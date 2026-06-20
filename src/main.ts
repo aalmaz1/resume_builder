@@ -1,11 +1,10 @@
-import { ThemeSwitcher, ThemeType } from './resume-themes';
+import { ResumeData } from './types';
 import { renderResume } from './resume-builder';
 import { printResume } from './print-utils';
 import { fetchGitHubResumeData } from './github-provider';
-import { ResumeData } from './types';
 
 let currentResumeData: ResumeData | null = null;
-let currentTextAlign: 'left' | 'center' | 'right' | 'justify' = 'left';
+let currentTextAlign: 'left' | 'center' | 'justify' = 'left';
 
 const defaultData: ResumeData = {
   personal: {
@@ -50,7 +49,7 @@ function updateUI(data: ResumeData, container: HTMLElement): void {
 /**
  * Apply text alignment to resume content
  */
-function applyTextAlign(container: HTMLElement, align: 'left' | 'center' | 'right' | 'justify'): void {
+function applyTextAlign(container: HTMLElement, align: 'left' | 'center' | 'justify'): void {
   currentTextAlign = align;
   
   // Header stays centered always
@@ -70,14 +69,24 @@ function applyTextAlign(container: HTMLElement, align: 'left' | 'center' | 'righ
       const hl = headerLine as HTMLElement;
       if (align === 'center') {
         hl.style.justifyContent = 'center';
-      } else if (align === 'right') {
-        hl.style.justifyContent = 'flex-end';
       } else if (align === 'left') {
         hl.style.justifyContent = 'space-between';
       } else if (align === 'justify') {
         hl.style.justifyContent = 'space-between';
       }
     }
+    
+    // Управление маркерами списка: точки только при выравнивании по левому краю
+    const lists = element.querySelectorAll('ul');
+    lists.forEach(ul => {
+      if (align === 'left') {
+        ul.style.listStyleType = 'disc'; // Возвращаем точки
+        ul.style.paddingLeft = '20px';
+      } else {
+        ul.style.listStyleType = 'none'; // Убираем точки
+        ul.style.paddingLeft = '0';
+      }
+    });
   });
 }
 
@@ -85,30 +94,27 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('resume-container');
   const loader = document.getElementById('loader');
   const loadingOverlay = document.getElementById('loading-overlay');
+  const themeToggleBtn = document.getElementById('theme-toggle');
   if (!container) return;
-
-  const themeSwitcher = new ThemeSwitcher();
   
   // Initial render
   updateUI(defaultData, container);
 
-  // Theme Switching
-  document.querySelectorAll('.theme-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const theme = btn.getAttribute('data-theme') as ThemeType;
-      if (theme) {
-        themeSwitcher.switchTheme(theme);
-        // Update active button state
-        document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      }
-    });
+  // Theme Toggle (Light/Dark)
+  let isDarkTheme = false;
+  themeToggleBtn?.addEventListener('click', () => {
+    isDarkTheme = !isDarkTheme;
+    document.body.classList.toggle('theme-dark', isDarkTheme);
+    document.body.classList.toggle('theme-classic', !isDarkTheme);
+    if (themeToggleBtn) {
+      themeToggleBtn.textContent = isDarkTheme ? '☀️ Светлая' : '🌙 Темная';
+    }
   });
 
   // Text Alignment Buttons
   document.querySelectorAll('.align-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const align = btn.getAttribute('data-align') as 'left' | 'center' | 'right' | 'justify';
+      const align = btn.getAttribute('data-align') as 'left' | 'center' | 'justify';
       if (align && container) {
         applyTextAlign(container, align);
         // Update active button state
@@ -117,12 +123,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-
-  // Set initial alignment button state
-  const initialAlignBtn = document.querySelector('.align-btn[data-align="left"]');
-  if (initialAlignBtn) {
-    initialAlignBtn.classList.add('active');
-  }
 
   // GitHub Import with Loader
   const importBtn = document.getElementById('import-github');

@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const resume_themes_1 = require("./resume-themes");
 const resume_builder_1 = require("./resume-builder");
 const print_utils_1 = require("./print-utils");
 const github_provider_1 = require("./github-provider");
@@ -74,9 +73,6 @@ function applyTextAlign(container, align) {
             if (align === 'center') {
                 hl.style.justifyContent = 'center';
             }
-            else if (align === 'right') {
-                hl.style.justifyContent = 'flex-end';
-            }
             else if (align === 'left') {
                 hl.style.justifyContent = 'space-between';
             }
@@ -84,6 +80,18 @@ function applyTextAlign(container, align) {
                 hl.style.justifyContent = 'space-between';
             }
         }
+        // Управление маркерами списка: точки только при выравнивании по левому краю
+        const lists = element.querySelectorAll('ul');
+        lists.forEach(ul => {
+            if (align === 'left') {
+                ul.style.listStyleType = 'disc'; // Возвращаем точки
+                ul.style.paddingLeft = '20px';
+            }
+            else {
+                ul.style.listStyleType = 'none'; // Убираем точки
+                ul.style.paddingLeft = '0';
+            }
+        });
     });
 }
 document.addEventListener('DOMContentLoaded', () => {
@@ -91,22 +99,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.getElementById('resume-container');
     const loader = document.getElementById('loader');
     const loadingOverlay = document.getElementById('loading-overlay');
+    const themeToggleBtn = document.getElementById('theme-toggle');
     if (!container)
         return;
-    const themeSwitcher = new resume_themes_1.ThemeSwitcher();
     // Initial render
     updateUI(defaultData, container);
-    // Theme Switching
-    document.querySelectorAll('.theme-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const theme = btn.getAttribute('data-theme');
-            if (theme) {
-                themeSwitcher.switchTheme(theme);
-                // Update active button state
-                document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            }
-        });
+    // Theme Toggle (Light/Dark)
+    let isDarkTheme = false;
+    themeToggleBtn === null || themeToggleBtn === void 0 ? void 0 : themeToggleBtn.addEventListener('click', () => {
+        isDarkTheme = !isDarkTheme;
+        document.body.classList.toggle('theme-dark', isDarkTheme);
+        document.body.classList.toggle('theme-classic', !isDarkTheme);
+        if (themeToggleBtn) {
+            themeToggleBtn.textContent = isDarkTheme ? '☀️ Светлая' : '🌙 Темная';
+        }
     });
     // Text Alignment Buttons
     document.querySelectorAll('.align-btn').forEach(btn => {
@@ -120,11 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    // Set initial alignment button state
-    const initialAlignBtn = document.querySelector('.align-btn[data-align="left"]');
-    if (initialAlignBtn) {
-        initialAlignBtn.classList.add('active');
-    }
     // GitHub Import with Loader
     const importBtn = document.getElementById('import-github');
     const githubInput = document.getElementById('github-url');
