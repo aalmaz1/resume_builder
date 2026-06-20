@@ -9,8 +9,17 @@
     <style id="print-styles">
         @media print {
             @page {
-                margin: 10mm;
+                margin: 0;
                 size: A4;
+            }
+            @page:first {
+                margin: 0;
+            }
+            @page:left {
+                margin: 0;
+            }
+            @page:right {
+                margin: 0;
             }
             body {
                 background: white !important;
@@ -19,14 +28,16 @@
                 padding: 0;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
+                -webkit-margin-before: 0;
+                -webkit-margin-after: 0;
             }
-            .controls-bar, #loading-overlay {
+            .controls-bar, #loading-overlay, .no-print {
                 display: none !important;
             }
             #resume-container {
                 box-shadow: none !important;
                 margin: 0 !important;
-                padding: 0 !important;
+                padding: 15mm !important;
                 width: 100% !important;
                 max-width: none !important;
                 border: none !important;
@@ -48,19 +59,36 @@
                 color: #000 !important;
             }
             /* Prevent page breaks inside sections */
-            .resume-section {
+            .resume-section, .entity-item, .section-block, .positioned-block {
                 break-inside: avoid;
                 page-break-inside: avoid;
+            }
+            h1, h2, h3 {
+                page-break-after: avoid;
+                margin-top: 0 !important;
             }
             /* Ensure content starts from top */
             html, body {
                 height: auto !important;
                 overflow: visible !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            .resume-header {
+                margin-top: 0 !important;
+                padding-top: 0 !important;
+                margin-bottom: 10px !important;
+                break-inside: avoid;
+            }
+            h1, h2, .contact-line {
+                overflow-wrap: break-word;
+                word-wrap: break-word;
+                hyphens: auto;
             }
         }
     </style>
-  <script type="module" crossorigin src="/assets/index-ZaSbmEEZ.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-BCsgj57w.css">
+  <script type="module" crossorigin src="/assets/index-DHuy9aQW.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-CXVP4HMG.css">
 </head>
 <body class="theme-classic">
 
