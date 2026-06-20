@@ -104,15 +104,34 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     // Initial render
     updateUI(defaultData, container);
-    // Theme Toggle (Light/Dark)
+    // Theme Toggle (Light/Dark for UI only)
     let isDarkTheme = false;
     themeToggleBtn === null || themeToggleBtn === void 0 ? void 0 : themeToggleBtn.addEventListener('click', () => {
         isDarkTheme = !isDarkTheme;
-        document.body.classList.toggle('theme-dark', isDarkTheme);
-        document.body.classList.toggle('theme-classic', !isDarkTheme);
+        if (isDarkTheme) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+        }
+        else {
+            document.documentElement.removeAttribute('data-theme');
+        }
         if (themeToggleBtn) {
             themeToggleBtn.textContent = isDarkTheme ? '☀️ Светлая' : '🌙 Темная';
         }
+    });
+    // Design Buttons (Classic, Modern, Minimal)
+    document.querySelectorAll('.design-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const design = btn.getAttribute('data-design');
+            if (design) {
+                // Remove all theme classes
+                document.body.classList.remove('theme-classic', 'theme-modern', 'theme-minimal');
+                // Add selected theme class
+                document.body.classList.add(`theme-${design}`);
+                // Update active button state
+                document.querySelectorAll('.design-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+        });
     });
     // Text Alignment Buttons
     document.querySelectorAll('.align-btn').forEach(btn => {
