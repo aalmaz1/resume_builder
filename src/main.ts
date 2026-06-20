@@ -37,22 +37,35 @@ const defaultData: ResumeData = {
   ]
 };
 
+/**
+ * Centralized UI update function
+ */
+function updateUI(data: ResumeData, container: HTMLElement): void {
+  currentResumeData = data;
+  renderResume(data, container);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('resume-container');
   const loader = document.getElementById('loader');
+  const loadingOverlay = document.getElementById('loading-overlay');
   if (!container) return;
 
   const themeSwitcher = new ThemeSwitcher();
   
   // Initial render
-  currentResumeData = defaultData;
-  renderResume(defaultData, container);
+  updateUI(defaultData, container);
 
   // Theme Switching
   document.querySelectorAll('.theme-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const theme = btn.getAttribute('data-theme') as ThemeType;
-      if (theme) themeSwitcher.switchTheme(theme);
+      if (theme) {
+        themeSwitcher.switchTheme(theme);
+        // Update active button state
+        document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
     });
   });
 
@@ -62,20 +75,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   importBtn?.addEventListener('click', async () => {
     const input = githubInput.value.trim();
-    if (!input) return alert('Please enter a username');
+    if (!input) {
+      alert('Please enter a username');
+      return;
+    }
     
     try {
       if (loader) loader.style.display = 'block';
+      if (loadingOverlay) loadingOverlay.classList.remove('hidden');
       importBtn.setAttribute('disabled', 'true');
       
       const data = await fetchGitHubResumeData(input);
-      currentResumeData = data;
-      renderResume(data, container);
+      updateUI(data, container);
       
     } catch (e) {
       alert('GitHub User not found or API limit reached');
     } finally {
       if (loader) loader.style.display = 'none';
+      if (loadingOverlay) loadingOverlay.classList.add('hidden');
       importBtn.removeAttribute('disabled');
     }
   });

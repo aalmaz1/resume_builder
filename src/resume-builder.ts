@@ -6,10 +6,9 @@
 import { ResumeData, TimeBoundedEntity, SkillCategory } from './types';
 
 export function renderResume(data: ResumeData, container: HTMLElement): void {
-  // Clear container - simulating the rigid re-render cycle of Pretext
   container.innerHTML = '';
-
-  // 1. PositionedBlock: Header (Pretext Concept: High-level layout container)
+  
+  // 1. Header (PositionedBlock)
   const header = createBlock('resume-header');
   header.appendChild(createLine('h1', data.personal.name));
   header.appendChild(createLine('h2', data.personal.title));
@@ -19,7 +18,7 @@ export function renderResume(data: ResumeData, container: HTMLElement): void {
   header.appendChild(createLine('p', contacts));
   container.appendChild(header);
 
-  // 2. Sections (Pretext Concept: Content Nodes)
+  // 2. Sections
   if (data.experience?.length) {
     container.appendChild(renderSection('Experience', data.experience));
   }
@@ -28,7 +27,7 @@ export function renderResume(data: ResumeData, container: HTMLElement): void {
     container.appendChild(renderSection('Education', data.education));
   }
 
-  // 3. Skills Grid (Pretext Concept: Dynamic Grid Constraints)
+  // 3. Skills Grid
   if (data.skills?.length) {
     const section = createBlock('section-block');
     section.appendChild(createLine('h3', 'Skills'));
@@ -38,11 +37,9 @@ export function renderResume(data: ResumeData, container: HTMLElement): void {
     
     data.skills.forEach(skill => {
       const el = document.createElement('div');
-      if (typeof skill === 'string') {
-        el.textContent = skill;
-      } else {
-        el.innerHTML = `<strong>${skill.category}:</strong> ${skill.items.join(', ')}`;
-      }
+      el.textContent = typeof skill === 'string' 
+        ? skill 
+        : `${skill.category}: ${skill.items.join(', ')}`;
       skillsList.appendChild(el);
     });
     section.appendChild(skillsList);
@@ -50,20 +47,12 @@ export function renderResume(data: ResumeData, container: HTMLElement): void {
   }
 }
 
-/**
- * Primitive: PositionedBlock
- * Maps to Pretext's concept of an explicit bounding box.
- */
 function createBlock(cls: string): HTMLElement {
   const div = document.createElement('div');
   div.className = `positioned-block ${cls}`;
   return div;
 }
 
-/**
- * Primitive: LayoutLine
- * Maps to Pretext's typography baseline alignment.
- */
 function createLine(tag: string, text: string): HTMLElement {
   const el = document.createElement(tag);
   el.className = 'layout-line';
@@ -79,8 +68,7 @@ function renderSection(title: string, items: TimeBoundedEntity[]): HTMLElement {
 
   items.forEach(item => {
     const itemBlock = createBlock('entity-item');
-    const headerLine = document.createElement('div');
-    headerLine.className = 'layout-line';
+    const headerLine = createLine('div', '');
     headerLine.innerHTML = `<span><strong>${item.role}</strong> - ${item.institution}</span><span>${item.period}</span>`;
     itemBlock.appendChild(headerLine);
 

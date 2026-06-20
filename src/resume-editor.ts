@@ -23,7 +23,6 @@ export class ResumeEditor {
     this.render();
   }
 
-  /** Load saved data from localStorage, or return null. */
   static loadSaved(): ResumeData | null {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
@@ -47,7 +46,6 @@ export class ResumeEditor {
     return structuredClone(this.data);
   }
 
-  /** Import JSON data from a file. */
   importJSON(json: string): void {
     try {
       const parsed = JSON.parse(json) as ResumeData;
@@ -63,21 +61,15 @@ export class ResumeEditor {
     }
   }
 
-  /** Export current data as JSON string. */
   exportJSON(): string {
     return JSON.stringify(this.data, null, 2);
   }
 
-  /** Reset to provided default data. */
   reset(defaultData: ResumeData): void {
     this.data = structuredClone(defaultData);
     this.save();
     this.render();
   }
-
-  /* ------------------------------------------------------------------ */
-  /*  Rendering                                                          */
-  /* ------------------------------------------------------------------ */
 
   private render(): void {
     this.container.innerHTML = '';
@@ -87,8 +79,6 @@ export class ResumeEditor {
     this.container.appendChild(this.buildEntitySection('Education', this.data.education, (items) => { this.data.education = items; }));
     this.container.appendChild(this.buildSkillsSection());
   }
-
-  /* ---------- Personal ---------- */
 
   private buildPersonalSection(): HTMLElement {
     const section = this.createSection('Personal Details');
@@ -114,8 +104,6 @@ export class ResumeEditor {
     return section;
   }
 
-  /* ---------- Entity sections (Experience / Education) ---------- */
-
   private buildEntitySection(
     title: string,
     items: TimeBoundedEntity[],
@@ -137,7 +125,6 @@ export class ResumeEditor {
         item.period = val; this.notify();
       }));
 
-      // Description bullets
       const bulletsLabel = document.createElement('label');
       bulletsLabel.className = 'editor-label';
       bulletsLabel.textContent = 'Description (one per line)';
@@ -153,7 +140,6 @@ export class ResumeEditor {
       });
       card.appendChild(textarea);
 
-      // Remove button
       const removeBtn = document.createElement('button');
       removeBtn.className = 'editor-btn editor-btn-danger';
       removeBtn.textContent = `Remove ${title.slice(0, -1) || title}`;
@@ -168,7 +154,6 @@ export class ResumeEditor {
       section.appendChild(card);
     });
 
-    // Add button
     const addBtn = document.createElement('button');
     addBtn.className = 'editor-btn editor-btn-add';
     addBtn.textContent = `+ Add ${title.slice(0, -1) || title}`;
@@ -183,20 +168,21 @@ export class ResumeEditor {
     return section;
   }
 
-  /* ---------- Skills ---------- */
-
   private buildSkillsSection(): HTMLElement {
     const section = this.createSection('Skills');
 
-    this.data.skills.forEach((cat, idx) => {
+    this.data.skills.forEach((skill, idx) => {
+      // Only handle SkillCategory objects, skip strings
+      if (typeof skill === 'string') return;
+      
       const card = document.createElement('div');
       card.className = 'editor-card';
 
-      card.appendChild(this.createInput('Category', cat.category, 'e.g. Languages', (val) => {
-        cat.category = val; this.notify();
+      card.appendChild(this.createInput('Category', skill.category, 'e.g. Languages', (val) => {
+        skill.category = val; this.notify();
       }));
-      card.appendChild(this.createInput('Items (comma-separated)', cat.items.join(', '), 'e.g. TypeScript, Python', (val) => {
-        cat.items = val.split(',').map((s) => s.trim()).filter(Boolean);
+      card.appendChild(this.createInput('Items (comma-separated)', skill.items.join(', '), 'e.g. TypeScript, Python', (val) => {
+        skill.items = val.split(',').map((s) => s.trim()).filter(Boolean);
         this.notify();
       }));
 
@@ -225,8 +211,6 @@ export class ResumeEditor {
 
     return section;
   }
-
-  /* ---------- DOM helpers ---------- */
 
   private createSection(title: string): HTMLElement {
     const el = document.createElement('fieldset');
