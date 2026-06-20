@@ -7,16 +7,48 @@
   padding: 0;
 }
 
+/* ==========================================================================
+   Theme Variables (Light/Dark for UI only)
+   ========================================================================== */
+:root {
+  /* Light Theme (Default) */
+  --ui-bg: #f0f2f5;
+  --ui-text: #333;
+  --ui-panel-bg: #ffffff;
+  --ui-border: #e2e8f0;
+  --ui-accent: #4361ee;
+  --ui-btn-text: #fff;
+  
+  /* Resume always stays white/black for print consistency */
+  --resume-bg: #ffffff;
+  --resume-text: #000000;
+}
+
+[data-theme="dark"] {
+  /* Dark Theme for UI */
+  --ui-bg: #1a1a1a;
+  --ui-text: #e0e0e0;
+  --ui-panel-bg: #2d2d2d;
+  --ui-border: #444;
+  --ui-accent: #4dabf7;
+  --ui-btn-text: #000;
+  
+  /* Resume remains white */
+  --resume-bg: #ffffff;
+  --resume-text: #000000;
+}
+
 body {
-  font-family: var(--font-family);
-  color: var(--primary-color);
-  background: #f0f2f5;
+  font-family: var(--font-family, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
+  color: var(--ui-text);
+  background: var(--ui-bg);
   line-height: 1.6;
-  transition: color 0.3s, background 0.3s;
+  transition: background 0.3s, color 0.3s;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
+  min-height: 100vh;
 }
 
 /* ==========================================================================
@@ -94,16 +126,17 @@ body.theme-minimal h1 {
   align-items: center;
   gap: 20px;
   padding: 16px;
-  background: #ffffff;
+  background: var(--ui-panel-bg);
   border-radius: 12px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--ui-border);
   box-shadow: 0 10px 25px rgba(0,0,0,0.05);
   margin-bottom: 25px;
   width: 850px;
   max-width: 100%;
+  color: var(--ui-text);
 }
 
-.import-group, .theme-group, .action-group {
+.import-group, .theme-group, .action-group, .align-group, .design-group {
   display: flex;
   gap: 8px;
   align-items: center;
@@ -113,23 +146,27 @@ body.theme-minimal h1 {
   padding: 10px 20px;
   border: none;
   border-radius: 6px;
-  background: #f1f5f9;
+  background: var(--ui-panel-bg);
+  color: var(--ui-text);
+  border: 1px solid var(--ui-border);
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
-  color: #475569;
   transition: all 0.2s ease;
 }
 
 .controls-bar button:hover {
-  background: #e2e8f0;
+  background: var(--ui-accent);
+  color: var(--ui-btn-text);
+  border-color: var(--ui-accent);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .controls-bar button.active {
-  background: var(--accent-color, #334155);
-  color: #fff;
+  background: var(--ui-accent);
+  color: var(--ui-btn-text);
+  border-color: var(--ui-accent);
 }
 
 .align-group {
@@ -144,8 +181,9 @@ body.theme-minimal h1 {
 }
 
 .align-btn.active {
-  background: var(--accent-color, #334155) !important;
-  color: #fff !important;
+  background: var(--ui-accent) !important;
+  color: var(--ui-btn-text) !important;
+  border-color: var(--ui-accent) !important;
 }
 
 #import-github {
@@ -153,9 +191,19 @@ body.theme-minimal h1 {
   color: white;
 }
 
+#import-github:hover {
+  background: var(--ui-accent);
+  color: var(--ui-btn-text);
+}
+
 #save-json {
   background: #718096;
   color: white;
+}
+
+#save-json:hover {
+  background: var(--ui-accent);
+  color: var(--ui-btn-text);
 }
 
 #export-pdf {
@@ -163,18 +211,25 @@ body.theme-minimal h1 {
   color: white;
 }
 
+#export-pdf:hover {
+  background: var(--ui-accent);
+  color: var(--ui-btn-text);
+}
+
 input[type="text"] {
   padding: 10px 15px;
-  border: 2px solid #edf2f7;
+  border: 2px solid var(--ui-border);
   border-radius: 6px;
   font-size: 14px;
   outline: none;
   min-width: 200px;
   flex-grow: 1;
+  background: var(--ui-panel-bg);
+  color: var(--ui-text);
 }
 
 input[type="text"]:focus {
-  border-color: var(--accent-color);
+  border-color: var(--ui-accent);
 }
 
 /* ==========================================================================
@@ -186,13 +241,17 @@ input[type="text"]:focus {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.9);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   z-index: 1000;
   backdrop-filter: blur(4px);
+}
+
+[data-theme="dark"] #loading-overlay {
+  background: rgba(26, 26, 26, 0.9);
 }
 
 #loading-overlay.hidden {
@@ -233,8 +292,9 @@ input[type="text"]:focus {
   max-width: 210mm;
   margin: 0 auto;
   padding: 60px;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-color);
+  background: var(--resume-bg);
+  color: var(--resume-text);
+  border: 1px solid var(--ui-border);
   border-radius: 4px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
