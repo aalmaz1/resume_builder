@@ -291,14 +291,14 @@ input[type="text"]:focus {
   min-height: 1120px;
   max-width: 210mm;
   margin: 0 auto;
-  padding: 60px;
+  padding: 40px 50px;
   background: var(--resume-bg);
   color: var(--resume-text);
   border: 1px solid var(--ui-border);
   border-radius: 4px;
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* ==========================================================================
@@ -424,31 +424,63 @@ li {
    @media print overrides
    ========================================================================== */
 @media print {
+  @page {
+    margin: 10mm;
+    size: A4;
+  }
+
+  body {
+    background: white;
+    padding: 0;
+    margin: 0;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    -moz-print-color-adjust: exact;
+    font-size: 12pt;
+  }
+
   .controls-bar,
   .no-print,
   #loading-overlay {
     display: none !important;
   }
 
-  body {
-    background: white;
-    padding: 0;
-    print-color-adjust: exact;
-    -webkit-print-color-adjust: exact;
-  }
-
   #resume-container {
     margin: 0;
-    padding: 15mm !important;
+    padding: 0 !important;
     border: none;
     box-shadow: none;
     max-width: none;
     width: 100%;
+    min-height: auto;
+    overflow: visible;
   }
 
+  /* Ensure header stays together */
+  .resume-header {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 15px;
+  }
+
+  /* Prevent sections from breaking in the middle */
   .positioned-block.entity-item,
   .positioned-block.section-block {
     page-break-inside: avoid;
     break-inside: avoid;
+    margin-bottom: 10px;
+  }
+
+  /* Ensure text wraps properly in headers */
+  h1, h2, .contact-line {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+  }
+
+  /* Remove default browser margins */
+  h1, h2, h3, p, ul, li {
+    orphans: 2;
+    widows: 2;
   }
 }
