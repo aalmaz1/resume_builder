@@ -427,6 +427,27 @@ li {
   @page {
     margin: 0; /* Remove browser default margins to prevent extra space */
     size: A4;
+    /* Explicitly remove headers and footers */
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  /* Force removal of browser headers/footers */
+  @page:first {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  @page:left {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  @page:right {
+    margin-top: 0;
+    margin-bottom: 0;
   }
 
   body {
@@ -437,6 +458,9 @@ li {
     -webkit-print-color-adjust: exact;
     -moz-print-color-adjust: exact;
     font-size: 12pt;
+    /* Hide browser headers/footers */
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
   }
 
   .controls-bar,

@@ -11,7 +11,7 @@ function printResume() {
         alert('Resume container not found in the DOM. Cannot print.');
         return;
     }
-    // Inject Print Styles
+    // Inject Print Styles - matching index.html exactly
     const styleId = 'print-overrides';
     let styleEl = document.getElementById(styleId);
     if (!styleEl) {
@@ -22,7 +22,7 @@ function printResume() {
     styleEl.innerHTML = `
     @media print {
       /* Interface Purging */
-      .controls-bar, .theme-switcher-bar, button, nav, .debug-info, #loading-overlay {
+      .controls-bar, .theme-switcher-bar, button, nav, .debug-info, #loading-overlay, .no-print {
         display: none !important;
       }
 
@@ -35,12 +35,26 @@ function printResume() {
         print-color-adjust: exact;
         height: auto !important;
         overflow: visible !important;
+        -webkit-margin-before: 0 !important;
+        -webkit-margin-after: 0 !important;
       }
 
-      /* Sizing Mechanics (A4) */
+      /* Sizing Mechanics (A4) - NO margins to prevent browser headers/footers */
       @page {
         size: A4;
-        margin: 10mm;
+        margin: 0 !important;
+      }
+      
+      @page:first {
+        margin: 0 !important;
+      }
+      
+      @page:left {
+        margin: 0 !important;
+      }
+      
+      @page:right {
+        margin: 0 !important;
       }
 
       #resume-container {
@@ -48,7 +62,7 @@ function printResume() {
         max-width: none !important;
         box-shadow: none !important;
         margin: 0 !important;
-        padding: 0 !important;
+        padding: 15mm !important;
         background: white !important;
         color: black !important;
         position: static !important;
@@ -71,18 +85,33 @@ function printResume() {
       }
 
       /* Pagination Break Protections */
-      .entity-item, .section-block, .positioned-block, .resume-section {
+      .entity-item, .section-block, .positioned-block, .resume-section, .resume-header {
         page-break-inside: avoid;
         break-inside: avoid;
       }
 
       h1, h2, h3 {
         page-break-after: avoid;
+        margin-top: 0 !important;
       }
       
-      /* Ensure first page is not blank */
+      /* Ensure first page is not blank and no extra spacing */
       body::before, html::before {
         content: none !important;
+      }
+      
+      /* Text wrapping for long names/URLs */
+      h1, h2, .contact-line {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        hyphens: auto;
+      }
+      
+      /* Minimal gap after header */
+      .resume-header {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+        margin-bottom: 10px !important;
       }
     }
   `;
