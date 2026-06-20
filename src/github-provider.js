@@ -28,6 +28,7 @@ function fetchGitHubResumeData(input) {
             .filter(repo => !repo.fork)
             .sort((a, b) => (b.stargazers_count + b.forks_count) - (a.stargazers_count + a.forks_count))
             .slice(0, 10);
+        const currentYear = new Date().getFullYear();
         // 3. Map Repos to Professional Experience
         const experience = topRepos.map(repo => {
             const bullets = [];
@@ -49,10 +50,26 @@ function fetchGitHubResumeData(input) {
             if (repo.homepage) {
                 bullets.push(`Live Demo: ${repo.homepage.replace(/^https?:\/\//, '')}`);
             }
+            // Умное форматирование дат
+            const startYear = new Date(repo.created_at).getFullYear();
+            const endYear = new Date(repo.updated_at).getFullYear();
+            let period;
+            if (startYear === endYear) {
+                // Если годы одинаковые, показываем только один год
+                period = `${startYear}`;
+            }
+            else if (endYear > currentYear) {
+                // Если конец даты в будущем (невозможно), ограничиваем текущим годом
+                period = `${startYear} — ${currentYear}`;
+            }
+            else {
+                // Обычный случай: диапазон годов
+                period = `${startYear} — ${endYear}`;
+            }
             return {
                 institution: 'GitHub Open Source',
                 role: formatRepoName(repo.name),
-                period: `${new Date(repo.created_at).getFullYear()} — ${new Date(repo.updated_at).getFullYear()}`,
+                period: period,
                 description: bullets
             };
         });
