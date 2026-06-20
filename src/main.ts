@@ -5,6 +5,7 @@ import { fetchGitHubResumeData } from './github-provider';
 import { ResumeData } from './types';
 
 let currentResumeData: ResumeData | null = null;
+let currentTextAlign: 'left' | 'center' | 'right' | 'justify' = 'left';
 
 const defaultData: ResumeData = {
   personal: {
@@ -43,6 +44,41 @@ const defaultData: ResumeData = {
 function updateUI(data: ResumeData, container: HTMLElement): void {
   currentResumeData = data;
   renderResume(data, container);
+  applyTextAlign(container, currentTextAlign);
+}
+
+/**
+ * Apply text alignment to resume content
+ */
+function applyTextAlign(container: HTMLElement, align: 'left' | 'center' | 'right' | 'justify'): void {
+  currentTextAlign = align;
+  
+  // Header stays centered always
+  const header = container.querySelector('.resume-header');
+  if (header) {
+    (header as HTMLElement).style.textAlign = 'center';
+  }
+  
+  // Apply alignment to all other blocks
+  container.querySelectorAll('.section-block').forEach(el => {
+    const element = el as HTMLElement;
+    element.style.textAlign = align;
+    
+    // Special handling for entity headers with flex layout
+    const headerLine = element.querySelector('.layout-line');
+    if (headerLine) {
+      const hl = headerLine as HTMLElement;
+      if (align === 'center') {
+        hl.style.justifyContent = 'center';
+      } else if (align === 'right') {
+        hl.style.justifyContent = 'flex-end';
+      } else if (align === 'left') {
+        hl.style.justifyContent = 'space-between';
+      } else if (align === 'justify') {
+        hl.style.justifyContent = 'space-between';
+      }
+    }
+  });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -68,6 +104,25 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
+
+  // Text Alignment Buttons
+  document.querySelectorAll('.align-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const align = btn.getAttribute('data-align') as 'left' | 'center' | 'right' | 'justify';
+      if (align && container) {
+        applyTextAlign(container, align);
+        // Update active button state
+        document.querySelectorAll('.align-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      }
+    });
+  });
+
+  // Set initial alignment button state
+  const initialAlignBtn = document.querySelector('.align-btn[data-align="left"]');
+  if (initialAlignBtn) {
+    initialAlignBtn.classList.add('active');
+  }
 
   // GitHub Import with Loader
   const importBtn = document.getElementById('import-github');

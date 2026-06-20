@@ -132,6 +132,22 @@ body.theme-minimal h1 {
   color: #fff;
 }
 
+.align-group {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.align-btn {
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+}
+
+.align-btn.active {
+  background: var(--accent-color, #334155) !important;
+  color: #fff !important;
+}
+
 #import-github {
   background: #1a1a2e;
   color: white;
@@ -269,6 +285,11 @@ input[type="text"]:focus {
 .layout-line.skills-content {
   flex-direction: column;
   gap: 4px;
+}
+
+/* Text alignment support for print */
+.section-block {
+  text-align: left; /* Default, overridden by JS */
 }
 
 /* ==========================================================================
