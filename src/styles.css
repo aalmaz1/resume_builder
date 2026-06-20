@@ -312,8 +312,8 @@ input[type="text"]:focus {
 .positioned-block.resume-header {
   text-align: center;
   border-bottom: 2px solid var(--accent-color);
-  padding-bottom: calc(var(--padding-unit) * 0.5);
-  margin-bottom: calc(var(--padding-unit) * 0.75);
+  padding-bottom: calc(var(--padding-unit) * 0.3);
+  margin-bottom: calc(var(--padding-unit) * 0.4);
 }
 
 .positioned-block.section-block {
@@ -425,7 +425,7 @@ li {
    ========================================================================== */
 @media print {
   @page {
-    margin: 10mm;
+    margin: 0; /* Remove browser default margins to prevent extra space */
     size: A4;
   }
 
@@ -447,20 +447,23 @@ li {
 
   #resume-container {
     margin: 0;
-    padding: 0 !important;
+    padding: 15mm !important; /* Controlled padding inside the page */
     border: none;
     box-shadow: none;
     max-width: none;
     width: 100%;
     min-height: auto;
     overflow: visible;
+    background: white !important;
   }
 
-  /* Ensure header stays together */
+  /* Ensure header stays together and has minimal top margin */
   .resume-header {
     break-inside: avoid;
     page-break-inside: avoid;
-    margin-bottom: 15px;
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    margin-bottom: 10px; /* Reduced gap after header */
   }
 
   /* Prevent sections from breaking in the middle */
@@ -468,7 +471,8 @@ li {
   .positioned-block.section-block {
     page-break-inside: avoid;
     break-inside: avoid;
-    margin-bottom: 10px;
+    margin-top: 8px; /* Consistent small spacing between sections */
+    margin-bottom: 8px;
   }
 
   /* Ensure text wraps properly in headers */
@@ -476,11 +480,18 @@ li {
     overflow-wrap: break-word;
     word-wrap: break-word;
     hyphens: auto;
+    margin-top: 0;
   }
 
   /* Remove default browser margins */
   h1, h2, h3, p, ul, li {
     orphans: 2;
     widows: 2;
+    margin-top: 0;
+  }
+  
+  /* Reset any flex gaps that might cause spacing issues in print */
+  .resume-header {
+    gap: 2px;
   }
 }
