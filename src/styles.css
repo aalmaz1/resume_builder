@@ -13,6 +13,10 @@ body {
   background: #f0f2f5;
   line-height: 1.6;
   transition: color 0.3s, background 0.3s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
 /* ==========================================================================
@@ -43,6 +47,19 @@ body.theme-modern {
   --border-color: #e0e7ff;
 }
 
+body.theme-modern h1 {
+  color: var(--accent-color);
+  border-bottom: 4px solid var(--accent-color);
+  letter-spacing: -1px;
+}
+
+body.theme-modern .section-block h3 {
+  background: #f0f3ff;
+  padding: 8px;
+  border-left: 5px solid var(--accent-color);
+  border-bottom: none;
+}
+
 /* ==========================================================================
    Design Tokens — Theme: Minimal
    ========================================================================== */
@@ -57,60 +74,160 @@ body.theme-minimal {
   --border-color: #e4e4e7;
 }
 
+body.theme-minimal #resume-container {
+  border: 10px solid #000;
+}
+
+body.theme-minimal h1 {
+  text-transform: uppercase;
+  font-weight: 900;
+  border-bottom: 10px solid #000;
+}
+
 /* ==========================================================================
    Controls Bar (theme switcher + print button)
    ========================================================================== */
 .controls-bar {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  align-items: center;
+  gap: 20px;
   padding: 16px;
   background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  margin-bottom: 25px;
+  width: 850px;
+  max-width: 100%;
+}
+
+.import-group, .theme-group, .action-group {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }
 
 .controls-bar button {
-  padding: 8px 20px;
-  border: 1px solid #cbd5e1;
+  padding: 10px 20px;
+  border: none;
   border-radius: 6px;
-  background: #f8fafc;
+  background: #f1f5f9;
   cursor: pointer;
   font-size: 14px;
-  font-weight: 500;
-  transition: background 0.2s, border-color 0.2s;
+  font-weight: 600;
+  color: #475569;
+  transition: all 0.2s ease;
 }
 
 .controls-bar button:hover {
   background: #e2e8f0;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .controls-bar button.active {
   background: var(--accent-color, #334155);
   color: #fff;
-  border-color: var(--accent-color, #334155);
+}
+
+#import-github {
+  background: #1a1a2e;
+  color: white;
+}
+
+#save-json {
+  background: #718096;
+  color: white;
+}
+
+#export-pdf {
+  background: #4361ee;
+  color: white;
+}
+
+input[type="text"] {
+  padding: 10px 15px;
+  border: 2px solid #edf2f7;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  min-width: 200px;
+  flex-grow: 1;
+}
+
+input[type="text"]:focus {
+  border-color: var(--accent-color);
+}
+
+/* ==========================================================================
+   Loading Overlay & Spinner
+   ========================================================================== */
+#loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(4px);
+}
+
+#loading-overlay.hidden {
+  display: none;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+#loader {
+  display: none;
+  width: 22px;
+  height: 22px;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid var(--accent-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* ==========================================================================
    Resume Preview Container
    ========================================================================== */
 #resume-container {
+  width: 800px;
+  min-height: 1120px;
   max-width: 210mm;
-  margin: 32px auto;
-  padding: calc(var(--padding-unit) * 2);
+  margin: 0 auto;
+  padding: 60px;
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: 4px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 /* ==========================================================================
    Layout Primitives
    ========================================================================== */
-
-/* PositionedBlock — rigid content bounding box */
 .positioned-block {
   margin-bottom: var(--padding-unit);
   padding: calc(var(--padding-unit) * 0.5) 0;
@@ -132,12 +249,12 @@ body.theme-minimal {
   padding-left: calc(var(--padding-unit) * 0.5);
 }
 
-/* LayoutLine — flexbox baseline-aligned row */
 .layout-line {
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
   gap: 8px;
+  width: 100%;
 }
 
 .layout-line.entity-header {
@@ -157,26 +274,35 @@ body.theme-minimal {
 /* ==========================================================================
    Typography
    ========================================================================== */
+h1, h2, h3 {
+  margin: 0;
+  color: var(--primary-color);
+}
+
 h1 {
-  font-size: 2rem;
+  font-size: 3em;
+  line-height: 1.1;
+  margin-bottom: 10px;
   color: var(--heading-color);
   letter-spacing: 0.5px;
 }
 
 h2 {
-  font-size: 1.15rem;
   font-weight: 400;
+  color: #64748b;
+  font-size: 1.5em;
   color: var(--muted-color);
 }
 
 h3 {
-  font-size: 1.1rem;
+  font-size: 1.2em;
   color: var(--heading-color);
-  border-bottom: 1px solid var(--border-color);
+  border-bottom: 2px solid #eee;
   padding-bottom: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 20px;
+  margin-top: 30px;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
 }
 
 .role-org {
@@ -193,38 +319,50 @@ ul {
   list-style: disc;
   padding-left: 20px;
   margin-top: 4px;
+  color: #475569;
 }
 
 li {
   font-size: 0.9rem;
   margin-bottom: 2px;
+  line-height: 1.5;
 }
 
 .skill-category {
   font-size: 0.9rem;
 }
 
+.skills-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-top: 10px;
+}
+
 /* ==========================================================================
-   @media print overrides (complement to print-utils.ts injected styles)
+   @media print overrides
    ========================================================================== */
 @media print {
   .controls-bar,
-  .no-print {
+  .no-print,
+  #loading-overlay {
     display: none !important;
   }
 
   body {
     background: white;
+    padding: 0;
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
 
   #resume-container {
     margin: 0;
-    padding: 15mm;
+    padding: 15mm !important;
     border: none;
     box-shadow: none;
     max-width: none;
+    width: 100%;
   }
 
   .positioned-block.entity-item,
@@ -232,100 +370,4 @@ li {
     page-break-inside: avoid;
     break-inside: avoid;
   }
-}
-
-.controls-bar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  padding: 16px;
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.import-group, .theme-group, .action-group {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-input[type="text"] {
-  padding: 8px 12px;
-  border: 1px solid #cbd5e1;
-  border-radius: 6px;
-  font-size: 14px;
-  outline: none;
-  min-width: 200px;
-}
-
-#btn-import {
-  background: #6366f1;
-  color: white;
-  border-color: #6366f1;
-}
-
-/* Спиннер загрузки */
-#loading-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(255, 255, 255, 0.8);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(4px);
-}
-
-#loading-overlay.hidden { display: none; }
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #f3f3f3;
-  border-top: 4px solid #6366f1;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 16px;
-}
-
-@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-canvas {
-  background: white;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
-}
-
-/* Validation Warning Message */
-.validation-warning {
-  background-color: #fffbeb;
-  border: 1px solid #fcd34d;
-  color: #92400e;
-  padding: 12px 16px;
-  border-radius: 6px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  border-left: 4px solid #f59e0b;
-  animation: slideIn 0.4s ease-out;
-}
-
-.validation-warning.hidden { display: none; }
-
-@keyframes slideIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
 }

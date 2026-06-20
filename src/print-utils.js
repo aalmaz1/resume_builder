@@ -1,25 +1,25 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.printResume = printResume;
 /**
  * Production Print Optimizer
  */
-export function printResume(): void {
-  const resumeContainer = document.getElementById('resume-container');
-  
-  // Sanity Check
-  if (!resumeContainer) {
-    alert('Resume container not found in the DOM. Cannot print.');
-    return;
-  }
-
-  // Inject Print Styles
-  const styleId = 'print-overrides';
-  let styleEl = document.getElementById(styleId) as HTMLStyleElement;
-  if (!styleEl) {
-    styleEl = document.createElement('style');
-    styleEl.id = styleId;
-    document.head.appendChild(styleEl);
-  }
-
-  styleEl.innerHTML = `
+function printResume() {
+    const resumeContainer = document.getElementById('resume-container');
+    // Sanity Check
+    if (!resumeContainer) {
+        alert('Resume container not found in the DOM. Cannot print.');
+        return;
+    }
+    // Inject Print Styles
+    const styleId = 'print-overrides';
+    let styleEl = document.getElementById(styleId);
+    if (!styleEl) {
+        styleEl = document.createElement('style');
+        styleEl.id = styleId;
+        document.head.appendChild(styleEl);
+    }
+    styleEl.innerHTML = `
     @media print {
       /* Interface Purging */
       .controls-bar, .theme-switcher-bar, button, nav, .debug-info, #loading-overlay {
@@ -57,7 +57,6 @@ export function printResume(): void {
       }
     }
   `;
-
-  // Execute Print
-  window.print();
+    // Execute Print
+    window.print();
 }
