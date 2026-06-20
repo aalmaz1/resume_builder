@@ -312,8 +312,8 @@ input[type="text"]:focus {
 .positioned-block.resume-header {
   text-align: center;
   border-bottom: 2px solid var(--accent-color);
-  padding-bottom: var(--padding-unit);
-  margin-bottom: calc(var(--padding-unit) * 1.5);
+  padding-bottom: calc(var(--padding-unit) * 0.5);
+  margin-bottom: calc(var(--padding-unit) * 0.75);
 }
 
 .positioned-block.section-block {
