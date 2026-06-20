@@ -5,6 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pretext Resume Builder | KNU Project</title>
     <link rel="stylesheet" href="/src/styles.css">
+    
+    <!-- Print Styles - Critical for PDF Export -->
+    <style id="print-styles">
+        @media print {
+            @page {
+                margin: 10mm;
+                size: A4;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+                margin: 0;
+                padding: 0;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .controls-bar, #loading-overlay {
+                display: none !important;
+            }
+            #resume-container {
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                width: 100% !important;
+                max-width: none !important;
+                border: none !important;
+                background: white !important;
+                color: black !important;
+                position: static !important;
+                float: none !important;
+                clear: both !important;
+                overflow: visible !important;
+                height: auto !important;
+            }
+            /* Force text visibility */
+            * {
+                color: black !important;
+                background: transparent !important;
+            }
+            a {
+                text-decoration: underline;
+                color: #000 !important;
+            }
+            /* Prevent page breaks inside sections */
+            .resume-section {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+            /* Ensure content starts from top */
+            html, body {
+                height: auto !important;
+                overflow: visible !important;
+            }
+        }
+    </style>
 </head>
 <body class="theme-classic">
 
