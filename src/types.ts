@@ -25,5 +25,4 @@ export interface ResumeData {
   education: TimeBoundedEntity[];
   experience: TimeBoundedEntity[];
   skills: (string | SkillCategory)[];
-  readme?: string;
 }

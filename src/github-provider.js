@@ -132,8 +132,7 @@ function fetchGitHubResumeData(input) {
                     ]
                 }
             ],
-            skills,
-            readme: readmeContent
+            skills
         };
     });
 }
