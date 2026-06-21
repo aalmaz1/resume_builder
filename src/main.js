@@ -13,9 +13,40 @@ const resume_builder_1 = require("./resume-builder");
 const print_utils_1 = require("./print-utils");
 const github_provider_1 = require("./github-provider");
 const demo_profile_1 = require("./demo-profile");
+const translations_1 = require("./translations");
 let currentResumeData = null;
 let currentTextAlign = 'left';
+let currentLang = translations_1.defaultLang;
 const defaultData = (0, demo_profile_1.generateDemoProfile)();
+/**
+ * Update all UI text based on current language
+ */
+function updateInterfaceLanguage(lang) {
+    currentLang = lang;
+    const t = translations_1.translations[lang];
+    // Update elements by ID
+    const updateText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el)
+            el.textContent = text;
+    };
+    updateText('app-title', t.appTitle);
+    updateText('github-input', t.githubPlaceholder); // Note: This is a placeholder, need special handling
+    updateText('generate-btn', t.generateBtn);
+    updateText('export-pdf', t.exportBtn);
+    updateText('theme-toggle', t.themeToggle);
+    updateText('lang-label', t.languageLabel);
+    // Update placeholder specifically
+    const githubInput = document.getElementById('github-url');
+    if (githubInput)
+        githubInput.placeholder = t.githubPlaceholder;
+    // Update demo note if exists
+    const demoNote = document.querySelector('.demo-note');
+    if (demoNote)
+        demoNote.textContent = t.demoNote;
+    // Save to localStorage
+    localStorage.setItem('resume-lang', lang);
+}
 /**
  * Centralized UI update function
  */
@@ -74,8 +105,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
     if (!container)
         return;
+    // Load saved language or default
+    const savedLang = localStorage.getItem('resume-lang');
+    if (savedLang && ['en', 'ru', 'ko'].includes(savedLang)) {
+        currentLang = savedLang;
+    }
     // Initial render
     updateUI(defaultData, container);
+    updateInterfaceLanguage(currentLang);
+    // Language Selector
+    const langSelect = document.getElementById('lang-select');
+    if (langSelect) {
+        langSelect.value = currentLang;
+        langSelect.addEventListener('change', (e) => {
+            const newLang = e.target.value;
+            updateInterfaceLanguage(newLang);
+        });
+    }
     // Theme Toggle (Light/Dark for UI only)
     let isDarkTheme = false;
     themeToggleBtn === null || themeToggleBtn === void 0 ? void 0 : themeToggleBtn.addEventListener('click', () => {

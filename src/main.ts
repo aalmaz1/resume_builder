@@ -3,11 +3,45 @@ import { renderResume } from './resume-builder';
 import { printResume } from './print-utils';
 import { fetchGitHubResumeData } from './github-provider';
 import { generateDemoProfile } from './demo-profile';
+import { translations, Lang, defaultLang } from './translations';
 
 let currentResumeData: ResumeData | null = null;
 let currentTextAlign: 'left' | 'center' | 'justify' = 'left';
+let currentLang: Lang = defaultLang;
 
 const defaultData: ResumeData = generateDemoProfile();
+
+/**
+ * Update all UI text based on current language
+ */
+function updateInterfaceLanguage(lang: Lang): void {
+  currentLang = lang;
+  const t = translations[lang];
+  
+  // Update elements by ID
+  const updateText = (id: string, text: string) => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = text;
+  };
+  
+  updateText('app-title', t.appTitle);
+  updateText('github-input', t.githubPlaceholder); // Note: This is a placeholder, need special handling
+  updateText('generate-btn', t.generateBtn);
+  updateText('export-pdf', t.exportBtn);
+  updateText('theme-toggle', t.themeToggle);
+  updateText('lang-label', t.languageLabel);
+  
+  // Update placeholder specifically
+  const githubInput = document.getElementById('github-url') as HTMLInputElement;
+  if (githubInput) githubInput.placeholder = t.githubPlaceholder;
+  
+  // Update demo note if exists
+  const demoNote = document.querySelector('.demo-note');
+  if (demoNote) demoNote.textContent = t.demoNote;
+  
+  // Save to localStorage
+  localStorage.setItem('resume-lang', lang);
+}
 
 /**
  * Centralized UI update function
@@ -69,8 +103,25 @@ document.addEventListener('DOMContentLoaded', () => {
   const themeToggleBtn = document.getElementById('theme-toggle');
   if (!container) return;
   
+  // Load saved language or default
+  const savedLang = localStorage.getItem('resume-lang') as Lang | null;
+  if (savedLang && ['en', 'ru', 'ko'].includes(savedLang)) {
+    currentLang = savedLang;
+  }
+  
   // Initial render
   updateUI(defaultData, container);
+  updateInterfaceLanguage(currentLang);
+  
+  // Language Selector
+  const langSelect = document.getElementById('lang-select') as HTMLSelectElement;
+  if (langSelect) {
+    langSelect.value = currentLang;
+    langSelect.addEventListener('change', (e) => {
+      const newLang = (e.target as HTMLSelectElement).value as Lang;
+      updateInterfaceLanguage(newLang);
+    });
+  }
 
   // Theme Toggle (Light/Dark for UI only)
   let isDarkTheme = false;
