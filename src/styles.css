@@ -117,7 +117,7 @@ body.theme-minimal h1 {
 }
 
 /* ==========================================================================
-   Controls Bar (theme switcher + print button)
+   Controls Bar (theme switcher + print button) - Glassmorphism Style
    ========================================================================== */
 .controls-bar {
   display: flex;
@@ -126,14 +126,51 @@ body.theme-minimal h1 {
   align-items: center;
   gap: 20px;
   padding: 16px;
-  background: var(--ui-panel-bg);
-  border-radius: 12px;
-  border: 1px solid var(--ui-border);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1);
   margin-bottom: 25px;
   width: 850px;
   max-width: 100%;
   color: var(--ui-text);
+  position: relative;
+  overflow: hidden;
+}
+
+.controls-bar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.8),
+    transparent
+  );
+}
+
+.controls-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 100%;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.8),
+    transparent,
+    rgba(255, 255, 255, 0.3)
+  );
 }
 
 .import-group, .theme-group, .action-group, .align-group, .design-group {
@@ -145,28 +182,35 @@ body.theme-minimal h1 {
 .controls-bar button {
   padding: 10px 20px;
   border: none;
-  border-radius: 6px;
-  background: var(--ui-panel-bg);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   color: var(--ui-text);
-  border: 1px solid var(--ui-border);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
 }
 
 .controls-bar button:hover {
-  background: var(--ui-accent);
+  background: rgba(255, 255, 255, 0.2);
   color: var(--ui-btn-text);
-  border-color: var(--ui-accent);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 8px 16px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
 .controls-bar button.active {
-  background: var(--ui-accent);
+  background: rgba(255, 255, 255, 0.25);
   color: var(--ui-btn-text);
-  border-color: var(--ui-accent);
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .align-group {
