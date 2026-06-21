@@ -2,40 +2,12 @@ import { ResumeData } from './types';
 import { renderResume } from './resume-builder';
 import { printResume } from './print-utils';
 import { fetchGitHubResumeData } from './github-provider';
+import { generateDemoProfile } from './demo-profile';
 
 let currentResumeData: ResumeData | null = null;
 let currentTextAlign: 'left' | 'center' | 'justify' = 'left';
 
-const defaultData: ResumeData = {
-  personal: {
-    name: "Almaz Developer",
-    title: "Full Stack Software Engineer",
-    email: "almaz@knu.ac.kr",
-    phone: "+82 10-1234-5678",
-    location: "Gongju, South Korea",
-    github: "github.com/almaz"
-  },
-  education: [
-    {
-      institution: "Kongju National University",
-      role: "B.S. Computer Science",
-      period: "2020 - 2024",
-      description: ["GPA: 4.2/4.5", "Focus on Web Architecture and UI/UX Design"]
-    }
-  ],
-  experience: [
-    {
-      institution: "Web Engineering Lab",
-      role: "Research Intern",
-      period: "2023 - Present",
-      description: ["Implementing Pretext-based layout algorithms", "Optimizing GitHub API data processing"]
-    }
-  ],
-  skills: [
-    "TypeScript", "React", "Node.js", 
-    { category: "Frameworks", items: ["Vite", "Tailwind", "Express"] }
-  ]
-};
+const defaultData: ResumeData = generateDemoProfile();
 
 /**
  * Centralized UI update function
