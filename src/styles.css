@@ -510,6 +510,30 @@ li {
 }
 
 /* ==========================================================================
+   README Content Styling
+   ========================================================================== */
+.readme-content {
+  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-size: 9pt;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  background: #f6f8fa;
+  padding: 15px;
+  border-radius: 6px;
+  border: 1px solid #d0d7de;
+  max-height: 400px;
+  overflow-y: auto;
+  color: #24292f;
+}
+
+[data-theme="dark"] .readme-content {
+  background: #0d1117;
+  border-color: #30363d;
+  color: #c9d1d9;
+}
+
+/* ==========================================================================
    @media print overrides - for native browser print (backup)
    ========================================================================== */
 @media print {
