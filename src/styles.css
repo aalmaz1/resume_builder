@@ -182,10 +182,43 @@ body.theme-minimal h1 {
   );
 }
 
-.import-group, .theme-group, .action-group, .align-group, .design-group {
+.import-group, .theme-group, .action-group, .align-group, .design-group, .lang-group {
   display: flex;
   gap: 8px;
   align-items: center;
+}
+
+.lang-select {
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ui-text);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  outline: none;
+}
+
+.lang-select:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 24px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 20px rgba(88, 166, 255, 0.15);
+}
+
+.lang-select option {
+  background: var(--ui-panel-bg);
+  color: var(--ui-text);
 }
 
 .controls-bar button {
