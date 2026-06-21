@@ -26,7 +26,14 @@ export async function fetchGitHubResumeData(input: string): Promise<ResumeData> 
         const readmeData = await readmeRes.json();
         // GitHub API returns README content base64 encoded
         if (readmeData.content) {
-          readmeContent = atob(readmeData.content);
+          // Правильное декодирование Base64 в UTF-8 для поддержки всех языков (корейский, эмодзи и т.д.)
+          const binaryString = window.atob(readmeData.content);
+          const bytes = new Uint8Array(binaryString.length);
+          for (let i = 0; i < binaryString.length; i++) {
+            bytes[i] = binaryString.charCodeAt(i);
+          }
+          const decoder = new TextDecoder('utf-8');
+          readmeContent = decoder.decode(bytes);
           break;
         }
       }
