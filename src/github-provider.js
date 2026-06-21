@@ -14,7 +14,7 @@ function fetchGitHubResumeData(input) {
     return __awaiter(this, void 0, void 0, function* () {
         const username = input.replace('https://github.com/', '').split('/')[0].trim();
         const headers = { 'Accept': 'application/vnd.github.v3+json' };
-        // 1. Fetch Profile & Repos in parallel
+        // 1. Fetch Profile, Repos & README in parallel
         const [userRes, reposRes] = yield Promise.all([
             fetch(`https://api.github.com/users/${username}`, { headers }),
             fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=30`, { headers })
@@ -23,6 +23,27 @@ function fetchGitHubResumeData(input) {
             throw new Error('User not found');
         const profile = yield userRes.json();
         const allRepos = yield reposRes.json();
+        // 2. Fetch README from the most popular repo (or a repo named after the user)
+        let readmeContent;
+        const sortedRepos = [...allRepos].sort((a, b) => b.stargazers_count - a.stargazers_count);
+        // Try to find README in top repos
+        for (const repo of sortedRepos.slice(0, 5)) {
+            try {
+                const readmeRes = yield fetch(`https://api.github.com/repos/${username}/${repo.name}/readme`, { headers });
+                if (readmeRes.ok) {
+                    const readmeData = yield readmeRes.json();
+                    // GitHub API returns README content base64 encoded
+                    if (readmeData.content) {
+                        readmeContent = atob(readmeData.content);
+                        break;
+                    }
+                }
+            }
+            catch (e) {
+                // Continue to next repo if this one fails
+                continue;
+            }
+        }
         // 2. Filter and Sort Repos (Top 10 by impact: stars + forks)
         const topRepos = allRepos
             .filter(repo => !repo.fork)
@@ -104,7 +125,8 @@ function fetchGitHubResumeData(input) {
                     ]
                 }
             ],
-            skills
+            skills,
+            readme: readmeContent
         };
     });
 }
