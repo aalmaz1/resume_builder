@@ -13,7 +13,8 @@ exports.printResume = printResume;
 /**
  * Production Print Optimizer with html2pdf.js
  */
-const html2pdf_js_1 = require("html2pdf.js");
+const html2pdfModule = require("html2pdf.js");
+const html2pdf = html2pdfModule.default || html2pdfModule;
 function printResume() {
     return __awaiter(this, void 0, void 0, function* () {
         const resumeContainer = document.getElementById('resume-container');
@@ -33,7 +34,7 @@ function printResume() {
             // Даем дополнительное время для рендеринга изображений
             yield new Promise(resolve => setTimeout(resolve, 500));
             // Экспорт через html2pdf.js с точными настройками A4
-            yield (0, html2pdf_js_1.default)()
+            yield html2pdf()
                 .set({
                 margin: 0, // Поля уже заданы в CSS контейнера (padding: 20mm)
                 filename: 'resume.pdf',

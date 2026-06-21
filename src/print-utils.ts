@@ -1,7 +1,8 @@
 /**
  * Production Print Optimizer with html2pdf.js
  */
-import html2pdf from 'html2pdf.js';
+import * as html2pdfModule from 'html2pdf.js';
+const html2pdf = (html2pdfModule as any).default || html2pdfModule;
 
 export async function printResume(): Promise<void> {
   const resumeContainer = document.getElementById('resume-container');
