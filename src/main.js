@@ -12,38 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const resume_builder_1 = require("./resume-builder");
 const print_utils_1 = require("./print-utils");
 const github_provider_1 = require("./github-provider");
+const demo_profile_1 = require("./demo-profile");
 let currentResumeData = null;
 let currentTextAlign = 'left';
-const defaultData = {
-    personal: {
-        name: "Almaz Developer",
-        title: "Full Stack Software Engineer",
-        email: "almaz@knu.ac.kr",
-        phone: "+82 10-1234-5678",
-        location: "Gongju, South Korea",
-        github: "github.com/almaz"
-    },
-    education: [
-        {
-            institution: "Kongju National University",
-            role: "B.S. Computer Science",
-            period: "2020 - 2024",
-            description: ["GPA: 4.2/4.5", "Focus on Web Architecture and UI/UX Design"]
-        }
-    ],
-    experience: [
-        {
-            institution: "Web Engineering Lab",
-            role: "Research Intern",
-            period: "2023 - Present",
-            description: ["Implementing Pretext-based layout algorithms", "Optimizing GitHub API data processing"]
-        }
-    ],
-    skills: [
-        "TypeScript", "React", "Node.js",
-        { category: "Frameworks", items: ["Vite", "Tailwind", "Express"] }
-    ]
-};
+const defaultData = (0, demo_profile_1.generateDemoProfile)();
 /**
  * Centralized UI update function
  */
