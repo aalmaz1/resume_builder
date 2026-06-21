@@ -10,7 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@chenglou/pretext": "^0.0.7"
+    "@chenglou/pretext": "^0.0.7",
+    "html2pdf.js": "^0.14.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0",

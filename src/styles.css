@@ -284,21 +284,24 @@ input[type="text"]:focus {
 }
 
 /* ==========================================================================
-   Resume Preview Container
+   Resume Preview Container - Fixed A4 Layout
    ========================================================================== */
 #resume-container {
-  width: 800px;
-  min-height: 1120px;
-  max-width: 210mm;
-  margin: 0 auto;
-  padding: 40px 50px;
+  /* Фиксированные размеры A4 */
+  width: 210mm;
+  min-height: 297mm;
+  margin: 20px auto;
+  padding: 20mm;
   background: var(--resume-bg);
   color: var(--resume-text);
-  border: 1px solid var(--ui-border);
-  border-radius: 4px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
   overflow: visible;
+  /* Базовый кегль и шрифт для стабильности */
+  font-size: 12pt;
+  font-family: 'DejaVu Sans', 'Segoe UI', Arial, sans-serif;
 }
 
 /* ==========================================================================
@@ -421,33 +424,12 @@ li {
 }
 
 /* ==========================================================================
-   @media print overrides
+   @media print overrides - for native browser print (backup)
    ========================================================================== */
 @media print {
   @page {
-    margin: 0; /* Remove browser default margins to prevent extra space */
+    margin: 0;
     size: A4;
-    /* Explicitly remove headers and footers */
-    margin-top: 0;
-    margin-bottom: 0;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  /* Force removal of browser headers/footers */
-  @page:first {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  
-  @page:left {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  
-  @page:right {
-    margin-top: 0;
-    margin-bottom: 0;
   }
 
   body {
@@ -456,11 +438,7 @@ li {
     margin: 0;
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
-    -moz-print-color-adjust: exact;
     font-size: 12pt;
-    /* Hide browser headers/footers */
-    -webkit-margin-before: 0;
-    -webkit-margin-after: 0;
   }
 
   .controls-bar,
@@ -471,51 +449,24 @@ li {
 
   #resume-container {
     margin: 0;
-    padding: 15mm !important; /* Controlled padding inside the page */
+    padding: 20mm !important; /* Same as screen */
     border: none;
     box-shadow: none;
-    max-width: none;
     width: 100%;
     min-height: auto;
-    overflow: visible;
     background: white !important;
   }
 
-  /* Ensure header stays together and has minimal top margin */
-  .resume-header {
-    break-inside: avoid;
-    page-break-inside: avoid;
-    margin-top: 0 !important;
-    padding-top: 0 !important;
-    margin-bottom: 10px; /* Reduced gap after header */
-  }
-
-  /* Prevent sections from breaking in the middle */
+  .resume-header,
   .positioned-block.entity-item,
   .positioned-block.section-block {
     page-break-inside: avoid;
     break-inside: avoid;
-    margin-top: 8px; /* Consistent small spacing between sections */
-    margin-bottom: 8px;
   }
 
-  /* Ensure text wraps properly in headers */
-  h1, h2, .contact-line {
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    hyphens: auto;
-    margin-top: 0;
-  }
-
-  /* Remove default browser margins */
   h1, h2, h3, p, ul, li {
     orphans: 2;
     widows: 2;
     margin-top: 0;
-  }
-  
-  /* Reset any flex gaps that might cause spacing issues in print */
-  .resume-header {
-    gap: 2px;
   }
 }
