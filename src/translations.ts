@@ -8,6 +8,10 @@ export const translations = {
     exportBtn: 'Export PDF',
     themeToggle: 'Toggle Theme',
     languageLabel: 'Interface Language',
+    siteThemeLabel: 'Site Theme:',
+    resumeDesignLabel: 'Resume Design:',
+    alignmentLabel: 'Alignment:',
+    saveJsonBtn: 'Save JSON',
     demoNote: 'Showing demo data. Enter a GitHub username to load real profile.',
     skillsTitle: 'Skills',
     languagesTitle: 'Languages',
@@ -17,7 +21,12 @@ export const translations = {
     present: 'Present',
     loading: 'Loading...',
     error: 'Error loading profile',
-    retry: 'Retry'
+    retry: 'Retry',
+    alignLeft: 'Left',
+    alignCenter: 'Center',
+    alignJustify: 'Justify',
+    themeDark: '🌙 Dark',
+    themeLight: '☀️ Light'
   },
   ru: {
     appTitle: 'Конструктор Резюме',
@@ -26,6 +35,10 @@ export const translations = {
     exportBtn: 'Экспорт в PDF',
     themeToggle: 'Сменить тему',
     languageLabel: 'Язык интерфейса',
+    siteThemeLabel: 'Тема сайта:',
+    resumeDesignLabel: 'Дизайн резюме:',
+    alignmentLabel: 'Выравнивание:',
+    saveJsonBtn: 'Сохранить JSON',
     demoNote: 'Показаны демо-данные. Введите имя пользователя GitHub для загрузки реального профиля.',
     skillsTitle: 'Навыки',
     languagesTitle: 'Языки программирования',
@@ -35,7 +48,12 @@ export const translations = {
     present: 'Наст. время',
     loading: 'Загрузка...',
     error: 'Ошибка загрузки профиля',
-    retry: 'Повторить'
+    retry: 'Повторить',
+    alignLeft: 'Левый',
+    alignCenter: 'Центр',
+    alignJustify: 'По ширине',
+    themeDark: '🌙 Темная',
+    themeLight: '☀️ Светлая'
   },
   ko: {
     appTitle: '이력서 빌더',
@@ -44,6 +62,10 @@ export const translations = {
     exportBtn: 'PDF 내보내기',
     themeToggle: '테마 변경',
     languageLabel: '인터페이스 언어',
+    siteThemeLabel: '사이트 테마:',
+    resumeDesignLabel: '이력서 디자인:',
+    alignmentLabel: '정렬:',
+    saveJsonBtn: 'JSON 저장',
     demoNote: '데모 데이터가 표시됩니다. 실제 프로필을 로드하려면 GitHub 사용자명을 입력하세요.',
     skillsTitle: '기술',
     languagesTitle: '프로그래밍 언어',
@@ -53,7 +75,12 @@ export const translations = {
     present: '현재',
     loading: '로딩 중...',
     error: '프로필 로딩 오류',
-    retry: '다시 시도'
+    retry: '다시 시도',
+    alignLeft: '왼쪽',
+    alignCenter: '중앙',
+    alignJustify: '양쪽 맞춤',
+    themeDark: '🌙 다크',
+    themeLight: '☀️ 라이트'
   }
 };
 

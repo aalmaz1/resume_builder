@@ -31,19 +31,26 @@ function updateInterfaceLanguage(lang) {
             el.textContent = text;
     };
     updateText('app-title', t.appTitle);
-    updateText('github-input', t.githubPlaceholder); // Note: This is a placeholder, need special handling
-    updateText('generate-btn', t.generateBtn);
-    updateText('export-pdf', t.exportBtn);
-    updateText('theme-toggle', t.themeToggle);
     updateText('lang-label', t.languageLabel);
+    updateText('export-pdf', t.exportBtn);
+    updateText('save-json', t.saveJsonBtn);
     // Update placeholder specifically
     const githubInput = document.getElementById('github-url');
     if (githubInput)
         githubInput.placeholder = t.githubPlaceholder;
-    // Update demo note if exists
-    const demoNote = document.querySelector('.demo-note');
-    if (demoNote)
-        demoNote.textContent = t.demoNote;
+    // Update labels with data-i18n attribute
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (key && t[key]) {
+            el.textContent = t[key];
+        }
+    });
+    // Update theme toggle button
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    if (themeToggleBtn) {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        themeToggleBtn.textContent = isDark ? t.themeDark : t.themeLight;
+    }
     // Save to localStorage
     localStorage.setItem('resume-lang', lang);
 }
@@ -132,8 +139,10 @@ document.addEventListener('DOMContentLoaded', () => {
         else {
             document.documentElement.removeAttribute('data-theme');
         }
+        // Update button text based on current language
+        const t = translations_1.translations[currentLang];
         if (themeToggleBtn) {
-            themeToggleBtn.textContent = isDarkTheme ? '☀️ Светлая' : '🌙 Темная';
+            themeToggleBtn.textContent = isDarkTheme ? t.themeDark : t.themeLight;
         }
     });
     // Design Buttons (Classic, Modern, Minimal)
