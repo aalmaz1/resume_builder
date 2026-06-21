@@ -1,4 +1,11 @@
 ```
-# Build artifacts
 dist/
+*.pyc
+__pycache__/
+*.tmp
+*.log
+.env
+.env.local
+.vscode/
+.idea/
 ```

@@ -133,8 +133,7 @@ export async function fetchGitHubResumeData(input: string): Promise<ResumeData> 
         ]
       }
     ],
-    skills,
-    readme: readmeContent
+    skills
   };
 }
 

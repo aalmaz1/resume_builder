@@ -45,18 +45,6 @@ export function renderResume(data: ResumeData, container: HTMLElement): void {
     section.appendChild(skillsList);
     container.appendChild(section);
   }
-
-  // 4. README Section (if available)
-  if (data.readme) {
-    const readmeSection = createBlock('section-block');
-    readmeSection.appendChild(createLine('h3', 'Project Overview (README)'));
-    
-    const readmeContent = document.createElement('div');
-    readmeContent.className = 'readme-content';
-    readmeContent.textContent = data.readme;
-    readmeSection.appendChild(readmeContent);
-    container.appendChild(readmeSection);
-  }
 }
 
 function createBlock(cls: string): HTMLElement {
