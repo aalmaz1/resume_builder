@@ -1,15 +1,5 @@
 ```
-# Dependencies
-node_modules/
-
 # Build artifacts
 dist/
-
-# Environment
-.env
-.env.local
-*.env.*
-
-# Package manager
-package-lock.json
+build/
 ```
