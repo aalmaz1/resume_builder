@@ -586,7 +586,8 @@ li {
 
   .controls-bar,
   .no-print,
-  #loading-overlay {
+  #loading-overlay,
+  .theme-toggle-floating {
     display: none !important;
   }
 
@@ -612,4 +613,60 @@ li {
     widows: 2;
     margin-top: 0;
   }
+}
+
+/* ==========================================================================
+   Floating Theme Toggle Button - Bottom Left Corner (Telegram Style)
+   ========================================================================== */
+.theme-toggle-floating {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(135deg, rgba(88, 166, 255, 0.9), rgba(67, 97, 238, 0.9));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #ffffff;
+  font-size: 28px;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.theme-toggle-floating:hover {
+  transform: scale(1.1) rotate(15deg);
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 25px rgba(88, 166, 255, 0.5);
+}
+
+.theme-toggle-floating:active {
+  transform: scale(0.95);
+}
+
+[data-theme="dark"] .theme-toggle-floating {
+  background: linear-gradient(135deg, rgba(255, 193, 7, 0.9), rgba(255, 152, 0, 0.9));
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 20px rgba(255, 193, 7, 0.4);
+}
+
+[data-theme="dark"] .theme-toggle-floating:hover {
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 0 30px rgba(255, 193, 7, 0.6);
 }
