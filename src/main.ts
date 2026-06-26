@@ -109,8 +109,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('resume-container');
   const loader = document.getElementById('loader');
   const loadingOverlay = document.getElementById('loading-overlay');
-  const themeToggleBtn = document.getElementById('theme-toggle');
   if (!container) return;
+  
+  // Load saved theme state
+  const savedTheme = localStorage.getItem('resume-theme');
+  let isDarkTheme = savedTheme === 'dark';
+  if (isDarkTheme) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
   
   // Load saved language or default
   const savedLang = localStorage.getItem('resume-lang') as Lang | null;
@@ -122,6 +128,26 @@ document.addEventListener('DOMContentLoaded', () => {
   updateUI(defaultData, container);
   updateInterfaceLanguage(currentLang);
   
+  // Theme Toggle (Light/Dark for UI only) - Floating Button
+  const themeToggleFloatingBtn = document.getElementById('theme-toggle-floating');
+  themeToggleFloatingBtn?.addEventListener('click', () => {
+    isDarkTheme = !isDarkTheme;
+    if (isDarkTheme) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      themeToggleFloatingBtn.textContent = '☀️';
+      localStorage.setItem('resume-theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      themeToggleFloatingBtn.textContent = '🌙';
+      localStorage.setItem('resume-theme', 'light');
+    }
+  });
+  
+  // Set initial button icon based on saved theme
+  if (themeToggleFloatingBtn) {
+    themeToggleFloatingBtn.textContent = isDarkTheme ? '☀️' : '🌙';
+  }
+
   // Language Selector
   const langSelect = document.getElementById('lang-select') as HTMLSelectElement;
   if (langSelect) {
@@ -131,22 +157,6 @@ document.addEventListener('DOMContentLoaded', () => {
       updateInterfaceLanguage(newLang);
     });
   }
-
-  // Theme Toggle (Light/Dark for UI only)
-  let isDarkTheme = false;
-  themeToggleBtn?.addEventListener('click', () => {
-    isDarkTheme = !isDarkTheme;
-    if (isDarkTheme) {
-      document.documentElement.setAttribute('data-theme', 'dark');
-    } else {
-      document.documentElement.removeAttribute('data-theme');
-    }
-    // Update button text based on current language
-    const t = translations[currentLang];
-    if (themeToggleBtn) {
-      themeToggleBtn.textContent = isDarkTheme ? t.themeDark : t.themeLight;
-    }
-  });
 
   // Design Buttons (Classic, Modern, Minimal)
   document.querySelectorAll('.design-btn').forEach(btn => {
