@@ -1,5 +1,171 @@
 import { ResumeData, TimeBoundedEntity, SkillCategory } from './types';
 
+/**
+ * AI-powered description generator based on repository metadata
+ */
+class GitHubAIGenerator {
+  private actionVerbs = [
+    'Architected', 'Engineered', 'Developed', 'Built', 'Created', 
+    'Designed', 'Implemented', 'Launched', 'Optimized', 'Revolutionized'
+  ];
+
+  private projectTypes: Record<string, string[]> = {
+    'game': ['gaming experience', 'interactive entertainment', 'game mechanics'],
+    'app': ['application', 'user-centric solution', 'mobile experience'],
+    'tool': ['developer tool', 'productivity enhancer', 'utility'],
+    'web': ['web platform', 'digital experience', 'online service'],
+    'bot': ['automation bot', 'intelligent assistant', 'automated system'],
+    'api': ['API service', 'backend infrastructure', 'integration layer'],
+    'ui': ['user interface', 'design system', 'visual component'],
+    'data': ['data processing', 'analytics solution', 'information system']
+  };
+
+  private techDescriptions: Record<string, string> = {
+    'JavaScript': 'leveraging modern JavaScript ES6+ features',
+    'TypeScript': 'with type-safe TypeScript architecture',
+    'Python': 'utilizing Python\'s powerful ecosystem',
+    'Dart': 'using Dart for cross-platform performance',
+    'Kotlin': 'with Kotlin for modern Android development',
+    'HTML': 'focusing on semantic HTML5 structure',
+    'CSS': 'with advanced CSS styling techniques',
+    'React': 'powered by React components',
+    'Vue': 'built with Vue.js framework',
+    'Angular': 'using Angular framework',
+    'Node.js': 'with Node.js backend',
+    'Flutter': 'cross-platform with Flutter'
+  };
+
+  /**
+   * Detects project type from repo name and topics
+   */
+  detectProjectType(name: string, topics: string[]): string {
+    const lowerName = name.toLowerCase();
+    const lowerTopics = topics.map(t => t.toLowerCase());
+    
+    for (const [type, keywords] of Object.entries(this.projectTypes)) {
+      if (lowerName.includes(type) || lowerTopics.some(t => keywords.some(k => t.includes(k)))) {
+        return type;
+      }
+    }
+    
+    // Default based on common patterns
+    if (lowerName.includes('pixel') || lowerName.includes('word')) return 'game';
+    if (lowerName.includes('app')) return 'app';
+    if (lowerName.includes('bot')) return 'bot';
+    
+    return 'web';
+  }
+
+  /**
+   * Generates a unique achievement statement based on stars and forks
+   */
+  generateAchievement(stars: number, forks: number): string {
+    if (stars === 0 && forks === 0) {
+      return 'Initiated an open-source project to showcase technical capabilities.';
+    } else if (stars > 10 || forks > 5) {
+      return `Built and maintained a popular open-source project with ${stars} stars and ${forks} forks, demonstrating community impact.`;
+    } else if (stars > 0) {
+      return `Developed an open-source solution that gained ${stars} stars through quality implementation.`;
+    } else {
+      return `Created a specialized tool adopted by ${forks} developers through forks.`;
+    }
+  }
+
+  /**
+   * Generates professional description based on repo metadata
+   */
+  generateDescription(
+    repoName: string,
+    description: string | null,
+    language: string | null,
+    topics: string[],
+    readmeContent: string | null
+  ): string {
+    const projectType = this.detectProjectType(repoName, topics);
+    const projectConcept = this.projectTypes[projectType]?.[0] || 'software solution';
+    
+    // Extract keywords from README if available
+    let readmeKeywords: string[] = [];
+    if (readmeContent) {
+      const words = readmeContent.split(/\s+/).filter(w => w.length > 4);
+      const importantWords = words.filter(w => 
+        ['performance', 'fast', 'efficient', 'modern', 'clean', 'modular', 
+         'responsive', 'scalable', 'secure', 'intuitive'].some(k => w.toLowerCase().includes(k))
+      );
+      readmeKeywords = [...new Set(importantWords)].slice(0, 3);
+    }
+
+    // Choose action verb based on project characteristics
+    const verbIndex = (repoName.length + (topics.length * 2)) % this.actionVerbs.length;
+    const actionVerb = this.actionVerbs[verbIndex];
+    
+    // Build tech stack description
+    const techDesc = language ? (this.techDescriptions[language] || `using ${language}`) : 'with modern engineering practices';
+    
+    // Generate base description
+    const baseDescriptions = [
+      `${actionVerb} a ${projectConcept} ${techDesc}, emphasizing code quality and maintainability.`,
+      `${actionVerb} ${projectConcept} ${techDesc} with focus on user experience and performance optimization.`,
+      `${actionVerb} innovative ${projectConcept} ${techDesc}, incorporating best practices in software architecture.`
+    ];
+    
+    // Add README-based enhancements
+    if (readmeKeywords.length > 0) {
+      const keywordPhrase = readmeKeywords.join(', ');
+      return `${baseDescriptions[0]} Key features include ${keywordPhrase}.`;
+    }
+    
+    // Add topic-based enhancements
+    if (topics.length > 0) {
+      const topTopics = topics.slice(0, 3).join(', ');
+      return `${actionVerb} a ${projectConcept} ${techDesc}, featuring ${topTopics}.`;
+    }
+    
+    // Fallback to original description or generated one
+    if (description && description.trim().length > 10) {
+      return description;
+    }
+    
+    return baseDescriptions[Math.floor(Math.random() * baseDescriptions.length)];
+  }
+
+  /**
+   * Generates skills section based on all repositories
+   */
+  generateSkills(repos: any[], readmeContent: string | null): (string | SkillCategory)[] {
+    const languages = Array.from(new Set(repos.map(r => r.language).filter(Boolean))) as string[];
+    const allTopics = repos.flatMap(r => r.topics || []);
+    const uniqueTopics = Array.from(new Set(allTopics));
+    
+    // Extract additional skills from README
+    let readmeSkills: string[] = [];
+    if (readmeContent) {
+      const skillPatterns = [
+        /react/gi, /vue/gi, /angular/gi, /node/gi, /express/gi,
+        /mongodb/gi, /postgresql/gi, /mysql/gi, /docker/gi, /kubernetes/gi,
+        /aws/gi, /azure/gi, /gcp/gi, /git/gi, /ci\/cd/gi,
+        /rest/gi, /graphql/gi, /api/gi, /microservices/gi
+      ];
+      
+      skillPatterns.forEach(pattern => {
+        const matches = readmeContent.match(pattern);
+        if (matches && matches.length > 0) {
+          readmeSkills.push(matches[0].toUpperCase());
+        }
+      });
+    }
+    
+    const combinedTopics = [...uniqueTopics, ...readmeSkills].filter(Boolean);
+    
+    return [
+      { category: 'Languages', items: languages.slice(0, 8) },
+      { category: 'Frameworks & Tools', items: combinedTopics.slice(0, 10) }
+    ];
+  }
+}
+
+const aiGenerator = new GitHubAIGenerator();
+
 export async function fetchGitHubResumeData(input: string): Promise<ResumeData> {
   const username = input.replace('https://github.com/', '').split('/')[0].trim();
   const headers = { 'Accept': 'application/vnd.github.v3+json' };
@@ -51,18 +217,23 @@ export async function fetchGitHubResumeData(input: string): Promise<ResumeData> 
   
   const currentYear = new Date().getFullYear();
   
-  // 3. Map Repos to Professional Experience
+  // 3. Map Repos to Professional Experience with AI-generated descriptions
   const experience: TimeBoundedEntity[] = topRepos.map(repo => {
     const bullets: string[] = [];
     
-    // Impact Achievement
-    if (repo.stargazers_count > 0) {
-      bullets.push(`Built and maintained an open-source project with ${repo.stargazers_count} stars and ${repo.forks_count} forks.`);
-    }
+    // AI-generated achievement based on metrics
+    const achievement = aiGenerator.generateAchievement(repo.stargazers_count, repo.forks_count);
+    bullets.push(achievement);
     
-    // Technical Description
-    const desc = repo.description || 'Developed a custom solution focusing on performance and modularity.';
-    bullets.push(desc);
+    // AI-generated technical description
+    const smartDescription = aiGenerator.generateDescription(
+      repo.name,
+      repo.description,
+      repo.language,
+      repo.topics || [],
+      readmeContent || null
+    );
+    bullets.push(smartDescription);
     
     // Tech Stack & Metadata
     if (repo.topics && repo.topics.length > 0) {
@@ -100,15 +271,8 @@ export async function fetchGitHubResumeData(input: string): Promise<ResumeData> 
     };
   });
   
-  // 4. Synthesize Skills Section
-  const languages = Array.from(new Set(allRepos.map(r => r.language).filter(Boolean))) as string[];
-  const allTopics = allRepos.flatMap(r => r.topics || []);
-  const topTopics = Array.from(new Set(allTopics)).slice(0, 12) as string[];
-  
-  const skills: (string | SkillCategory)[] = [
-    { category: 'Languages', items: languages.slice(0, 8) },
-    { category: 'Frameworks & Tools', items: topTopics.slice(0, 8) }
-  ];
+  // 4. Synthesize Skills Section with AI enhancement
+  const skills = aiGenerator.generateSkills(allRepos, readmeContent || null);
   
   // 5. Build Final Resume Object
   return {
