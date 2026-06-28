@@ -1,8 +1,3 @@
 ```
-# Dependencies
-node_modules/
-# Build artifacts
 dist/
-# Package lock
-package-lock.json
 ```
