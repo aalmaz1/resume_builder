@@ -2,8 +2,10 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   build: {
-    rollupOptions: {
-      external: ['html2canvas']
-    }
+    target: 'esnext',
+    rollupOptions: {}
+  },
+  optimizeDeps: {
+    include: ['html2pdf.js', 'html2canvas']
   }
 });
