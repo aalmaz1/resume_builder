@@ -1,11 +1,35 @@
 /**
- * Production Print Optimizer with html2pdf.js
+ * Production Print Optimizer with html2pdf.js loaded from CDN
  */
 
-// Динамический импорт html2pdf.js для корректной работы в браузере
-async function loadHtml2Pdf() {
-  const html2pdfModule = await import('html2pdf.js');
-  return html2pdfModule.default;
+// Динамический импорт html2pdf.js из CDN для корректной работы в браузере
+async function loadHtml2Pdf(): Promise<any> {
+  // Проверяем, загружена ли библиотека уже
+  if ((window as any).html2pdf) {
+    return (window as any).html2pdf;
+  }
+
+  return new Promise((resolve, reject) => {
+    // Создаем скрипт для загрузки из CDN
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+    script.integrity = 'sha512-ksCqCD/iBQP6EccAUOnPHstVeR+okGZLBpKdoWYaJbAe4kVdIu9lSg3T3LbTCpPnHxYXzUvQfGhFyqjwNqMqDw==';
+    script.crossOrigin = 'anonymous';
+    
+    script.onload = () => {
+      if ((window as any).html2pdf) {
+        resolve((window as any).html2pdf);
+      } else {
+        reject(new Error('html2pdf failed to load'));
+      }
+    };
+    
+    script.onerror = () => {
+      reject(new Error('Failed to load html2pdf.js from CDN'));
+    };
+    
+    document.head.appendChild(script);
+  });
 }
 
 export async function printResume(): Promise<void> {
@@ -30,7 +54,7 @@ export async function printResume(): Promise<void> {
     // Даем дополнительное время для рендеринга изображений
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    // Динамически загружаем html2pdf
+    // Динамически загружаем html2pdf из CDN
     const html2pdf = await loadHtml2Pdf();
 
     // Экспорт через html2pdf.js с точными настройками A4

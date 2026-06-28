@@ -670,3 +670,188 @@ li {
     inset 0 1px 0 rgba(255, 255, 255, 0.4),
     0 0 30px rgba(255, 193, 7, 0.6);
 }
+
+/* ==========================================================================
+   Responsive Design - Mobile First Approach
+   ========================================================================== */
+
+/* Tablet and smaller screens (max-width: 1024px) */
+@media screen and (max-width: 1024px) {
+  body {
+    padding: 15px;
+  }
+
+  .controls-bar {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .theme-group, .lang-group, .design-group, .action-group, .align-group, .import-group {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .import-group {
+    flex-direction: column;
+  }
+
+  #github-url {
+    width: 100%;
+    min-width: auto;
+  }
+
+  #resume-container {
+    width: 100%;
+    padding: 15mm;
+    margin: 15px auto;
+  }
+
+  h1 {
+    font-size: 2.5em;
+  }
+}
+
+/* Mobile phones (max-width: 768px) */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  .controls-bar {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .design-group, .align-group {
+    flex-wrap: wrap;
+  }
+
+  .design-btn, .align-btn {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+
+  .group-label {
+    font-size: 12px;
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  #resume-container {
+    padding: 10mm;
+    margin: 10px auto;
+    min-height: auto;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  h2 {
+    font-size: 1.3em;
+  }
+
+  h3 {
+    font-size: 1.1em;
+  }
+
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Adjust floating button for mobile */
+  .theme-toggle-floating {
+    width: 48px;
+    height: 48px;
+    bottom: 15px;
+    left: 15px;
+    font-size: 24px;
+  }
+
+  /* Toast notification adjustments */
+  #toast-notification {
+    right: 10px;
+    left: 10px;
+    bottom: 10px;
+    text-align: center;
+  }
+
+  #editable-hint {
+    top: 60px;
+    font-size: 12px;
+    padding: 8px 16px;
+    max-width: 90%;
+    white-space: normal;
+  }
+}
+
+/* Small mobile phones (max-width: 480px) */
+@media screen and (max-width: 480px) {
+  body {
+    padding: 5px;
+  }
+
+  .controls-bar {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .design-group button, .align-group button {
+    flex: 1;
+    min-width: 60px;
+  }
+
+  .action-group {
+    flex-direction: column;
+  }
+
+  .action-group button {
+    width: 100%;
+  }
+
+  #resume-container {
+    padding: 8mm;
+    margin: 5px auto;
+  }
+
+  h1 {
+    font-size: 1.8em;
+  }
+
+  h2 {
+    font-size: 1.2em;
+  }
+
+  ul {
+    padding-left: 15px;
+  }
+
+  li {
+    font-size: 0.85rem;
+  }
+
+  .theme-toggle-floating {
+    width: 44px;
+    height: 44px;
+    bottom: 10px;
+    left: 10px;
+    font-size: 20px;
+  }
+}
+
+/* Landscape orientation on mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+  .controls-bar {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+
+  #resume-container {
+    transform: scale(0.9);
+    transform-origin: top center;
+  }
+}
