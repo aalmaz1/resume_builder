@@ -170,16 +170,19 @@ export async function fetchGitHubResumeData(input: string): Promise<ResumeData> 
   // Поддержка форматов: https://github.com/username, https://github.com/username/, с пробелами и т.д.
   let cleanInput = input.trim();
   
+  // Удаляем завершающие слэши и пробелы для нормализации
+  cleanInput = cleanInput.replace(/\/+\s*$/, '');
+  
   // Извлекаем username из URL или используем как есть
-  // Сначала пробуем матчить полный URL (с http/https, с опциональным слэшем в конце)
-  const githubUrlMatch = cleanInput.match(/^https?:\/\/github\.com\/([^/\s]+)\/?$/i);
+  // Матчим полный URL (с http/https, без завершающего слэша, так как мы его уже убрали)
+  const githubUrlMatch = cleanInput.match(/^https?:\/\/github\.com\/([^\s]+)/i);
   let username: string;
   
   if (githubUrlMatch) {
     username = githubUrlMatch[1];
   } else {
     // Если не URL, убираем возможные лишние части и берем первое слово
-    username = cleanInput.split('/')[0].trim();
+    username = cleanInput.split('/').pop()?.trim() || cleanInput;
   }
   
   const headers = { 'Accept': 'application/vnd.github.v3+json' };
