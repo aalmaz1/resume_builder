@@ -167,7 +167,13 @@ class GitHubAIGenerator {
 const aiGenerator = new GitHubAIGenerator();
 
 export async function fetchGitHubResumeData(input: string): Promise<ResumeData> {
-  const username = input.replace('https://github.com/', '').split('/')[0].trim();
+  // Поддержка форматов: https://github.com/username или https://github.com/username/
+  const username = input
+    .replace('https://github.com/', '')
+    .replace('http://github.com/', '')
+    .replace(/\/$/, '')  // Удаляем trailing slash если есть
+    .split('/')[0]
+    .trim();
   const headers = { 'Accept': 'application/vnd.github.v3+json' };
   
   // 1. Fetch Profile, Repos & README in parallel
