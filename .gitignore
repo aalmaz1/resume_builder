@@ -1,1 +1,89 @@
-(empty)
+```
+# Dependencies
+node_modules/
+
+# Build artifacts
+dist/
+
+# Environment
+.env
+.env.local
+.env.*
+
+# Editors
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Compiled binary files
+*.o
+*.obj
+*.so
+*.a
+*.dll
+*.exe
+*.dylib
+
+# Compression files
+*.zip
+*.gz
+*.tar
+*.tgz
+*.bz2
+*.xz
+*.7z
+*.rar
+*.zst
+*.lz4
+*.lzh
+*.cab
+*.arj
+*.rpm
+*.deb
+*.Z
+*.lz
+*.lzo
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.tar.zst
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Coverage reports
+coverage/
+htmlcov/
+.coverage
+
+# Venv
+venv/
+.venv/
+
+# Gradle
+.gradle/
+
+# Target
+target/
+
+# MyPy
+.mypy_cache/
+
+# Pytest
+.pytest_cache/
+
+```
