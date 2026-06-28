@@ -198,9 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
   importBtn?.addEventListener('click', async () => {
     const input = githubInput.value.trim();
     
-    // Validate username format (alphanumeric, hyphens, underscores, max 39 chars)
-    const usernameRegex = /^[a-zA-Z0-9]([a-zA-Z0-9\-_]{0,37}[a-zA-Z0-9])?$/;
-    if (!input || !usernameRegex.test(input)) {
+    // Просто проверяем, что поле не пустое - валидация формата теперь в extractUsername
+    if (!input) {
       showNotification(currentLang === 'ru' ? translations.ru.invalidUsername : 
                        currentLang === 'ko' ? translations.ko.invalidUsername : 
                        translations.en.invalidUsername, 'error');
@@ -217,9 +216,23 @@ document.addEventListener('DOMContentLoaded', () => {
       showNotification('✅ Profile loaded successfully!', 'success');
       
     } catch (e) {
-      showNotification(currentLang === 'ru' ? '❌ Пользователь не найден или лимит API' : 
-                       currentLang === 'ko' ? '❌ 사용자를 찾을 수 없거나 API 제한' : 
-                       '❌ GitHub User not found or API limit reached', 'error');
+      const errorMessage = e instanceof Error ? e.message : 'Unknown error';
+      // Показываем более точное сообщение об ошибке
+      if (errorMessage.includes('Invalid username') || errorMessage.includes('User not found')) {
+        showNotification(
+          currentLang === 'ru' ? '❌ Пользователь не найден или неверный формат' : 
+          currentLang === 'ko' ? '❌ 사용자를 찾을 수 없거나 잘못된 형식' : 
+          '❌ User not found or invalid format', 
+          'error'
+        );
+      } else {
+        showNotification(
+          currentLang === 'ru' ? '❌ Пользователь не найден или лимит API' : 
+          currentLang === 'ko' ? '❌ 사용자를 찾을 수 없거나 API 제한' : 
+          '❌ GitHub User not found or API limit reached', 
+          'error'
+        );
+      }
     } finally {
       if (loader) loader.style.display = 'none';
       if (loadingOverlay) loadingOverlay.classList.add('hidden');
