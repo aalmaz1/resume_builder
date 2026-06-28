@@ -1,8 +1,1 @@
-```
-# Dependencies
-node_modules/
-# Build artifacts
-dist/
-# Package manager
-package-lock.json
-```
+(empty)
