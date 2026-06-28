@@ -164,26 +164,85 @@ class GitHubAIGenerator {
   }
 }
 
+/**
+ * Extracts GitHub username from various input formats
+ * Supported formats:
+ * - username (e.g., "eKoopmans")
+ * - https://github.com/username
+ * - https://github.com/username/
+ * - http://github.com/username
+ * - github.com/username
+ * - With trailing spaces
+ */
+function extractUsername(input: string): string {
+  if (!input || typeof input !== 'string') {
+    throw new Error('Invalid input: username cannot be empty');
+  }
+  
+  // Trim whitespace
+  let cleanInput = input.trim();
+  
+  // Remove trailing slashes and any spaces after them
+  cleanInput = cleanInput.replace(/\/+\s*$/, '');
+  
+  // Try to match full URL with protocol
+  const urlMatch = cleanInput.match(/^https?:\/\/(?:www\.)?github\.com\/([a-zA-Z0-9_-]+)/i);
+  if (urlMatch) {
+    const username = urlMatch[1];
+    if (!isValidUsername(username)) {
+      throw new Error(`Invalid username extracted: ${username}`);
+    }
+    return username;
+  }
+  
+  // Try to match without protocol (e.g., "github.com/username")
+  const noProtocolMatch = cleanInput.match(/^(?:www\.)?github\.com\/([a-zA-Z0-9_-]+)/i);
+  if (noProtocolMatch) {
+    const username = noProtocolMatch[1];
+    if (!isValidUsername(username)) {
+      throw new Error(`Invalid username extracted: ${username}`);
+    }
+    return username;
+  }
+  
+  // If it contains a slash, take the last part (handles edge cases)
+  if (cleanInput.includes('/')) {
+    const parts = cleanInput.split('/');
+    const potentialUsername = parts[parts.length - 1].trim();
+    if (potentialUsername && isValidUsername(potentialUsername)) {
+      return potentialUsername;
+    }
+  }
+  
+  // Treat as raw username
+  const username = cleanInput;
+  if (!isValidUsername(username)) {
+    throw new Error(`Invalid username format: ${username}. Only letters, numbers, hyphens, and underscores are allowed.`);
+  }
+  
+  return username;
+}
+
+/**
+ * Validates GitHub username format
+ * GitHub usernames can contain letters, numbers, hyphens, and underscores
+ * Cannot start or end with a hyphen
+ */
+function isValidUsername(username: string): boolean {
+  if (!username || username.length === 0 || username.length > 39) {
+    return false;
+  }
+  // GitHub username pattern: alphanumeric, hyphens, underscores
+  // Cannot start or end with hyphen
+  const githubUsernamePattern = /^[a-zA-Z0-9](?:[a-zA-Z0-9_-]*[a-zA-Z0-9])?$|^[a-zA-Z0-9]$/;
+  return githubUsernamePattern.test(username);
+}
+
 const aiGenerator = new GitHubAIGenerator();
 
 export async function fetchGitHubResumeData(input: string): Promise<ResumeData> {
-  // Поддержка форматов: https://github.com/username, https://github.com/username/, с пробелами и т.д.
-  let cleanInput = input.trim();
-  
-  // Удаляем завершающие слэши и пробелы для нормализации
-  cleanInput = cleanInput.replace(/\/+\s*$/, '');
-  
-  // Извлекаем username из URL или используем как есть
-  // Матчим полный URL (с http/https, без завершающего слэша, так как мы его уже убрали)
-  const githubUrlMatch = cleanInput.match(/^https?:\/\/github\.com\/([^\s]+)/i);
-  let username: string;
-  
-  if (githubUrlMatch) {
-    username = githubUrlMatch[1];
-  } else {
-    // Если не URL, убираем возможные лишние части и берем первое слово
-    username = cleanInput.split('/').pop()?.trim() || cleanInput;
-  }
+  // Extract and validate username from various input formats
+  const username = extractUsername(input);
   
   const headers = { 'Accept': 'application/vnd.github.v3+json' };
   
