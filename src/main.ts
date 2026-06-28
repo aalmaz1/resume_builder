@@ -128,6 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
   updateUI(defaultData, container);
   updateInterfaceLanguage(currentLang);
   
+  // Show editable hint after a short delay
+  setTimeout(() => showEditableHint(), 2000);
+  
   // Theme Toggle (Light/Dark for UI only) - Floating Button
   const themeToggleFloatingBtn = document.getElementById('theme-toggle-floating');
   themeToggleFloatingBtn?.addEventListener('click', () => {
@@ -188,14 +191,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // GitHub Import with Loader
+  // GitHub Import with Loader and Validation
   const importBtn = document.getElementById('import-github');
   const githubInput = document.getElementById('github-url') as HTMLInputElement;
 
   importBtn?.addEventListener('click', async () => {
     const input = githubInput.value.trim();
-    if (!input) {
-      alert('Please enter a username');
+    
+    // Validate username format (alphanumeric, hyphens, underscores, max 39 chars)
+    const usernameRegex = /^[a-zA-Z0-9]([a-zA-Z0-9\-_]{0,37}[a-zA-Z0-9])?$/;
+    if (!input || !usernameRegex.test(input)) {
+      showNotification(currentLang === 'ru' ? translations.ru.invalidUsername : 
+                       currentLang === 'ko' ? translations.ko.invalidUsername : 
+                       translations.en.invalidUsername, 'error');
       return;
     }
     
@@ -206,9 +214,12 @@ document.addEventListener('DOMContentLoaded', () => {
       
       const data = await fetchGitHubResumeData(input);
       updateUI(data, container);
+      showNotification('✅ Profile loaded successfully!', 'success');
       
     } catch (e) {
-      alert('GitHub User not found or API limit reached');
+      showNotification(currentLang === 'ru' ? '❌ Пользователь не найден или лимит API' : 
+                       currentLang === 'ko' ? '❌ 사용자를 찾을 수 없거나 API 제한' : 
+                       '❌ GitHub User not found or API limit reached', 'error');
     } finally {
       if (loader) loader.style.display = 'none';
       if (loadingOverlay) loadingOverlay.classList.add('hidden');
@@ -216,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // JSON Export
+  // JSON Export with notification
   document.getElementById('save-json')?.addEventListener('click', () => {
     if (!currentResumeData) return;
     const blob = new Blob([JSON.stringify(currentResumeData, null, 2)], { type: 'application/json' });
@@ -226,8 +237,96 @@ document.addEventListener('DOMContentLoaded', () => {
     a.download = `resume-${currentResumeData.personal.name.replace(/\s+/g, '-').toLowerCase()}.json`;
     a.click();
     URL.revokeObjectURL(url);
+    showNotification(
+      currentLang === 'ru' ? translations.ru.jsonSaved : 
+      currentLang === 'ko' ? translations.ko.jsonSaved : 
+      translations.en.jsonSaved, 
+      'success'
+    );
   });
 
-  // PDF Export
-  document.getElementById('export-pdf')?.addEventListener('click', printResume);
+  // PDF Export with notification
+  document.getElementById('export-pdf')?.addEventListener('click', async () => {
+    await printResume();
+    showNotification(
+      currentLang === 'ru' ? translations.ru.exportSuccess : 
+      currentLang === 'ko' ? translations.ko.exportSuccess : 
+      translations.en.exportSuccess, 
+      'success'
+    );
+  });
 });
+
+/**
+ * Show a toast notification
+ */
+function showNotification(message: string, type: 'success' | 'error' = 'success'): void {
+  // Remove existing notification if any
+  const existing = document.getElementById('toast-notification');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.id = 'toast-notification';
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: ${type === 'success' ? '#4CAF50' : '#f44336'};
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    z-index: 10000;
+    animation: slideIn 0.3s ease-out;
+    font-size: 14px;
+  `;
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    toast.style.transition = 'opacity 0.3s';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+/**
+ * Show editable hint notification
+ */
+function showEditableHint(): void {
+  const hintEl = document.getElementById('editable-hint');
+  if (!hintEl) return;
+  
+  const messages: Record<string, string> = {
+    en: '💡 Tip: Click any text in the resume to edit it directly!',
+    ru: '💡 Совет: Нажмите на любой текст в резюме, чтобы отредактировать его!',
+    ko: '💡 팁: 이력서의 텍스트를 클릭하여 직접 편집할 수 있습니다!'
+  };
+  
+  const lang = currentLang || 'en';
+  hintEl.textContent = messages[lang] || messages.en;
+  hintEl.style.cssText = `
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    z-index: 9999;
+    font-size: 13px;
+    animation: fadeInDown 0.5s ease-out;
+    white-space: nowrap;
+  `;
+  
+  // Hide after 5 seconds
+  setTimeout(() => {
+    hintEl.style.opacity = '0';
+    hintEl.style.transition = 'opacity 0.5s';
+    setTimeout(() => {
+      hintEl.textContent = '';
+    }, 500);
+  }, 5000);
+}

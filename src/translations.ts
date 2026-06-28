@@ -26,7 +26,12 @@ export const translations = {
     alignCenter: 'Center',
     alignJustify: 'Justify',
     themeDark: '🌙 Dark',
-    themeLight: '☀️ Light'
+    themeLight: '☀️ Light',
+    editableHint: '💡 Tip: Click any text in the resume to edit it directly!',
+    savedToast: '✅ Changes saved automatically',
+    invalidUsername: '⚠️ Please enter a valid GitHub username',
+    exportSuccess: '✅ PDF exported successfully!',
+    jsonSaved: '✅ JSON file downloaded'
   },
   ru: {
     appTitle: 'Конструктор Резюме',
@@ -53,7 +58,12 @@ export const translations = {
     alignCenter: 'Центр',
     alignJustify: 'По ширине',
     themeDark: '🌙 Темная',
-    themeLight: '☀️ Светлая'
+    themeLight: '☀️ Светлая',
+    editableHint: '💡 Совет: Нажмите на любой текст в резюме, чтобы отредактировать его!',
+    savedToast: '✅ Изменения сохранены автоматически',
+    invalidUsername: '⚠️ Введите корректное имя пользователя GitHub',
+    exportSuccess: '✅ PDF успешно экспортирован!',
+    jsonSaved: '✅ JSON файл загружен'
   },
   ko: {
     appTitle: '이력서 빌더',
@@ -80,7 +90,12 @@ export const translations = {
     alignCenter: '중앙',
     alignJustify: '양쪽 맞춤',
     themeDark: '🌙 다크',
-    themeLight: '☀️ 라이트'
+    themeLight: '☀️ 라이트',
+    editableHint: '💡 팁: 이력서의 텍스트를 클릭하여 직접 편집할 수 있습니다!',
+    savedToast: '✅ 변경사항이 자동으로 저장되었습니다',
+    invalidUsername: '⚠️ 유효한 GitHub 사용자명을 입력하세요',
+    exportSuccess: '✅ PDF 가 성공적으로 내보내졌습니다!',
+    jsonSaved: '✅ JSON 파일이 다운로드되었습니다'
   }
 };
 

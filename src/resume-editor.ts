@@ -11,6 +11,7 @@ export class ResumeEditor {
   private container: HTMLElement;
   private data: ResumeData;
   private onUpdate: (data: ResumeData) => void;
+  private saveTimeout: number | null = null;
 
   constructor(
     container: HTMLElement,
@@ -31,15 +32,61 @@ export class ResumeEditor {
     return null;
   }
 
-  private save(): void {
+  private save(showToast: boolean = false): void {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.data));
+      if (showToast) {
+        this.showToast();
+      }
     } catch { /* ignore */ }
     this.onUpdate(this.data);
   }
 
-  private notify(): void {
-    this.save();
+  private showToast(): void {
+    // Remove existing toast if any
+    const existing = document.getElementById('toast-notification');
+    if (existing) existing.remove();
+
+    const lang = localStorage.getItem('resume-lang') || 'en';
+    const messages: Record<string, string> = {
+      en: '✅ Changes saved automatically',
+      ru: '✅ Изменения сохранены автоматически',
+      ko: '✅ 변경사항이 자동으로 저장되었습니다'
+    };
+
+    const toast = document.createElement('div');
+    toast.id = 'toast-notification';
+    toast.textContent = messages[lang] || messages.en;
+    toast.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4CAF50;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      z-index: 10000;
+      animation: slideIn 0.3s ease-out;
+      font-size: 14px;
+    `;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transition = 'opacity 0.3s';
+      setTimeout(() => toast.remove(), 300);
+    }, 2000);
+  }
+
+  private notify(showToast: boolean = false): void {
+    // Debounce saves to avoid excessive localStorage writes
+    if (this.saveTimeout) {
+      clearTimeout(this.saveTimeout);
+    }
+    this.saveTimeout = window.setTimeout(() => {
+      this.save(showToast);
+    }, 500);
   }
 
   getData(): ResumeData {
@@ -51,7 +98,7 @@ export class ResumeEditor {
       const parsed = JSON.parse(json) as ResumeData;
       if (parsed.personal && parsed.experience && parsed.education && parsed.skills) {
         this.data = parsed;
-        this.save();
+        this.save(true);
         this.render();
       } else {
         alert('Invalid resume JSON format.');
@@ -67,7 +114,7 @@ export class ResumeEditor {
 
   reset(defaultData: ResumeData): void {
     this.data = structuredClone(defaultData);
-    this.save();
+    this.save(true);
     this.render();
   }
 
