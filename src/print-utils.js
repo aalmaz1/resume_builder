@@ -13,8 +13,22 @@ exports.printResume = printResume;
 /**
  * Production Print Optimizer with html2pdf.js
  */
-const html2pdfModule = require("html2pdf.js");
-const html2pdf = html2pdfModule.default || html2pdfModule;
+
+// Динамически загружаем html2pdf.js из CDN
+function getHtml2Pdf() {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (!window.html2pdf) {
+            const script = document.createElement('script');
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+            document.body.appendChild(script);
+            yield new Promise((resolve) => {
+                script.onload = resolve;
+            });
+        }
+        return window.html2pdf;
+    });
+}
+
 function printResume() {
     return __awaiter(this, void 0, void 0, function* () {
         const resumeContainer = document.getElementById('resume-container');
@@ -34,21 +48,22 @@ function printResume() {
             // Даем дополнительное время для рендеринга изображений
             yield new Promise(resolve => setTimeout(resolve, 500));
             // Экспорт через html2pdf.js с точными настройками A4
+            const html2pdf = yield getHtml2Pdf();
             yield html2pdf()
                 .set({
                 margin: 0, // Поля уже заданы в CSS контейнера (padding: 20mm)
                 filename: 'resume.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: {
+                html2canvas: { 
                     scale: 2, // Улучшенное качество рендеринга
                     letterRendering: true, // Корректный рендеринг шрифтов
                     useCORS: true, // Разрешить загрузку изображений с CORS
                     logging: false,
                     windowWidth: 794 // Фиксированная ширина в px (210mm при 96dpi)
                 },
-                jsPDF: {
-                    unit: 'mm',
-                    format: 'a4',
+                jsPDF: { 
+                    unit: 'mm', 
+                    format: 'a4', 
                     orientation: 'portrait'
                 }
             })
