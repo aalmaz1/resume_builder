@@ -32,15 +32,33 @@ export function renderResume(data: ResumeData, container: HTMLElement): void {
     const section = createBlock('section-block');
     section.appendChild(createLine('h3', 'Skills'));
     
-    const skillsList = document.createElement('div');
+    const skillsList = document.createElement('ul');
     skillsList.className = 'skills-grid';
+    skillsList.style.listStyleType = 'disc';
+    skillsList.style.paddingLeft = '20px';
     
     data.skills.forEach(skill => {
-      const el = document.createElement('div');
-      el.textContent = typeof skill === 'string' 
-        ? skill 
-        : `${skill.category}: ${skill.items.join(', ')}`;
-      skillsList.appendChild(el);
+      if (typeof skill === 'string') {
+        // Если навык просто строка - добавляем как есть
+        const li = document.createElement('li');
+        li.textContent = skill;
+        skillsList.appendChild(li);
+      } else {
+        // Если навык объект с категорией и элементами
+        // Добавляем название категории жирным
+        const categoryLi = document.createElement('li');
+        categoryLi.innerHTML = `<strong>${skill.category}:</strong>`;
+        categoryLi.style.marginTop = '8px';
+        skillsList.appendChild(categoryLi);
+        
+        // Добавляем каждый элемент категории отдельным подпунктом
+        skill.items.forEach(item => {
+          const subLi = document.createElement('li');
+          subLi.textContent = item;
+          subLi.style.marginLeft = '20px';
+          skillsList.appendChild(subLi);
+        });
+      }
     });
     section.appendChild(skillsList);
     container.appendChild(section);
