@@ -70,8 +70,8 @@ export function generateDemoProfile(): ResumeData {
       email: faker.internet.email(),
       phone: faker.phone.number(),
       location: `${faker.location.city()}, ${faker.location.country()}`,
-      github: `github.com/${faker.internet.username()}`,
-      linkedin: `linkedin.com/in/${faker.internet.username()}`
+      github: `github.com/${faker.internet.userName()}`,
+      linkedin: `linkedin.com/in/${faker.internet.userName()}`
     },
     education,
     experience,
