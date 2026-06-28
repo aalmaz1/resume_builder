@@ -168,13 +168,12 @@ const aiGenerator = new GitHubAIGenerator();
 
 export async function fetchGitHubResumeData(input: string): Promise<ResumeData> {
   // Поддержка форматов: https://github.com/username, https://github.com/username/, с пробелами и т.д.
-  const username = input
-    .trim()  // Удаляем пробелы в начале и конце
-    .replace('https://github.com/', '')
-    .replace('http://github.com/', '')
-    .replace(/\/$/, '')  // Удаляем trailing slash если есть
-    .split('/')[0]
-    .trim();  // Еще раз trim на случай пробелов внутри
+  let cleanInput = input.trim();
+  
+  // Извлекаем username из URL или используем как есть
+  const githubUrlMatch = cleanInput.match(/^https?:\/\/github\.com\/([^\/]+)\/?$/i);
+  const username = githubUrlMatch ? githubUrlMatch[1] : cleanInput.split('/')[0];
+  
   const headers = { 'Accept': 'application/vnd.github.v3+json' };
   
   // 1. Fetch Profile, Repos & README in parallel
