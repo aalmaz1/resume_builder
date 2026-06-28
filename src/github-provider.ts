@@ -171,8 +171,16 @@ export async function fetchGitHubResumeData(input: string): Promise<ResumeData> 
   let cleanInput = input.trim();
   
   // Извлекаем username из URL или используем как есть
-  const githubUrlMatch = cleanInput.match(/^https?:\/\/github\.com\/([^\/]+)\/?$/i);
-  const username = githubUrlMatch ? githubUrlMatch[1] : cleanInput.split('/')[0];
+  // Сначала пробуем матчить полный URL (с http/https, с опциональным слэшем в конце)
+  const githubUrlMatch = cleanInput.match(/^https?:\/\/github\.com\/([^/\s]+)\/?$/i);
+  let username: string;
+  
+  if (githubUrlMatch) {
+    username = githubUrlMatch[1];
+  } else {
+    // Если не URL, убираем возможные лишние части и берем первое слово
+    username = cleanInput.split('/')[0].trim();
+  }
   
   const headers = { 'Accept': 'application/vnd.github.v3+json' };
   
