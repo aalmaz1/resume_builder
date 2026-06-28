@@ -1,7 +1,12 @@
 /**
  * Production Print Optimizer with html2pdf.js
  */
-import html2pdf from 'html2pdf.js';
+
+// Динамический импорт html2pdf.js для корректной работы в браузере
+async function loadHtml2Pdf() {
+  const html2pdfModule = await import('html2pdf.js');
+  return html2pdfModule.default;
+}
 
 export async function printResume(): Promise<void> {
   const resumeContainer = document.getElementById('resume-container');
@@ -24,6 +29,9 @@ export async function printResume(): Promise<void> {
     
     // Даем дополнительное время для рендеринга изображений
     await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Динамически загружаем html2pdf
+    const html2pdf = await loadHtml2Pdf();
 
     // Экспорт через html2pdf.js с точными настройками A4
     await html2pdf()
