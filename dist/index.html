@@ -87,9 +87,9 @@
             }
         }
     </style>
-  <script type="module" crossorigin src="/assets/index-BLfZQNnn.js"></script>
+  <script type="module" crossorigin src="/assets/index-2l3UiA0G.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-CNC7AqOf.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-CDLXJp4R.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-BPqRQN1j.css">
 </head>
 <body class="theme-classic">
 
@@ -132,9 +132,6 @@
             <button id="export-pdf">Export PDF</button>
             <button id="ats-check">📊 ATS Check</button>
         </div>
-        
-        <!-- ATS Result Card (inline, not modal) -->
-        <div id="ats-result-card" class="ats-result-card hidden"></div>
     </div>
 
     <!-- Theme Toggle Button - Bottom Left Corner -->
@@ -148,7 +145,15 @@
     <!-- Editable hint toast -->
     <div id="editable-hint" class="editable-hint"></div>
 
-    <div id="resume-container" contenteditable="true" spellcheck="false"></div>
+    <!-- Main content area with side-by-side layout -->
+    <div class="main-content-wrapper">
+        <div id="resume-container" contenteditable="true" spellcheck="false"></div>
+        
+        <!-- ATS Panel - Sticky sidebar -->
+        <aside id="ats-panel" class="ats-panel hidden">
+            <div class="ats-panel-content"></div>
+        </aside>
+    </div>
 
 </body>
 </html>

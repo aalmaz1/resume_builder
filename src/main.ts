@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
       issues: result.issues
     });
     
-    showATSResultCard(result);
+    showATSResultPanel(result);
   });
 });
 
@@ -338,38 +338,30 @@ function showNotification(message: string, type: 'success' | 'error' = 'success'
 }
 
 /**
- * Show ATS result in inline card (not modal)
+ * Show ATS result in sticky side panel (not modal)
  */
-function showATSResultCard(result: ATSResult): void {
-  const card = document.getElementById('ats-result-card');
-  if (!card) return;
+function showATSResultPanel(result: ATSResult): void {
+  const panel = document.getElementById('ats-panel');
+  const content = document.querySelector('.ats-panel-content');
+  if (!panel || !content) return;
   
-  // Toggle visibility: hide if already shown, show otherwise
-  const isCurrentlyVisible = !card.classList.contains('hidden');
-  
-  if (isCurrentlyVisible) {
-    card.classList.add('hidden');
-    card.innerHTML = '';
-    return;
-  }
-  
-  // Build card content
-  card.innerHTML = `
-    <div class="ats-card-header">
-      <span class="ats-card-title">📊 ATS Score</span>
-      <span class="ats-score-badge ${getScoreClass(result.score)}">${result.score} / 100</span>
+  // Build panel content
+  content.innerHTML = `
+    <div class="ats-panel-header">
+      <span class="ats-panel-title">📊 ATS Score</span>
+      <span class="ats-panel-score ${getScoreClass(result.score)}">${result.score} / 100</span>
     </div>
-    <div class="ats-card-issues">
+    <div class="ats-panel-issues">
       ${result.issues.map(issue => `
-        <div class="ats-issue-row issue-${issue.type}">
-          <span class="ats-issue-icon">${getIssueIcon(issue.type)}</span>
-          <span class="ats-issue-text">${issue.message}</span>
+        <div class="ats-panel-issue issue-${issue.type}">
+          <span class="ats-panel-issue-icon">${getIssueIcon(issue.type)}</span>
+          <span class="ats-panel-issue-text">${issue.message}</span>
         </div>
       `).join('')}
     </div>
   `;
   
-  card.classList.remove('hidden');
+  panel.classList.remove('hidden');
 }
 
 /**
