@@ -267,16 +267,35 @@ document.addEventListener('DOMContentLoaded', () => {
     showNotification(
       currentLang === 'ru' ? translations.ru.exportSuccess : 
       currentLang === 'ko' ? translations.ko.exportSuccess : 
-      translations.en.exportSuccess, 
-      'success'
-    );
-  });
 
   // ATS Check Button
   document.getElementById('ats-check')?.addEventListener('click', () => {
-    if (!currentResumeData) return;
+    console.log('🔍 ATS Check clicked');
+    console.log('currentResumeData:', currentResumeData);
     
+    if (!currentResumeData) {
+      console.error('❌ No resume data available');
+      return;
+    }
+
+    console.log('📊 Analyzing resume:', {
+      email: currentResumeData.personal.email,
+      github: currentResumeData.personal.github,
+      phone: currentResumeData.personal.phone,
+      linkedin: currentResumeData.personal.linkedin,
+      title: currentResumeData.personal.title,
+      skillsCount: currentResumeData.skills?.length || 0,
+      experienceCount: currentResumeData.experience?.length || 0
+    });
+
     const result = atsService.analyze(currentResumeData);
+    
+    console.log('✅ ATS Result:', {
+      score: result.score,
+      issuesCount: result.issues.length,
+      issues: result.issues
+    });
+    
     showATSModal(result);
   });
 });
