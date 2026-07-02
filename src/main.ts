@@ -4,10 +4,13 @@ import { printResume } from './print-utils';
 import { fetchGitHubResumeData } from './github-provider';
 import { generateDemoProfile } from './demo-profile';
 import { translations, Lang, defaultLang } from './translations';
+import { ATSService } from './services/ATSService';
+import { ATSResult } from './types/ats';
 
 let currentResumeData: ResumeData | null = null;
 let currentTextAlign: 'left' | 'center' | 'justify' = 'left';
 let currentLang: Lang = defaultLang;
+const atsService = new ATSService();
 
 const defaultData: ResumeData = generateDemoProfile();
 
@@ -267,6 +270,14 @@ document.addEventListener('DOMContentLoaded', () => {
       translations.en.exportSuccess, 
       'success'
     );
+  });
+
+  // ATS Check Button
+  document.getElementById('ats-check')?.addEventListener('click', () => {
+    if (!currentResumeData) return;
+    
+    const result = atsService.analyze(currentResumeData);
+    showATSModal(result);
   });
 });
 
