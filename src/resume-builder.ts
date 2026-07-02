@@ -45,9 +45,11 @@ export function renderResume(data: ResumeData, container: HTMLElement): void {
         skillsList.appendChild(li);
       } else {
         // Если навык объект с категорией и элементами
-        // Добавляем название категории жирным
+        // Добавляем название категории жирным с использованием textContent для безопасности
         const categoryLi = document.createElement('li');
-        categoryLi.innerHTML = `<strong>${skill.category}:</strong>`;
+        const strongEl = document.createElement('strong');
+        strongEl.textContent = `${skill.category}:`;
+        categoryLi.appendChild(strongEl);
         categoryLi.style.marginTop = '8px';
         skillsList.appendChild(categoryLi);
         
@@ -87,7 +89,20 @@ function renderSection(title: string, items: TimeBoundedEntity[]): HTMLElement {
   items.forEach(item => {
     const itemBlock = createBlock('entity-item');
     const headerLine = createLine('div', '');
-    headerLine.innerHTML = `<span><strong>${item.role}</strong> - ${item.institution}</span><span>${item.period}</span>`;
+    
+    // Безопасное создание HTML с использованием textContent вместо innerHTML
+    const leftSpan = document.createElement('span');
+    const roleOrgSpan = document.createElement('strong');
+    roleOrgSpan.textContent = item.role;
+    leftSpan.appendChild(roleOrgSpan);
+    const orgText = document.createTextNode(` - ${item.institution}`);
+    leftSpan.appendChild(orgText);
+    
+    const rightSpan = document.createElement('span');
+    rightSpan.textContent = item.period;
+    
+    headerLine.appendChild(leftSpan);
+    headerLine.appendChild(rightSpan);
     itemBlock.appendChild(headerLine);
 
     const ul = document.createElement('ul');

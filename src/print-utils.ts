@@ -2,7 +2,10 @@
  * Production Print Optimizer with html2pdf.js from node_modules
  */
 
-// Динамический импорт html2pdf.js из локального модуля для корректной работы
+interface Html2PdfModule {
+  default: any;
+}
+
 async function loadHtml2Pdf(): Promise<any> {
   // Проверяем, загружена ли библиотека уже
   if ((window as any).html2pdf) {
@@ -11,7 +14,7 @@ async function loadHtml2Pdf(): Promise<any> {
   
   try {
     // Импортируем из локального модуля
-    const module = await import('html2pdf.js');
+    const module = await import('html2pdf.js') as Html2PdfModule;
     if (module.default) {
       (window as any).html2pdf = module.default;
       return module.default;
