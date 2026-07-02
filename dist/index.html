@@ -87,9 +87,9 @@
             }
         }
     </style>
-  <script type="module" crossorigin src="/assets/index-B2V37K2b.js"></script>
+  <script type="module" crossorigin src="/assets/index-Duv6tPSJ.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-CNC7AqOf.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-De4zODbl.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-tKQ2S9Fm.css">
 </head>
 <body class="theme-classic">
 
@@ -130,6 +130,7 @@
         <div class="action-group">
             <button id="save-json">Save JSON</button>
             <button id="export-pdf">Export PDF</button>
+            <button id="ats-check">📊 ATS Check</button>
         </div>
     </div>
 
@@ -143,6 +144,26 @@
 
     <!-- Editable hint toast -->
     <div id="editable-hint" class="editable-hint"></div>
+
+    <!-- ATS Check Modal -->
+    <div id="ats-modal" class="ats-modal hidden">
+        <div class="ats-modal-content">
+            <div class="ats-modal-header">
+                <h2>ATS Resume Analysis</h2>
+                <button id="ats-close" class="ats-close-btn">&times;</button>
+            </div>
+            <div class="ats-modal-body">
+                <div class="ats-score-container">
+                    <div class="ats-score-circle">
+                        <span id="ats-score-value">0</span>
+                        <span class="ats-score-label">/ 100</span>
+                    </div>
+                    <div id="ats-score-status" class="ats-score-status"></div>
+                </div>
+                <div id="ats-issues-list" class="ats-issues-list"></div>
+            </div>
+        </div>
+    </div>
 
     <div id="resume-container" contenteditable="true" spellcheck="false"></div>
 

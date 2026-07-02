@@ -315,6 +315,62 @@ function showNotification(message: string, type: 'success' | 'error' = 'success'
 }
 
 /**
+ * Show ATS modal with analysis results
+ */
+function showATSModal(result: ATSResult): void {
+  // Remove existing modal if present
+  const existingModal = document.getElementById('ats-modal');
+  if (existingModal) existingModal.remove();
+
+  // Create modal container
+  const modal = document.createElement('div');
+  modal.id = 'ats-modal';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <span class="close-button" id="ats-modal-close">&times;</span>
+      <h2>📊 ATS Score</h2>
+      <div class="ats-score-display">
+        <div class="score-number">${result.score} / 100</div>
+      </div>
+      <div class="ats-issues-list">
+        ${result.issues.map(issue => `
+          <div class="issue-item issue-${issue.type}">
+            <span class="issue-icon">${getIssueIcon(issue.type)}</span>
+            <span class="issue-message">${issue.message}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  // Close modal when close button is clicked
+  document.getElementById('ats-modal-close')?.addEventListener('click', () => {
+    modal.remove();
+  });
+
+  // Close modal when clicking outside content
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
+}
+
+/**
+ * Get icon for issue type
+ */
+function getIssueIcon(type: string): string {
+  switch (type) {
+    case 'success': return '✅';
+    case 'warning': return '⚠';
+    case 'error': return '❌';
+    default: return '';
+  }
+}
+
+/**
  * Show editable hint notification
  */
 function showEditableHint(): void {
