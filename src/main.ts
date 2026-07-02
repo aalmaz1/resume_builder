@@ -267,6 +267,10 @@ document.addEventListener('DOMContentLoaded', () => {
     showNotification(
       currentLang === 'ru' ? translations.ru.exportSuccess : 
       currentLang === 'ko' ? translations.ko.exportSuccess : 
+      translations.en.exportSuccess, 
+      'success'
+    );
+  });
 
   // ATS Check Button
   document.getElementById('ats-check')?.addEventListener('click', () => {
