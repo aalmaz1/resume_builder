@@ -272,7 +272,7 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   });
 
-  // ATS Check Button
+  // ATS Check Button - Show inline card, not modal
   document.getElementById('ats-check')?.addEventListener('click', () => {
     console.log('🔍 ATS Check clicked');
     console.log('currentResumeData:', currentResumeData);
@@ -300,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
       issues: result.issues
     });
     
-    showATSModal(result);
+    showATSResultCard(result);
   });
 });
 
@@ -338,47 +338,47 @@ function showNotification(message: string, type: 'success' | 'error' = 'success'
 }
 
 /**
- * Show ATS modal with analysis results
+ * Show ATS result in inline card (not modal)
  */
-function showATSModal(result: ATSResult): void {
-  // Remove existing modal if present
-  const existingModal = document.getElementById('ats-modal');
-  if (existingModal) existingModal.remove();
-
-  // Create modal container
-  const modal = document.createElement('div');
-  modal.id = 'ats-modal';
-  modal.innerHTML = `
-    <div class="modal-content">
-      <span class="close-button" id="ats-modal-close">&times;</span>
-      <h2>📊 ATS Score</h2>
-      <div class="ats-score-display">
-        <div class="score-number">${result.score} / 100</div>
-      </div>
-      <div class="ats-issues-list">
-        ${result.issues.map(issue => `
-          <div class="issue-item issue-${issue.type}">
-            <span class="issue-icon">${getIssueIcon(issue.type)}</span>
-            <span class="issue-message">${issue.message}</span>
-          </div>
-        `).join('')}
-      </div>
+function showATSResultCard(result: ATSResult): void {
+  const card = document.getElementById('ats-result-card');
+  if (!card) return;
+  
+  // Toggle visibility: hide if already shown, show otherwise
+  const isCurrentlyVisible = !card.classList.contains('hidden');
+  
+  if (isCurrentlyVisible) {
+    card.classList.add('hidden');
+    card.innerHTML = '';
+    return;
+  }
+  
+  // Build card content
+  card.innerHTML = `
+    <div class="ats-card-header">
+      <span class="ats-card-title">📊 ATS Score</span>
+      <span class="ats-score-badge ${getScoreClass(result.score)}">${result.score} / 100</span>
+    </div>
+    <div class="ats-card-issues">
+      ${result.issues.map(issue => `
+        <div class="ats-issue-row issue-${issue.type}">
+          <span class="ats-issue-icon">${getIssueIcon(issue.type)}</span>
+          <span class="ats-issue-text">${issue.message}</span>
+        </div>
+      `).join('')}
     </div>
   `;
+  
+  card.classList.remove('hidden');
+}
 
-  document.body.appendChild(modal);
-
-  // Close modal when close button is clicked
-  document.getElementById('ats-modal-close')?.addEventListener('click', () => {
-    modal.remove();
-  });
-
-  // Close modal when clicking outside content
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      modal.remove();
-    }
-  });
+/**
+ * Get CSS class based on score
+ */
+function getScoreClass(score: number): string {
+  if (score >= 80) return 'score-good';
+  if (score >= 60) return 'score-medium';
+  return 'score-low';
 }
 
 /**
