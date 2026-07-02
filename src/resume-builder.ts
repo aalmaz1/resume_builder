@@ -1,6 +1,6 @@
 /**
  * Pretext-Inspired Typographic Engine
- * This module implements the Layout Primitive pattern from @chenglou/pretext
+ * This module implements the Layout Primitive pattern
  * logic, specifically extending the 'Editorial Engine' concept.
  */
 import { ResumeData, TimeBoundedEntity, SkillCategory } from './types';

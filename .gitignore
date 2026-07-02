@@ -1,31 +1,12 @@
 ```
+# Dependencies
 node_modules/
+# Build artifacts
 dist/
-build/
-.npm/
-.yarn/
+# Environment
 .env
 .env.local
-.env.*
-.vscode/
-.idea/
+*.env.*
+# Logs
 *.log
-*.tmp
-*.swp
-*.swo
-.DS_Store
-Thumbs.db
-coverage/
-htmlcov/
-.coverage
-*.pyc
-__pycache__/
-*.class
-*.o
-*.obj
-*.out
-*.exe
-*.dll
-*.so
-*.a
 ```
