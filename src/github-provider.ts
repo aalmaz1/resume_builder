@@ -174,7 +174,7 @@ class GitHubAIGenerator {
  * - github.com/username
  * - With trailing spaces
  */
-function extractUsername(input: string): string {
+export function extractUsername(input: string): string {
   if (!input || typeof input !== 'string') {
     throw new Error('Invalid input: username cannot be empty');
   }
@@ -228,7 +228,7 @@ function extractUsername(input: string): string {
  * GitHub usernames can contain letters, numbers, hyphens, and underscores
  * Cannot start or end with a hyphen
  */
-function isValidUsername(username: string): boolean {
+export function isValidUsername(username: string): boolean {
   if (!username || username.length === 0 || username.length > 39) {
     return false;
   }
