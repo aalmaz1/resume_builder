@@ -857,25 +857,53 @@ li {
 }
 
 /* ==========================================================================
-   ATS Result Card (Inline, not modal)
+   Main Content Layout - Resume + ATS Panel Side by Side
    ========================================================================== */
-.ats-result-card {
+.main-content-wrapper {
+  display: flex;
+  gap: 20px;
+  max-width: 1400px;
   width: 100%;
-  max-width: 600px;
-  margin: 12px auto;
-  padding: 16px 20px;
+  margin: 20px auto;
+  padding: 0 20px;
+}
+
+#resume-container {
+  flex: 0 0 75%;
+  max-width: 75%;
+  background: var(--resume-bg);
+  color: var(--resume-text);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 30px;
+  min-height: 800px;
+}
+
+/* ==========================================================================
+   ATS Panel - Sticky Sidebar
+   ========================================================================== */
+.ats-panel {
+  flex: 0 0 25%;
+  max-width: 25%;
+  position: sticky;
+  top: 20px;
+  align-self: flex-start;
+}
+
+.ats-panel.hidden {
+  display: none;
+}
+
+.ats-panel-content {
   background: var(--ui-panel-bg);
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--ui-border);
+  padding: 16px;
   animation: fadeIn 0.3s ease-out;
 }
 
-.ats-result-card.hidden {
-  display: none;
-}
-
-.ats-card-header {
+.ats-panel-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -884,76 +912,101 @@ li {
   border-bottom: 1px solid var(--ui-border);
 }
 
-.ats-card-title {
-  font-size: 1rem;
+.ats-panel-title {
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--ui-text);
 }
 
-.ats-score-badge {
-  font-size: 0.95rem;
+.ats-panel-score {
+  font-size: 0.9rem;
   font-weight: 700;
-  padding: 6px 14px;
-  border-radius: 20px;
+  padding: 4px 10px;
+  border-radius: 16px;
 }
 
-.ats-score-badge.score-good {
+.ats-panel-score.score-good {
   background: rgba(76, 175, 80, 0.15);
   color: #4caf50;
   border: 1px solid #4caf50;
 }
 
-.ats-score-badge.score-medium {
+.ats-panel-score.score-medium {
   background: rgba(255, 152, 0, 0.15);
   color: #ff9800;
   border: 1px solid #ff9800;
 }
 
-.ats-score-badge.score-low {
+.ats-panel-score.score-low {
   background: rgba(244, 67, 54, 0.15);
   color: #f44336;
   border: 1px solid #f44336;
 }
 
-.ats-card-issues {
+.ats-panel-issues {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
-.ats-issue-row {
+.ats-panel-issue {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  font-size: 0.85rem;
-  line-height: 1.4;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  line-height: 1.35;
 }
 
-.ats-issue-row.error {
+.ats-panel-issue.error {
   background: rgba(244, 67, 54, 0.08);
   border-left: 3px solid #f44336;
 }
 
-.ats-issue-row.warning {
+.ats-panel-issue.warning {
   background: rgba(255, 152, 0, 0.08);
   border-left: 3px solid #ff9800;
 }
 
-.ats-issue-row.success {
+.ats-panel-issue.success {
   background: rgba(76, 175, 80, 0.08);
   border-left: 3px solid #4caf50;
 }
 
-.ats-issue-icon {
-  font-size: 1rem;
+.ats-panel-issue-icon {
+  font-size: 0.9rem;
   flex-shrink: 0;
 }
 
-.ats-issue-text {
+.ats-panel-issue-text {
   flex: 1;
   color: var(--ui-text);
+}
+
+/* Responsive: Stack on smaller screens */
+@media (max-width: 1024px) {
+  .main-content-wrapper {
+    flex-direction: column;
+  }
+  
+  #resume-container {
+    flex: 1;
+    max-width: 100%;
+  }
+  
+  .ats-panel {
+    flex: 1;
+    max-width: 100%;
+    position: static;
+  }
+}
+
+/* ==========================================================================
+   Old ATS Result Card Styles (Deprecated - kept for backward compatibility)
+   ========================================================================== */
+.ats-result-card {
+  display: none; /* Hidden - using new panel instead */
 }
 
 @keyframes fadeIn {

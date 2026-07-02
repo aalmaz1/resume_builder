@@ -1,14 +1,42 @@
 ```
-# Build artifacts
-dist/
-build/
-
 # Dependencies
 node_modules/
 
-# Vite/Vitest cache
-.node_modules/.vite/
+# Build artifacts
+dist/
+build/
+target/
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.tmp
 
 # Logs
 *.log
+
+# Environment
+.env
+.env.local
+*.env.*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+.env
+
+# Coverage
+coverage/
+htmlcov/
+.coverage
+
+# Vite/Vitest cache
+.node_modules/.vite/
 ```
