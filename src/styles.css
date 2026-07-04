@@ -472,6 +472,19 @@ input[type="text"]:focus {
 /* Text alignment support for print */
 .section-block {
   text-align: left; /* Default, overridden by JS */
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+p {
+  line-height: 1.5;
+  orphans: 2;
+  widows: 2;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  -ms-hyphens: auto;
 }
 
 /* ==========================================================================
@@ -523,12 +536,18 @@ ul {
   padding-left: 20px;
   margin-top: 4px;
   color: #475569;
+  page-break-inside: avoid;
+  break-inside: avoid;
 }
 
 li {
   font-size: 0.9rem;
   margin-bottom: 2px;
   line-height: 1.5;
+  page-break-inside: avoid;
+  break-inside: avoid;
+  orphans: 2;
+  widows: 2;
 }
 
 .skill-category {
@@ -613,6 +632,58 @@ li {
     widows: 2;
     margin-top: 0;
   }
+}
+
+/* ==========================================================================
+   PDF Export Styles - for html2pdf.js export
+   These styles ensure proper page breaks when exporting to PDF
+   ========================================================================== */
+.pdf-export-mode #resume-container {
+  width: 210mm !important;
+  max-width: 210mm !important;
+}
+
+.pdf-export-mode .resume-header,
+.pdf-export-mode .positioned-block.entity-item,
+.pdf-export-mode .positioned-block.section-block {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
+  -webkit-column-break-inside: avoid !important;
+}
+
+.pdf-export-mode h1,
+.pdf-export-mode h2,
+.pdf-export-mode h3,
+.pdf-export-mode p,
+.pdf-export-mode ul,
+.pdf-export-mode li {
+  orphans: 2 !important;
+  widows: 2 !important;
+}
+
+.pdf-export-mode p,
+.pdf-export-mode li {
+  line-height: 1.5 !important;
+  text-align: justify !important;
+  hyphens: auto !important;
+  -webkit-hyphens: auto !important;
+  -ms-hyphens: auto !important;
+}
+
+/* Helper classes for manual page break control */
+.page-break-before {
+  page-break-before: always !important;
+  break-before: page !important;
+}
+
+.page-break-after {
+  page-break-after: always !important;
+  break-after: page !important;
+}
+
+.avoid-page-break {
+  page-break-inside: avoid !important;
+  break-inside: avoid !important;
 }
 
 /* ==========================================================================
