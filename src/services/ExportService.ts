@@ -58,10 +58,13 @@ export class ExportService {
     await document.fonts.ready;
     await new Promise(resolve => setTimeout(resolve, 500));
 
+    // Add PDF export mode class for proper page break styling
+    document.body.classList.add('pdf-export-mode');
+
     try {
       await this.html2pdf()
         .set({
-          margin: 0,
+          margin: [0, 0, 0, 0],
           filename: 'resume.pdf',
           image: { type: 'jpeg', quality: 0.98 },
           html2canvas: { 
@@ -69,19 +72,27 @@ export class ExportService {
             letterRendering: true,
             useCORS: true,
             logging: false,
-            windowWidth: 794
+            windowWidth: 794,
+            scrollY: 0
           },
           jsPDF: { 
             unit: 'mm', 
             format: 'a4', 
-            orientation: 'portrait'
+            orientation: 'portrait',
+            hotfixes: ['PAGE_BREAK']
+          },
+          pagebreak: {
+            mode: ['avoid-all', 'css', 'legacy'],
+            before: '.page-break-before',
+            after: '.page-break-after',
+            avoid: '.avoid-page-break'
           }
         })
         .from(container)
         .save();
-    } catch (error) {
-      console.error('PDF export error:', error);
-      throw new Error('Failed to export PDF');
+    } finally {
+      // Remove PDF export mode class after export
+      document.body.classList.remove('pdf-export-mode');
     }
   }
 
