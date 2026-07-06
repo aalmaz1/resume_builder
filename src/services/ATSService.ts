@@ -65,6 +65,7 @@ interface ProfileWeights {
   dates: number;
   experience: number;
   education: number;
+  summary: number;
 }
 
 const PROFILE_WEIGHTS: Record<ResumeProfile, ProfileWeights> = {
@@ -75,7 +76,8 @@ const PROFILE_WEIGHTS: Record<ResumeProfile, ProfileWeights> = {
     format: 0.12,
     dates: 0.08,
     experience: 0.15,
-    education: 0.05
+    education: 0.05,
+    summary: 0
   },
   student: {
     structure: 0.10,
@@ -84,7 +86,8 @@ const PROFILE_WEIGHTS: Record<ResumeProfile, ProfileWeights> = {
     format: 0.10,
     dates: 0.05,
     experience: 0.10,
-    education: 0.30
+    education: 0.30,
+    summary: 0
   },
   management: {
     structure: 0.18,
@@ -93,7 +96,8 @@ const PROFILE_WEIGHTS: Record<ResumeProfile, ProfileWeights> = {
     format: 0.15,
     dates: 0.08,
     experience: 0.16,
-    education: 0.10
+    education: 0.10,
+    summary: 0
   },
   design: {
     structure: 0.15,
@@ -102,7 +106,8 @@ const PROFILE_WEIGHTS: Record<ResumeProfile, ProfileWeights> = {
     format: 0.18,
     dates: 0.07,
     experience: 0.12,
-    education: 0.08
+    education: 0.08,
+    summary: 0
   },
   other: {
     structure: 0.18,
@@ -111,7 +116,8 @@ const PROFILE_WEIGHTS: Record<ResumeProfile, ProfileWeights> = {
     format: 0.18,
     dates: 0.08,
     experience: 0.13,
-    education: 0.10
+    education: 0.10,
+    summary: 0
   }
 };
 
@@ -235,7 +241,8 @@ export class ATSService {
       format: { score: 0, maxScore: 100, weight: weights.format },
       dates: { score: 0, maxScore: 100, weight: weights.dates },
       experience: { score: 0, maxScore: 100, weight: weights.experience },
-      education: { score: 0, maxScore: 100, weight: weights.education }
+      education: { score: 0, maxScore: 100, weight: weights.education },
+      summary: { score: 0, maxScore: 100, weight: weights.summary }
     };
 
     breakdown.structure.score = this.checkStructure(data, issues, profile);
