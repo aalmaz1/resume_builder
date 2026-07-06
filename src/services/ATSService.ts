@@ -224,7 +224,7 @@ export class ATSService {
       dates: { score: 0, maxScore: 100, weight: weights.dates },
       experience: { score: 0, maxScore: 100, weight: weights.experience },
       education: { score: 0, maxScore: 100, weight: weights.education }
-    } as unknown as ATSScoreBreakdown;
+    };
 
     breakdown.structure.score = this.checkStructure(data, issues, profile);
     breakdown.contacts.score = this.checkContacts(data, issues);
