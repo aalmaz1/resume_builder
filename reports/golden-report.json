@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-07-06T09:38:11.744Z",
+  "timestamp": "2026-07-06T10:18:25.459Z",
   "totalTests": 5,
   "passedTests": 5,
-  "averageDifference": 1.2,
+  "averageDifference": 1.4,
   "results": [
     {
       "passed": true,
@@ -13,9 +13,9 @@
     },
     {
       "passed": true,
-      "actualScore": 97,
+      "actualScore": 96,
       "expectedScore": 95,
-      "difference": 2,
+      "difference": 1,
       "description": "Strong technical resume - should score high"
     },
     {
@@ -27,9 +27,9 @@
     },
     {
       "passed": true,
-      "actualScore": 65,
+      "actualScore": 63,
       "expectedScore": 65,
-      "difference": 0,
+      "difference": 2,
       "description": "Resume missing contact info - should score low-moderate"
     },
     {
@@ -41,7 +41,7 @@
     }
   ],
   "metrics": {
-    "correlation": 0.988,
-    "mae": 1.2
+    "correlation": 0.986,
+    "mae": 1.4
   }
 }

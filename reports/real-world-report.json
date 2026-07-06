@@ -1,32 +1,32 @@
 {
-  "timestamp": "2026-07-06T09:38:17.563Z",
+  "timestamp": "2026-07-06T10:18:27.440Z",
   "totalResumes": 4,
-  "averageScore": 92.75,
+  "averageScore": 91.25,
   "results": [
     {
-      "score": 94,
+      "score": 93,
       "description": "Entry-level software developer",
       "profile": "student/junior"
     },
     {
-      "score": 94,
+      "score": 93,
       "description": "Mid-level data scientist",
       "profile": "student/junior"
     },
     {
-      "score": 91,
+      "score": 90,
       "description": "Career changer - bootcamp graduate",
       "profile": "management"
     },
     {
-      "score": 92,
+      "score": 89,
       "description": "Senior engineering manager",
       "profile": "senior"
     }
   ],
   "metrics": {
-    "avgScore": 92.75,
-    "minScore": 91,
-    "maxScore": 94
+    "avgScore": 91.25,
+    "minScore": 89,
+    "maxScore": 93
   }
 }

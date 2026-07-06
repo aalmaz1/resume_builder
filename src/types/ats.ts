@@ -1,7 +1,7 @@
 export interface ATSIssue {
-  type: "error" | "warning" | "success";
+  type: "error" | "warning" | "success" | "info";
   message: string;
-  category?: "structure" | "contacts" | "keywords" | "format" | "dates" | "experience" | "summary" | "education";
+  category?: "structure" | "contacts" | "keywords" | "format" | "dates" | "experience" | "summary" | "education" | "projects";
 }
 
 export interface ATSScoreComponent {
@@ -24,4 +24,7 @@ export interface ATSResult {
   score: number;
   issues: ATSIssue[];
   breakdown?: ATSScoreBreakdown;
+  profile?: ResumeProfile;
 }
+
+export type ResumeProfile = 'student' | 'technical' | 'management' | 'design' | 'other';

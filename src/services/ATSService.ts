@@ -1,6 +1,7 @@
+import { ATSResult, ATSIssue, ATSScoreBreakdown, ResumeProfile } from '../types/ats';
 import { ResumeData } from '../types';
-import { ATSResult, ATSIssue, ATSScoreBreakdown } from '../types/ats';
 
+// Extended technical keywords including ML/Data Science terms
 const BASE_TECH_KEYWORDS = [
   'TypeScript', 'JavaScript', 'Python', 'Java', 'C++', 'C#', 'Go', 'Rust', 'Ruby', 'PHP', 'Swift', 'Kotlin', 'Scala',
   'React', 'Vue', 'Angular', 'HTML', 'CSS', 'SASS', 'LESS', 'Webpack', 'Vite', 'Next.js', 'Nuxt',
@@ -8,16 +9,22 @@ const BASE_TECH_KEYWORDS = [
   'SQL', 'PostgreSQL', 'MySQL', 'MongoDB', 'Redis', 'Elasticsearch', 'SQLite', 'Oracle',
   'Docker', 'Kubernetes', 'AWS', 'Azure', 'GCP', 'CI/CD', 'Jenkins', 'GitLab', 'GitHub Actions', 'Terraform',
   'Git', 'API', 'REST', 'GraphQL', 'Microservices', 'Agile', 'Scrum', 'TDD', 'Linux', 'Bash',
-  'Jest', 'Mocha', 'pytest', 'JUnit', 'Cypress', 'Playwright'
+  'Jest', 'Mocha', 'pytest', 'JUnit', 'Cypress', 'Playwright',
+  // ML/Data Science additions
+  'machine learning', 'statistics', 'pandas', 'numpy', 'data analysis', 'data science', 'AI', 'ML',
+  'TensorFlow', 'PyTorch', 'scikit-learn', 'deep learning', 'neural networks', 'NLP', 'computer vision'
 ];
 
+// Action verbs for experience evaluation
 const ACTION_VERBS = [
   'developed', 'created', 'built', 'implemented', 'designed', 'architected', 'led', 'managed',
   'optimized', 'improved', 'reduced', 'increased', 'automated', 'deployed', 'maintained',
   'collaborated', 'mentored', 'trained', 'coordinated', 'delivered', 'launched', 'integrated',
-  'migrated', 'refactored', 'debugged', 'tested', 'documented', 'analyzed', 'researched'
+  'migrated', 'refactored', 'debugged', 'tested', 'documented', 'analyzed', 'researched',
+  'spearheaded', 'orchestrated', 'pioneered', 'transformed', 'accelerated', 'scaled'
 ];
 
+// Required sections for structure check
 const REQUIRED_SECTIONS = {
   contacts: true,
   summary: true,
@@ -26,25 +33,30 @@ const REQUIRED_SECTIONS = {
   skills: true
 };
 
+// Management-specific keywords
 const MANAGEMENT_KEYWORDS = [
   'leadership', 'strategy', 'budget', 'ROI', 'campaign', 'stakeholder', 'KPIs', 'communication', 'planning',
   'team management', 'project management', 'process', 'growth', 'marketing', 'analytics', 'operations',
-  'prioritization', 'coordination', 'collaboration'
+  'prioritization', 'coordination', 'collaboration', 'P&L', 'business development', 'sales',
+  'customer acquisition', 'retention', 'engagement', 'conversion', 'funnel', 'pipeline',
+  'executive', 'director', 'vp', 'chief', 'head of', 'founder', 'co-founder'
 ];
 
+// Design-specific keywords (expanded)
 const DESIGN_KEYWORDS = [
   'Figma', 'Sketch', 'Adobe XD', 'Photoshop', 'Illustrator', 'prototyping', 'wireframing', 'user research',
   'usability testing', 'interaction design', 'visual design', 'UI/UX', 'design system', 'persona',
-  'accessibility', 'typography', 'research', 'prototype', 'user flows'
+  'accessibility', 'typography', 'research', 'prototype', 'user flows', 'information architecture',
+  'heuristic evaluation', 'A/B testing', 'user journey', 'service design', 'motion design',
+  'branding', 'icon design', 'responsive design', 'mobile-first', 'WCAG', 'design thinking'
 ];
 
+// Extended tech keywords (includes ML/DS)
 const EXTENDED_TECH_KEYWORDS = [
-  ...BASE_TECH_KEYWORDS,
-  'machine learning', 'statistics', 'pandas', 'numpy', 'data analysis', 'data science', 'AI', 'ML'
+  ...BASE_TECH_KEYWORDS
 ];
 
-type ResumeProfile = 'student' | 'technical' | 'management' | 'design' | 'other';
-
+// Profile weights configuration - optimized for accuracy
 interface ProfileWeights {
   structure: number;
   keywords: number;
@@ -58,47 +70,47 @@ interface ProfileWeights {
 const PROFILE_WEIGHTS: Record<ResumeProfile, ProfileWeights> = {
   technical: {
     structure: 0.15,
-    keywords: 0.35,
+    keywords: 0.30,
     contacts: 0.15,
-    format: 0.15,
-    dates: 0.10,
-    experience: 0.10,
-    education: 0.00
+    format: 0.12,
+    dates: 0.08,
+    experience: 0.15,
+    education: 0.05
   },
   student: {
-    structure: 0.05,
+    structure: 0.10,
     keywords: 0.20,
     contacts: 0.15,
     format: 0.10,
-    dates: 0.10,
-    experience: 0.15,
-    education: 0.25
+    dates: 0.05,
+    experience: 0.10,
+    education: 0.30
   },
   management: {
-    structure: 0.20,
-    keywords: 0.15,
+    structure: 0.18,
+    keywords: 0.18,
     contacts: 0.15,
-    format: 0.20,
-    dates: 0.10,
-    experience: 0.10,
+    format: 0.15,
+    dates: 0.08,
+    experience: 0.16,
     education: 0.10
   },
   design: {
     structure: 0.15,
     keywords: 0.25,
     contacts: 0.15,
-    format: 0.20,
-    dates: 0.10,
-    experience: 0.10,
-    education: 0.05
+    format: 0.18,
+    dates: 0.07,
+    experience: 0.12,
+    education: 0.08
   },
   other: {
     structure: 0.18,
-    keywords: 0.15,
+    keywords: 0.18,
     contacts: 0.15,
-    format: 0.20,
-    dates: 0.10,
-    experience: 0.12,
+    format: 0.18,
+    dates: 0.08,
+    experience: 0.13,
     education: 0.10
   }
 };
