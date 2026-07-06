@@ -1,7 +1,7 @@
 export interface ATSIssue {
   type: "error" | "warning" | "success";
   message: string;
-  category?: "structure" | "contacts" | "keywords" | "format" | "dates" | "experience" | "summary";
+  category?: "structure" | "contacts" | "keywords" | "format" | "dates" | "experience" | "summary" | "education";
 }
 
 export interface ATSScoreComponent {
@@ -17,6 +17,7 @@ export interface ATSScoreBreakdown {
   format: ATSScoreComponent;
   dates: ATSScoreComponent;
   experience: ATSScoreComponent;
+  education: ATSScoreComponent;
 }
 
 export interface ATSResult {
