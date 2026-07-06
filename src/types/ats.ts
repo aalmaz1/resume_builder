@@ -31,3 +31,5 @@ export interface ATSResult {
   breakdown: ATSScoreBreakdown;
   profile?: string;
 }
+
+export type ResumeProfile = 'student' | 'technical' | 'management' | 'design' | 'other';
