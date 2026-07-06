@@ -1,19 +1,46 @@
 /* ==========================================================================
-   TYPOGRAPHY SYSTEM — Modern Professional Resume Builder
-   Based on 8px grid system with Inter + Playfair Display
+   TYPOGRAPHY SYSTEM — 3 Professional Options for Resume Builder
+   Switch between systems by changing CSS variable values
    ========================================================================== */
 
-/* Font Families */
+/* Font Families - 3 Systems Available */
 :root {
-  /* Primary Typography Stack */
-  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  /* 
+   * SYSTEM A: PROFESSIONAL (Default)
+   * Merriweather (headings) + Inter (body)
+   * Best for: Finance, Law, Academia, Consulting
+   * Vibe: Trustworthy, established, authoritative
+   */
+  --font-heading: 'Merriweather', Georgia, 'Times New Roman', serif;
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   
-  /* Fallback for resume container (print-safe) */
-  --font-resume: 'Inter', 'Segoe UI', Arial, sans-serif;
+  /* 
+   * SYSTEM B: FRIENDLY & MODERN
+   * Uncomment to use: Poppins (headings) + Open Sans (body)
+   * Best for: Tech startups, Creative industries, Marketing
+   * Vibe: Approachable, energetic, contemporary
+   */
+  /*
+  --font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-body: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  */
   
-  /* Monospace for code/README */
-  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 'Courier New', monospace;
+  /* 
+   * SYSTEM C: NEUTRAL & UNIVERSAL (Fastest)
+   * Uncomment to use: System fonts only (0ms load time)
+   * Best for: Any industry, maximum performance
+   * Vibe: Clean, invisible, platform-native
+   */
+  /*
+  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  */
+  
+  /* Fallback for resume container (print-safe) */
+  --font-resume: var(--font-body);
+  
+  /* Monospace for code/technical content */
+  --font-mono: 'SF Mono', 'Fira Code', Consolas, Monaco, 'Courier New', monospace;
 }
 
 /* ==========================================================================
