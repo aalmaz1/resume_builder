@@ -116,9 +116,10 @@
 
         <div class="design-group">
             <span class="group-label" data-i18n="resumeDesignLabel">Resume Design:</span>
-            <button class="design-btn active" data-design="classic">Classic</button>
-            <button class="design-btn" data-design="modern">Modern</button>
-            <button class="design-btn" data-design="minimal">Minimal</button>
+            <select id="design-select" class="design-select">
+                <!-- Designs will be populated dynamically from design-templates.ts -->
+            </select>
+            <button id="random-design-btn" class="random-design-btn" title="Random Design">🎲 Random</button>
         </div>
 
         <div class="align-group">
