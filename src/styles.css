@@ -1055,6 +1055,65 @@ li {
   color: var(--ui-text);
 }
 
+/* ==========================================================================
+   ATS Breakdown Styles (NEW)
+   ========================================================================== */
+.ats-breakdown {
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ui-border);
+}
+
+.ats-breakdown-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ui-text);
+  margin-bottom: 12px;
+}
+
+.ats-breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 0.75rem;
+}
+
+.ats-breakdown-label {
+  flex: 0 0 100px;
+  font-weight: 500;
+  color: var(--ui-text);
+}
+
+.ats-breakdown-bar {
+  flex: 1;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.ats-breakdown-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.ats-breakdown-value {
+  flex: 0 0 70px;
+  text-align: right;
+  font-weight: 600;
+  color: var(--ui-text);
+}
+
+.ats-issues-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--ui-text);
+  margin-bottom: 12px;
+}
+
 /* Responsive: Stack on smaller screens */
 @media (max-width: 1024px) {
   .main-content-wrapper {

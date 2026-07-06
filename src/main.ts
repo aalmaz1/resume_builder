@@ -352,13 +352,31 @@ function showATSResultPanel(result: ATSResult): void {
   const content = document.querySelector('.ats-panel-content');
   if (!panel || !content) return;
   
+  // Build detailed breakdown if available
+  const breakdownHtml = result.breakdown ? `
+    <div class="ats-breakdown">
+      <h4 class="ats-breakdown-title">📈 Детализация оценки</h4>
+      ${Object.entries(result.breakdown).map(([key, component]) => `
+        <div class="ats-breakdown-item">
+          <span class="ats-breakdown-label">${getBreakdownLabel(key)}</span>
+          <div class="ats-breakdown-bar">
+            <div class="ats-breakdown-fill" style="width: ${component.score}%"></div>
+          </div>
+          <span class="ats-breakdown-value">${Math.round(component.score)}% (${(component.weight * 100).toFixed(0)}%)</span>
+        </div>
+      `).join('')}
+    </div>
+  ` : '';
+  
   // Build panel content
   content.innerHTML = `
     <div class="ats-panel-header">
       <span class="ats-panel-title">📊 ATS Score</span>
       <span class="ats-panel-score ${getScoreClass(result.score)}">${result.score} / 100</span>
     </div>
+    ${breakdownHtml}
     <div class="ats-panel-issues">
+      <h4 class="ats-issues-title">📋 Рекомендации</h4>
       ${result.issues.map(issue => `
         <div class="ats-panel-issue issue-${issue.type}">
           <span class="ats-panel-issue-icon">${getIssueIcon(issue.type)}</span>
@@ -369,6 +387,21 @@ function showATSResultPanel(result: ATSResult): void {
   `;
   
   panel.classList.remove('hidden');
+}
+
+/**
+ * Get label for breakdown category
+ */
+function getBreakdownLabel(key: string): string {
+  const labels: Record<string, string> = {
+    structure: '📋 Структура',
+    keywords: '🔑 Ключевые слова',
+    contacts: '📞 Контакты',
+    format: '📝 Формат',
+    dates: '📅 Даты',
+    experience: '💼 Опыт'
+  };
+  return labels[key] || key;
 }
 
 /**
