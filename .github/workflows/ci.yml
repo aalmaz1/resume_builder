@@ -32,8 +32,74 @@ jobs:
       - name: Type Check
         run: npm run typecheck
 
-      - name: Test
+      - name: Unit Test
         run: npm run test
 
       - name: Build
         run: npm run build
+
+ # 1. Валидация на золотом наборе (синтетика) – всегда запускается
+      - name: Validate ATS on Golden Dataset
+        run: npx tsx scripts/validate-ats-quality.ts
+        continue-on-error: false  # если упадёт – сборка остановится
+
+# 2. Сохранить отчёт золотого набора как артефакт
+      - name: Upload Golden Dataset Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-dataset-report
+          path: reports/golden-report.json   # если ваш скрипт генерирует такой файл, иначе адаптируйте
+          retention-days: 7
+
+      # 3. Валидация на реальных данных – только для main/master или по условию
+      - name: Validate ATS on Real-World Data
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: npx tsx scripts/real-world-validation.ts
+        continue-on-error: false
+
+      # 4. Проверка метрик (например, корреляция > 0.8, MAE < 8)
+      - name: Check ATS Quality Metrics
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        run: |
+          # Здесь парсим вывод скрипта или читаем сгенерированный JSON-отчёт
+          # Пример: предположим, что скрипт пишет в файл reports/metrics.json
+          CORRELATION=$(jq '.correlation' reports/metrics.json)
+          MAE=$(jq '.mae' reports/metrics.json)
+          echo "Correlation: $CORRELATION"
+          echo "MAE: $MAE"
+          # Устанавливаем пороги
+          if (( $(echo "$CORRELATION < 0.8" | bc -l) )); then
+            echo "❌ Correlation ($CORRELATION) is below 0.8"
+            exit 1
+          fi
+          if (( $(echo "$MAE > 8" | bc -l) )); then
+            echo "❌ MAE ($MAE) is above 8"
+            exit 1
+          fi
+          echo "✅ All ATS metrics are within acceptable ranges"
+        continue-on-error: false
+
+      # 5. Сохранить детальный отчёт реальной валидации как артефакт
+      - name: Upload Real-World Validation Report
+        if: always() && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')
+        uses: actions/upload-artifact@v4
+        with:
+          name: real-world-validation-report
+          path: reports/real-world-report.json   # адаптируйте под свой формат
+          retention-days: 30
+
+      # 6. (Опционально) Запуск оптимизации весов, если метрики упали ниже порога
+      # Можно сделать отдельный workflow, который запускается по расписанию или вручную
+      # и создаёт PR с улучшенными весами.
+
+      # 7. (Опционально) Генерация и сохранение coverage-отчёта
+      - name: Generate coverage report
+        run: npm run coverage -- --coverageReporters=json-summary,text
+      - name: Upload coverage to Codecov (если используете)
+        uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage/coverage-summary.json
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: fals
