@@ -1,10 +1,56 @@
 /* ==========================================================================
-   Global Reset & Base
+   TYPOGRAPHY SYSTEM — Modern Professional Resume Builder
+   Based on 8px grid system with Inter + Playfair Display
    ========================================================================== */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+
+/* Font Families */
+:root {
+  /* Primary Typography Stack */
+  --font-heading: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  
+  /* Fallback for resume container (print-safe) */
+  --font-resume: 'Inter', 'Segoe UI', Arial, sans-serif;
+  
+  /* Monospace for code/README */
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, Monaco, 'Courier New', monospace;
+}
+
+/* ==========================================================================
+   Type Scale — Based on 1.25 ratio (Major Third)
+   All sizes in rem for accessibility and scalability
+   ========================================================================== */
+:root {
+  /* Font Sizes */
+  --text-xs:    0.75rem;   /* 12px — Captions, metadata */
+  --text-sm:    0.875rem;  /* 14px — Secondary text, dates */
+  --text-base:  1rem;      /* 16px — Body text */
+  --text-lg:    1.125rem;  /* 18px — Lead text, descriptions */
+  --text-xl:    1.25rem;   /* 20px — H3, section titles */
+  --text-2xl:   1.5rem;    /* 24px — H2, name */
+  --text-3xl:   1.875rem;  /* 30px — H1, resume title */
+  --text-4xl:   2.25rem;   /* 36px — Hero, large accents */
+  
+  /* Line Heights — Tighter for headings, looser for body */
+  --leading-none:     1;
+  --leading-tight:    1.2;
+  --leading-snug:     1.375;
+  --leading-normal:   1.5;
+  --leading-relaxed:  1.625;
+  --leading-loose:    2;
+  
+  /* Font Weights */
+  --font-normal:  400;
+  --font-medium:  500;
+  --font-semibold: 600;
+  --font-bold:    700;
+  
+  /* Letter Spacing */
+  --tracking-tighter: -0.025em;
+  --tracking-tight:   -0.0125em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.025em;
+  --tracking-wider:   0.05em;
 }
 
 /* ==========================================================================
@@ -12,60 +58,82 @@
    ========================================================================== */
 :root {
   /* Light Theme (Default) */
-  --ui-bg: #f0f2f5;
-  --ui-text: #333;
+  --ui-bg: #f8fafc;
+  --ui-text: #1e293b;
   --ui-panel-bg: #ffffff;
   --ui-border: #e2e8f0;
-  --ui-accent: #4361ee;
+  --ui-accent: #4f46e5;
   --ui-btn-text: #fff;
   
   /* Resume always stays white/black for print consistency */
   --resume-bg: #ffffff;
-  --resume-text: #000000;
+  --resume-text: #0f172a;
+  
+  /* Semantic Colors */
+  --color-primary: #4f46e5;
+  --color-primary-hover: #4338ca;
+  --color-secondary: #64748b;
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  
+  /* Spacing Unit */
+  --spacing-unit: 8px;
 }
 
 [data-theme="dark"] {
-  /* Dark Theme for UI - GitHub Black Style */
-  --ui-bg: #0d1117;
-  --ui-text: #c9d1d9;
-  --ui-panel-bg: #161b22;
-  --ui-border: #30363d;
-  --ui-accent: #58a6ff;
+  /* Dark Theme for UI - Modern Slate Palette */
+  --ui-bg: #0f172a;
+  --ui-text: #e2e8f0;
+  --ui-panel-bg: #1e293b;
+  --ui-border: #334155;
+  --ui-accent: #818cf8;
   --ui-btn-text: #ffffff;
   
   /* Premium Glass Effect Variables */
-  --glass-bg: rgba(22, 27, 34, 0.65);
+  --glass-bg: rgba(30, 41, 59, 0.7);
   --glass-border: rgba(255, 255, 255, 0.1);
   --glass-highlight: rgba(255, 255, 255, 0.15);
-  --glass-shadow: rgba(0, 0, 0, 0.4);
-  --glass-gradient-top: rgba(255, 255, 255, 0.12);
-  --glass-gradient-side: rgba(255, 255, 255, 0.08);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
+  --glass-gradient-top: rgba(255, 255, 255, 0.1);
+  --glass-gradient-side: rgba(255, 255, 255, 0.05);
   
   /* Resume remains white */
   --resume-bg: #ffffff;
-  --resume-text: #000000;
+  --resume-text: #0f172a;
+  
+  /* Semantic Colors (Dark) */
+  --color-primary: #818cf8;
+  --color-primary-hover: #a5b4fc;
+  --color-secondary: #94a3b8;
+  --color-success: #34d399;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
 }
 
 body {
-  font-family: var(--font-family, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif);
+  font-family: var(--font-body);
   color: var(--ui-text);
   background: var(--ui-bg);
-  line-height: 1.6;
-  transition: background 0.3s, color 0.3s;
+  line-height: var(--leading-relaxed);
+  transition: background 0.3s ease, color 0.3s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
+  padding: calc(var(--spacing-unit) * 3);
   min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 /* ==========================================================================
-   Design Tokens — Theme: Classic
+   Design Tokens — Theme: Classic (Refined)
+   Now uses Playfair Display for elegance
    ========================================================================== */
 body.theme-classic {
   --primary-color: #1e293b;
-  --accent-color: #334155;
-  --font-family: 'Georgia', 'Times New Roman', serif;
+  --accent-color: #4f46e5;
+  --font-family: var(--font-heading);
   --padding-unit: 16px;
   --heading-color: #0f172a;
   --muted-color: #64748b;
@@ -74,54 +142,61 @@ body.theme-classic {
 }
 
 /* ==========================================================================
-   Design Tokens — Theme: Modern
+   Design Tokens — Theme: Modern (Enhanced)
+   Uses Inter for clean, tech-forward look
    ========================================================================== */
 body.theme-modern {
   --primary-color: #1e1e2e;
-  --accent-color: #6366f1;
-  --font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  --accent-color: #4f46e5;
+  --font-family: var(--font-body);
   --padding-unit: 20px;
-  --heading-color: #6366f1;
-  --muted-color: #71717a;
+  --heading-color: #4f46e5;
+  --muted-color: #64748b;
   --bg-surface: #ffffff;
   --border-color: #e0e7ff;
 }
 
 body.theme-modern h1 {
   color: var(--accent-color);
-  border-bottom: 4px solid var(--accent-color);
-  letter-spacing: -1px;
+  border-bottom: 3px solid var(--accent-color);
+  letter-spacing: var(--tracking-tight);
+  font-weight: var(--font-bold);
 }
 
 body.theme-modern .section-block h3 {
-  background: #f0f3ff;
-  padding: 8px;
-  border-left: 5px solid var(--accent-color);
+  background: linear-gradient(135deg, #f0f3ff 0%, #ffffff 100%);
+  padding: 10px 12px;
+  border-left: 4px solid var(--accent-color);
   border-bottom: none;
+  border-radius: 0 6px 6px 0;
+  font-weight: var(--font-semibold);
 }
 
 /* ==========================================================================
-   Design Tokens — Theme: Minimal
+   Design Tokens — Theme: Minimal (Refined)
+   Clean, brutalist-inspired design
    ========================================================================== */
 body.theme-minimal {
-  --primary-color: #18181b;
-  --accent-color: #18181b;
-  --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --primary-color: #0f172a;
+  --accent-color: #0f172a;
+  --font-family: var(--font-body);
   --padding-unit: 24px;
-  --heading-color: #18181b;
-  --muted-color: #a1a1aa;
+  --heading-color: #0f172a;
+  --muted-color: #94a3b8;
   --bg-surface: #ffffff;
-  --border-color: #e4e4e7;
+  --border-color: #e2e8f0;
 }
 
 body.theme-minimal #resume-container {
-  border: 10px solid #000;
+  border: 1px solid #0f172a;
+  border-radius: 0;
 }
 
 body.theme-minimal h1 {
   text-transform: uppercase;
-  font-weight: 900;
-  border-bottom: 10px solid #000;
+  font-weight: var(--font-bold);
+  border-bottom: 2px solid #0f172a;
+  letter-spacing: var(--tracking-wide);
 }
 
 /* ==========================================================================
@@ -224,40 +299,37 @@ body.theme-minimal h1 {
 .controls-bar button {
   padding: 10px 20px;
   border: none;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  border-radius: 10px;
+  background: var(--ui-panel-bg);
   color: var(--ui-text);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid var(--ui-border);
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 600;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  transition: all 0.2s ease;
   box-shadow: 
-    0 4px 12px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    0 1px 3px rgba(0, 0, 0, 0.1),
+    0 1px 2px rgba(0, 0, 0, 0.06);
 }
 
 .controls-bar button:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: var(--ui-accent);
   color: var(--ui-btn-text);
-  border-color: rgba(255, 255, 255, 0.3);
-  transform: translateY(-2px);
+  border-color: var(--ui-accent);
+  transform: translateY(-1px);
   box-shadow: 
-    0 12px 24px rgba(0, 0, 0, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 0 20px rgba(88, 166, 255, 0.15);
+    0 4px 6px rgba(0, 0, 0, 0.1),
+    0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 .controls-bar button.active {
-  background: rgba(88, 166, 255, 0.2);
+  background: var(--ui-accent);
   color: var(--ui-btn-text);
-  border-color: rgba(88, 166, 255, 0.4);
+  border-color: var(--ui-accent);
   box-shadow: 
-    0 6px 16px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2),
-    0 0 15px rgba(88, 166, 255, 0.2);
+    0 2px 4px rgba(79, 70, 229, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .align-group {
@@ -328,24 +400,26 @@ body.theme-minimal h1 {
 input[type="text"] {
   padding: 10px 15px;
   border: 1px solid var(--ui-border);
-  border-radius: 10px;
-  font-size: 14px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
   outline: none;
   min-width: 200px;
   flex-grow: 1;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  background: var(--ui-panel-bg);
   color: var(--ui-text);
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  box-shadow: 
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 input[type="text"]:focus {
   border-color: var(--ui-accent);
-  background: rgba(255, 255, 255, 0.08);
+  background: var(--ui-panel-bg);
   box-shadow: 
-    0 0 0 3px rgba(88, 166, 255, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    0 0 0 3px rgba(79, 70, 229, 0.15),
+    0 2px 4px rgba(0, 0, 0, 0.06);
 }
 
 /* ==========================================================================
@@ -404,6 +478,7 @@ input[type="text"]:focus {
 
 /* ==========================================================================
    Resume Preview Container - Fixed A4 Layout
+   Uses Inter font for optimal screen and print readability
    ========================================================================== */
 #resume-container {
   /* Фиксированные размеры A4 */
@@ -415,12 +490,15 @@ input[type="text"]:focus {
   color: var(--resume-text);
   border: none;
   border-radius: 0;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 
+    0 4px 6px rgba(0, 0, 0, 0.07),
+    0 2px 4px rgba(0, 0, 0, 0.06);
   box-sizing: border-box;
   overflow: visible;
-  /* Базовый кегль и шрифт для стабильности */
-  font-size: 12pt;
-  font-family: 'DejaVu Sans', 'Segoe UI', Arial, sans-serif;
+  /* Modern typography stack for resume */
+  font-size: 11pt;
+  font-family: var(--font-resume);
+  line-height: var(--leading-normal);
 }
 
 /* ==========================================================================
@@ -488,62 +566,69 @@ p {
 }
 
 /* ==========================================================================
-   Typography
+   Typography — Modern Type Scale
+   Using CSS custom properties for consistent sizing
    ========================================================================== */
 h1, h2, h3 {
   margin: 0;
   color: var(--primary-color);
+  font-family: var(--font-heading);
+  font-weight: var(--font-bold);
+  line-height: var(--leading-tight);
 }
 
 h1 {
-  font-size: 3em;
-  line-height: 1.1;
-  margin-bottom: 10px;
+  font-size: var(--text-3xl);    /* 30px */
+  line-height: var(--leading-none);
+  margin-bottom: 12px;
   color: var(--heading-color);
-  letter-spacing: 0.5px;
+  letter-spacing: var(--tracking-tight);
 }
 
 h2 {
-  font-weight: 400;
-  color: #64748b;
-  font-size: 1.5em;
+  font-weight: var(--font-medium);
   color: var(--muted-color);
+  font-size: var(--text-2xl);    /* 24px */
+  line-height: var(--leading-snug);
 }
 
 h3 {
-  font-size: 1.2em;
+  font-size: var(--text-xl);     /* 20px */
   color: var(--heading-color);
-  border-bottom: 2px solid #eee;
-  padding-bottom: 4px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 6px;
   margin-bottom: 20px;
-  margin-top: 30px;
+  margin-top: 28px;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: var(--tracking-wide);
+  font-weight: var(--font-semibold);
 }
 
 .role-org {
-  font-size: 0.95rem;
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
 }
 
 .period {
-  font-size: 0.85rem;
+  font-size: var(--text-sm);
   color: var(--muted-color);
   white-space: nowrap;
+  font-weight: var(--font-normal);
 }
 
 ul {
   list-style: disc;
   padding-left: 20px;
-  margin-top: 4px;
-  color: #475569;
+  margin-top: 6px;
+  color: var(--color-secondary);
   page-break-inside: avoid;
   break-inside: avoid;
 }
 
 li {
-  font-size: 0.9rem;
-  margin-bottom: 2px;
-  line-height: 1.5;
+  font-size: var(--text-base);
+  margin-bottom: 4px;
+  line-height: var(--leading-normal);
   page-break-inside: avoid;
   break-inside: avoid;
   orphans: 2;
@@ -551,7 +636,8 @@ li {
 }
 
 .skill-category {
-  font-size: 0.9rem;
+  font-size: var(--text-base);
+  font-weight: var(--font-medium);
 }
 
 .skills-grid {
@@ -562,18 +648,18 @@ li {
 }
 
 /* ==========================================================================
-   README Content Styling
+   README Content Styling - Monospace for code
    ========================================================================== */
 .readme-content {
-  font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+  font-family: var(--font-mono);
   font-size: 9pt;
-  line-height: 1.4;
+  line-height: var(--leading-normal);
   white-space: pre-wrap;
   word-wrap: break-word;
   background: #f6f8fa;
   padding: 15px;
   border-radius: 6px;
-  border: 1px solid #d0d7de;
+  border: 1px solid var(--border-color);
   max-height: 400px;
   overflow-y: auto;
   color: #24292f;
