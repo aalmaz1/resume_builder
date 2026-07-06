@@ -249,6 +249,7 @@ export class ATSService {
     let totalScore = 0;
     for (const key of Object.keys(breakdown) as Array<keyof typeof breakdown>) {
       const component = breakdown[key];
+      if (!component) continue;
       totalScore += (component.score / component.maxScore) * component.weight * 100;
     }
 
