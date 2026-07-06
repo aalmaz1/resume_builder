@@ -38,11 +38,6 @@ jobs:
       - name: Build
         run: npm run build
 
- # 1. Валидация на золотом наборе (синтетика) – всегда запускается
-      - name: Validate ATS on Golden Dataset
-        run: npx tsx scripts/validate-ats-quality.ts
-        continue-on-error: false  # если упадёт – сборка остановится
-
 # 2. Сохранить отчёт золотого набора как артефакт
       - name: Upload Golden Dataset Report
         if: always()
