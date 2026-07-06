@@ -272,13 +272,20 @@ document.addEventListener('DOMContentLoaded', () => {
     );
   });
 
-  // ATS Check Button - Show inline card, not modal
+  // ATS Check Button - Toggle panel visibility
   document.getElementById('ats-check')?.addEventListener('click', () => {
     console.log('🔍 ATS Check clicked');
     console.log('currentResumeData:', currentResumeData);
     
     if (!currentResumeData) {
       console.error('❌ No resume data available');
+      return;
+    }
+
+    // Check if panel is already visible - if so, hide it
+    const panel = document.getElementById('ats-panel');
+    if (panel && !panel.classList.contains('hidden')) {
+      panel.classList.add('hidden');
       return;
     }
 
