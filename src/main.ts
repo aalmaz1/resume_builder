@@ -6,10 +6,12 @@ import { generateDemoProfile } from './demo-profile';
 import { translations, Lang, defaultLang } from './translations';
 import { ATSService } from './services/ATSService';
 import { ATSResult } from './types/ats';
+import { DESIGNS, getRandomDesign, DesignTemplate } from './designs/design-templates';
 
 let currentResumeData: ResumeData | null = null;
 let currentTextAlign: 'left' | 'center' | 'justify' = 'left';
 let currentLang: Lang = defaultLang;
+let currentDesign: string = 'classic'; // Track current design
 const atsService = new ATSService();
 
 const defaultData: ResumeData = generateDemoProfile();
@@ -108,6 +110,110 @@ function applyTextAlign(container: HTMLElement, align: 'left' | 'center' | 'just
   });
 }
 
+/**
+ * Apply design theme to resume
+ */
+function applyDesign(designId: string): void {
+  const design = DESIGNS.find(d => d.id === designId);
+  if (!design) return;
+  
+  // Remove all existing theme classes
+  const bodyClasses = Array.from(document.body.classList);
+  bodyClasses.forEach(cls => {
+    if (cls.startsWith('theme-')) {
+      document.body.classList.remove(cls);
+    }
+  });
+  
+  // Add new theme class
+  document.body.classList.add(design.cssClass);
+  currentDesign = designId;
+  
+  // Save to localStorage
+  localStorage.setItem('resume-design', designId);
+  
+  // Update select dropdown
+  const designSelect = document.getElementById('design-select') as HTMLSelectElement;
+  if (designSelect) {
+    designSelect.value = designId;
+  }
+}
+
+/**
+ * Initialize design selector dropdown
+ */
+function initializeDesignSelector(): void {
+  const designSelect = document.getElementById('design-select') as HTMLSelectElement;
+  if (!designSelect) return;
+  
+  // Clear existing options
+  designSelect.innerHTML = '';
+  
+  // Populate with all designs grouped by category
+  let currentCategory = '';
+  DESIGNS.forEach(design => {
+    // Add category optgroup if category changed
+    if (design.category !== currentCategory) {
+      if (currentCategory !== '') {
+        const lastOptgroup = designSelect.querySelector('optgroup:last-child');
+        if (lastOptgroup) {
+          designSelect.appendChild(lastOptgroup);
+        }
+      }
+      
+      const optgroup = document.createElement('optgroup');
+      optgroup.label = design.category.charAt(0).toUpperCase() + design.category.slice(1);
+      optgroup.dataset.category = design.category;
+      currentCategory = design.category;
+    }
+    
+    const option = document.createElement('option');
+    option.value = design.id;
+    option.textContent = `${design.name} — ${design.description}`;
+    option.dataset.category = design.category;
+    
+    // Find or create the right optgroup and append
+    let targetOptgroup = designSelect.querySelector(`optgroup[data-category=\"${design.category}\"]`);
+    if (!targetOptgroup) {
+      targetOptgroup = document.createElement('optgroup');
+      (targetOptgroup as HTMLOptGroupElement).label = design.category.charAt(0).toUpperCase() + design.category.slice(1);
+      (targetOptgroup as HTMLElement).dataset.category = design.category;
+      designSelect.appendChild(targetOptgroup);
+    }
+    targetOptgroup.appendChild(option);
+  });
+  
+  // Set initial value from saved state or default
+  const savedDesign = localStorage.getItem('resume-design') || 'classic';
+  if (DESIGNS.some(d => d.id === savedDesign)) {
+    designSelect.value = savedDesign;
+    currentDesign = savedDesign;
+  }
+  
+  // Listen for changes
+  designSelect.addEventListener('change', (e) => {
+    const selectedDesign = (e.target as HTMLSelectElement).value;
+    applyDesign(selectedDesign);
+  });
+}
+
+/**
+ * Handle random design button click
+ */
+function handleRandomDesign(): void {
+  const randomDesign = getRandomDesign();
+  applyDesign(randomDesign.id);
+  
+  // Visual feedback animation
+  const btn = document.getElementById('random-design-btn');
+  if (btn) {
+    btn.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      btn.style.transform = 'scale(1)';
+    }, 100);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('resume-container');
   const loader = document.getElementById('loader');
@@ -164,22 +270,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Design Buttons (Classic, Modern, Minimal)
-  document.querySelectorAll('.design-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const design = btn.getAttribute('data-design');
-      if (design) {
-        // Remove all theme classes
-        document.body.classList.remove('theme-classic', 'theme-modern', 'theme-minimal');
-        // Add selected theme class
-        document.body.classList.add(`theme-${design}`);
-        
-        // Update active button state
-        document.querySelectorAll('.design-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-      }
-    });
-  });
+  // Initialize Design Selector with all 30 designs
+  initializeDesignSelector();
+  
+  // Apply initial design from saved state
+  applyDesign(currentDesign);
+
+  // Random Design Button
+  const randomDesignBtn = document.getElementById('random-design-btn');
+  randomDesignBtn?.addEventListener('click', handleRandomDesign);
 
   // Text Alignment Buttons
   document.querySelectorAll('.align-btn').forEach(btn => {

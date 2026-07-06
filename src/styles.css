@@ -227,6 +227,799 @@ body.theme-minimal h1 {
 }
 
 /* ==========================================================================
+   DESIGN TEMPLATES CSS — 30 Professional Resume Designs
+   Each design uses CSS custom properties for easy theming
+   ========================================================================== */
+
+/* ==================== PROFESSIONAL DESIGNS ==================== */
+
+/* Executive - Authoritative senior-level design */
+body.theme-executive {
+  --primary-color: #1a365d;
+  --accent-color: #2c5282;
+  --font-family: var(--font-heading);
+  --padding-unit: 18px;
+  --heading-color: #1a202c;
+  --muted-color: #4a5568;
+  --bg-surface: #ffffff;
+  --border-color: #cbd5e0;
+}
+body.theme-executive h1 {
+  font-size: 2.5rem;
+  color: var(--primary-color);
+  border-bottom: 4px solid var(--accent-color);
+  padding-bottom: 8px;
+}
+body.theme-executive .section-block h3 {
+  background: linear-gradient(180deg, #f7fafc 0%, #ffffff 100%);
+  border-left: 5px solid var(--accent-color);
+  padding: 12px 16px;
+  margin-top: 24px;
+}
+
+/* Corporate - Clean business identity */
+body.theme-corporate {
+  --primary-color: #2d3748;
+  --accent-color: #3182ce;
+  --font-family: var(--font-body);
+  --padding-unit: 20px;
+  --heading-color: #1a202c;
+  --muted-color: #718096;
+  --bg-surface: #ffffff;
+  --border-color: #e2e8f0;
+}
+body.theme-corporate #resume-container {
+  border-top: 6px solid var(--accent-color);
+}
+body.theme-corporate h1 {
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+body.theme-corporate .section-block h3 {
+  color: var(--accent-color);
+  border-bottom: 2px solid var(--accent-color);
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Formal - Strict traditional layout */
+body.theme-formal {
+  --primary-color: #000000;
+  --accent-color: #000000;
+  --font-family: var(--font-heading);
+  --padding-unit: 16px;
+  --heading-color: #000000;
+  --muted-color: #333333;
+  --bg-surface: #ffffff;
+  --border-color: #cccccc;
+}
+body.theme-formal h1 {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 8px;
+}
+body.theme-formal .resume-header {
+  text-align: center;
+  border-bottom: 3px double var(--border-color);
+  padding-bottom: 16px;
+}
+body.theme-formal .section-block h3 {
+  text-align: center;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-widest, 0.1em);
+}
+
+/* Diplomatic - Balanced neutral style */
+body.theme-diplomatic {
+  --primary-color: #4a5568;
+  --accent-color: #718096;
+  --font-family: var(--font-body);
+  --padding-unit: 18px;
+  --heading-color: #2d3748;
+  --muted-color: #a0aec0;
+  --bg-surface: #ffffff;
+  --border-color: #e2e8f0;
+}
+body.theme-diplomatic h1 {
+  color: var(--heading-color);
+  font-weight: var(--font-semibold);
+}
+body.theme-diplomatic .section-block h3 {
+  background: #f7fafc;
+  padding: 10px 14px;
+  border-radius: 4px;
+  color: var(--primary-color);
+}
+
+/* ==================== CREATIVE DESIGNS ==================== */
+
+/* Creative - Vibrant for creative professionals */
+body.theme-creative {
+  --primary-color: #dd6b20;
+  --accent-color: #ed8936;
+  --font-family: var(--font-body);
+  --padding-unit: 20px;
+  --heading-color: #2d3748;
+  --muted-color: #a0aec0;
+  --bg-surface: #ffffff;
+  --border-color: #fed7aa;
+}
+body.theme-creative h1 {
+  background: linear-gradient(135deg, #dd6b20 0%, #ed8936 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: var(--font-bold);
+}
+body.theme-creative .section-block h3 {
+  color: var(--primary-color);
+  border-left: 4px solid var(--accent-color);
+  padding-left: 12px;
+}
+body.theme-creative #resume-container {
+  border-left: 4px solid var(--accent-color);
+  border-right: 4px solid var(--accent-color);
+}
+
+/* Artistic - Bold artistic expression */
+body.theme-artistic {
+  --primary-color: #805ad5;
+  --accent-color: #d69e2e;
+  --font-family: var(--font-heading);
+  --padding-unit: 22px;
+  --heading-color: #2d3748;
+  --muted-color: #718096;
+  --bg-surface: #fffff0;
+  --border-color: #e9d8fd;
+}
+body.theme-artistic h1 {
+  font-style: italic;
+  color: var(--primary-color);
+  text-shadow: 2px 2px 0px rgba(214, 158, 46, 0.2);
+}
+body.theme-artistic .section-block h3 {
+  background: linear-gradient(90deg, rgba(128, 90, 213, 0.1) 0%, transparent 100%);
+  border-left: 6px solid var(--accent-color);
+  padding: 12px 16px;
+  font-style: italic;
+}
+
+/* Designer - Modern portfolio style */
+body.theme-designer {
+  --primary-color: #ec4899;
+  --accent-color: #8b5cf6;
+  --font-family: var(--font-body);
+  --padding-unit: 24px;
+  --heading-color: #1f2937;
+  --muted-color: #9ca3af;
+  --bg-surface: #ffffff;
+  --border-color: #f3f4f6;
+}
+body.theme-designer #resume-container {
+  border-radius: 16px;
+  overflow: hidden;
+}
+body.theme-designer h1 {
+  font-size: 2.75rem;
+  background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+body.theme-designer .section-block h3 {
+  display: inline-block;
+  background: linear-gradient(135deg, #fce7f3 0%, #ede9fe 100%);
+  padding: 8px 20px;
+  border-radius: 20px;
+  color: #1f2937;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Vibrant - Colorful energetic layout */
+body.theme-vibrant {
+  --primary-color: #059669;
+  --accent-color: #10b981;
+  --font-family: var(--font-body);
+  --padding-unit: 20px;
+  --heading-color: #064e3b;
+  --muted-color: #6ee7b7;
+  --bg-surface: #ecfdf5;
+  --border-color: #a7f3d0;
+}
+body.theme-vibrant h1 {
+  color: var(--primary-color);
+  font-weight: var(--font-bold);
+}
+body.theme-vibrant .section-block h3 {
+  background: var(--accent-color);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Playful - Friendly approachable design */
+body.theme-playful {
+  --primary-color: #f59e0b;
+  --accent-color: #fbbf24;
+  --font-family: var(--font-body);
+  --padding-unit: 18px;
+  --heading-color: #78350f;
+  --muted-color: #d97706;
+  --bg-surface: #fffbeb;
+  --border-color: #fde68a;
+}
+body.theme-playful h1 {
+  color: var(--primary-color);
+  border-radius: 12px;
+  display: inline-block;
+  padding: 4px 16px;
+  background: rgba(245, 158, 11, 0.1);
+}
+body.theme-playful .section-block h3 {
+  color: var(--primary-color);
+  border-bottom: 3px dashed var(--accent-color);
+  padding-bottom: 6px;
+}
+
+/* ==================== MINIMAL DESIGNS ==================== */
+
+/* Pure - Ultra-clean minimalist */
+body.theme-pure {
+  --primary-color: #111827;
+  --accent-color: #6b7280;
+  --font-family: var(--font-body);
+  --padding-unit: 28px;
+  --heading-color: #111827;
+  --muted-color: #9ca3af;
+  --bg-surface: #ffffff;
+  --border-color: #f3f4f6;
+}
+body.theme-pure h1 {
+  font-weight: var(--font-light, 300);
+  letter-spacing: var(--tracking-tight);
+  margin-bottom: 4px;
+}
+body.theme-pure .section-block h3 {
+  font-weight: var(--font-normal);
+  color: var(--muted-color);
+  border: none;
+  padding: 0;
+  margin-top: 32px;
+  margin-bottom: 16px;
+  text-transform: none;
+  letter-spacing: var(--tracking-normal);
+}
+body.theme-pure .section-block {
+  margin-bottom: 40px;
+}
+
+/* Zen - Calm whitespace-focused */
+body.theme-zen {
+  --primary-color: #57534e;
+  --accent-color: #78716c;
+  --font-family: var(--font-body);
+  --padding-unit: 32px;
+  --heading-color: #44403c;
+  --muted-color: #a8a29e;
+  --bg-surface: #fafaf9;
+  --border-color: #e7e5e4;
+}
+body.theme-zen h1 {
+  font-weight: var(--font-normal);
+  color: var(--heading-color);
+  letter-spacing: var(--tracking-wide);
+}
+body.theme-zen .section-block h3 {
+  text-align: center;
+  color: var(--accent-color);
+  border: none;
+  position: relative;
+  padding: 0 0 12px 0;
+}
+body.theme-zen .section-block h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40px;
+  height: 2px;
+  background: var(--accent-color);
+}
+
+/* Mono - Monospace developer style */
+body.theme-mono {
+  --primary-color: #1f2937;
+  --accent-color: #10b981;
+  --font-family: var(--font-mono);
+  --padding-unit: 16px;
+  --heading-color: #111827;
+  --muted-color: #6b7280;
+  --bg-surface: #ffffff;
+  --border-color: #e5e7eb;
+}
+body.theme-mono * {
+  font-family: var(--font-mono);
+}
+body.theme-mono h1::before {
+  content: '> ';
+  color: var(--accent-color);
+}
+body.theme-mono .section-block h3::before {
+  content: '# ';
+  color: var(--accent-color);
+}
+body.theme-mono .section-block h3 {
+  background: #f9fafb;
+  padding: 8px 12px;
+  border-radius: 4px;
+}
+
+/* Swiss - Grid-based Swiss design */
+body.theme-swiss {
+  --primary-color: #000000;
+  --accent-color: #ff0000;
+  --font-family: var(--font-body);
+  --padding-unit: 20px;
+  --heading-color: #000000;
+  --muted-color: #666666;
+  --bg-surface: #ffffff;
+  --border-color: #000000;
+}
+body.theme-swiss h1 {
+  font-weight: var(--font-bold);
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+}
+body.theme-swiss .section-block h3 {
+  background: #000000;
+  color: #ffffff;
+  padding: 8px 16px;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: var(--tracking-wider);
+}
+body.theme-swiss .entity-item {
+  border-left: 2px solid #000000;
+  padding-left: 16px;
+}
+
+/* ==================== TECH DESIGNS ==================== */
+
+/* Developer - IDE-inspired dark accents */
+body.theme-developer {
+  --primary-color: #61dafb;
+  --accent-color: #00d8ff;
+  --font-family: var(--font-mono);
+  --padding-unit: 16px;
+  --heading-color: #282c34;
+  --muted-color: #abb2bf;
+  --bg-surface: #ffffff;
+  --border-color: #e5e7eb;
+}
+body.theme-developer h1 {
+  color: #282c34;
+  font-family: var(--font-mono);
+}
+body.theme-developer h1::before {
+  content: 'const ';
+  color: #c678dd;
+}
+body.theme-developer h1::after {
+  content: ' = {}';
+  color: #c678dd;
+}
+body.theme-developer .section-block h3 {
+  color: #e5c07b;
+  background: #282c34;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+body.theme-developer .period {
+  color: #98c379;
+}
+
+/* Startup - Fresh startup culture vibe */
+body.theme-startup {
+  --primary-color: #3b82f6;
+  --accent-color: #60a5fa;
+  --font-family: var(--font-body);
+  --padding-unit: 20px;
+  --heading-color: #1e3a8a;
+  --muted-color: #93c5fd;
+  --bg-surface: #eff6ff;
+  --border-color: #bfdbfe;
+}
+body.theme-startup h1 {
+  color: var(--primary-color);
+  font-weight: var(--font-bold);
+}
+body.theme-startup .section-block h3 {
+  display: inline-block;
+  border-bottom: 3px solid var(--accent-color);
+  padding-bottom: 4px;
+  color: var(--heading-color);
+}
+
+/* Cyber - Futuristic cyber aesthetics */
+body.theme-cyber {
+  --primary-color: #00ffff;
+  --accent-color: #ff00ff;
+  --font-family: var(--font-mono);
+  --padding-unit: 18px;
+  --heading-color: #0a0a0a;
+  --muted-color: #666666;
+  --bg-surface: #000000;
+  --border-color: #333333;
+}
+body.theme-cyber #resume-container {
+  background: #0a0a0a;
+  color: #00ffff;
+  border: 2px solid #00ffff;
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+body.theme-cyber h1 {
+  color: #00ffff;
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  font-family: var(--font-mono);
+}
+body.theme-cyber .section-block h3 {
+  color: #ff00ff;
+  border: 1px solid #ff00ff;
+  padding: 8px 16px;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  box-shadow: 0 0 10px rgba(255, 0, 255, 0.3);
+}
+body.theme-cyber p, body.theme-cyber li, body.theme-cyber span {
+  color: #00ffff !important;
+}
+body.theme-cyber .period {
+  color: #ff00ff !important;
+}
+
+/* Terminal - Command-line inspired */
+body.theme-terminal {
+  --primary-color: #22c55e;
+  --accent-color: #16a34a;
+  --font-family: var(--font-mono);
+  --padding-unit: 14px;
+  --heading-color: #dcfce7;
+  --muted-color: #86efac;
+  --bg-surface: #0c0a09;
+  --border-color: #292524;
+}
+body.theme-terminal #resume-container {
+  background: #0c0a09;
+  color: #22c55e;
+  border: 1px solid #292524;
+}
+body.theme-terminal h1::before {
+  content: '$ ';
+  color: #22c55e;
+}
+body.theme-terminal h1,
+body.theme-terminal p,
+body.theme-terminal span,
+body.theme-terminal li {
+  color: #22c55e !important;
+  font-family: var(--font-mono);
+}
+body.theme-terminal .section-block h3::before {
+  content: '## ';
+  color: #22c55e;
+}
+body.theme-terminal .section-block h3 {
+  color: #22c55e;
+  border: none;
+  font-family: var(--font-mono);
+}
+body.theme-terminal .period {
+  color: #86efac !important;
+}
+
+/* ==================== BUSINESS DESIGNS ==================== */
+
+/* Business - Professional business card style */
+body.theme-business {
+  --primary-color: #1e40af;
+  --accent-color: #3b82f6;
+  --font-family: var(--font-body);
+  --padding-unit: 18px;
+  --heading-color: #1e3a8a;
+  --muted-color: #60a5fa;
+  --bg-surface: #ffffff;
+  --border-color: #dbeafe;
+}
+body.theme-business .resume-header {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  padding: 24px;
+  margin: -20mm -20mm 20px -20mm;
+  border-radius: 0 0 12px 12px;
+}
+body.theme-business .resume-header h1,
+body.theme-business .resume-header h2,
+body.theme-business .resume-header p {
+  color: white !important;
+}
+body.theme-business .section-block h3 {
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 8px;
+}
+
+/* Finance - Conservative financial sector */
+body.theme-finance {
+  --primary-color: #064e3b;
+  --accent-color: #059669;
+  --font-family: var(--font-heading);
+  --padding-unit: 16px;
+  --heading-color: #064e3b;
+  --muted-color: #6ee7b7;
+  --bg-surface: #ffffff;
+  --border-color: #a7f3d0;
+}
+body.theme-finance h1 {
+  color: var(--primary-color);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-tight);
+}
+body.theme-finance .section-block h3 {
+  background: #ecfdf5;
+  color: var(--primary-color);
+  padding: 10px 14px;
+  border-left: 4px solid var(--accent-color);
+  text-transform: uppercase;
+  font-size: 0.875rem;
+}
+
+/* Consulting - McKinsey-style format */
+body.theme-consulting {
+  --primary-color: #1e3a5f;
+  --accent-color: #3b5998;
+  --font-family: var(--font-body);
+  --padding-unit: 20px;
+  --heading-color: #1e3a5f;
+  --muted-color: #6b7280;
+  --bg-surface: #ffffff;
+  --border-color: #e5e7eb;
+}
+body.theme-consulting h1 {
+  font-size: 2rem;
+  color: var(--primary-color);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wider);
+}
+body.theme-consulting .section-block h3 {
+  color: var(--accent-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+  margin-top: 24px;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Legal - Law firm traditional style */
+body.theme-legal {
+  --primary-color: #374151;
+  --accent-color: #6b7280;
+  --font-family: var(--font-heading);
+  --padding-unit: 18px;
+  --heading-color: #111827;
+  --muted-color: #9ca3af;
+  --bg-surface: #ffffff;
+  --border-color: #d1d5db;
+}
+body.theme-legal h1 {
+  font-size: 2.25rem;
+  text-align: center;
+  margin-bottom: 4px;
+}
+body.theme-legal .resume-header {
+  border-bottom: 4px double var(--border-color);
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+}
+body.theme-legal .section-block h3 {
+  text-transform: uppercase;
+  color: var(--primary-color);
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 8px;
+  letter-spacing: var(--tracking-widest, 0.1em);
+  font-size: 0.875rem;
+}
+
+/* Academic - Research and academia focused */
+body.theme-academic {
+  --primary-color: #7c2d12;
+  --accent-color: #ea580c;
+  --font-family: var(--font-heading);
+  --padding-unit: 18px;
+  --heading-color: #431407;
+  --muted-color: #9a3412;
+  --bg-surface: #fef3c7;
+  --border-color: #fdba74;
+}
+body.theme-academic h1 {
+  font-style: italic;
+  color: var(--primary-color);
+}
+body.theme-academic .section-block h3 {
+  background: #fef3c7;
+  color: var(--primary-color);
+  padding: 8px 16px;
+  border-top: 2px solid var(--accent-color);
+  border-bottom: 2px solid var(--accent-color);
+  font-style: italic;
+}
+
+/* ==================== ELEGANT DESIGNS ==================== */
+
+/* Elegant - Sophisticated luxury design */
+body.theme-elegant {
+  --primary-color: #7c3aed;
+  --accent-color: #a78bfa;
+  --font-family: var(--font-heading);
+  --padding-unit: 22px;
+  --heading-color: #5b21b6;
+  --muted-color: #c4b5fd;
+  --bg-surface: #faf5ff;
+  --border-color: #e9d5ff;
+}
+body.theme-elegant h1 {
+  font-style: italic;
+  color: var(--primary-color);
+  font-weight: var(--font-bold);
+}
+body.theme-elegant .section-block h3 {
+  color: var(--primary-color);
+  text-align: center;
+  position: relative;
+  padding: 12px 0;
+  border: none;
+}
+body.theme-elegant .section-block h3::before,
+body.theme-elegant .section-block h3::after {
+  content: '❧';
+  position: absolute;
+  top: 50%;
+  color: var(--accent-color);
+}
+body.theme-elegant .section-block h3::before {
+  left: 0;
+}
+body.theme-elegant .section-block h3::after {
+  right: 0;
+}
+
+/* Luxury - Premium high-end aesthetic */
+body.theme-luxury {
+  --primary-color: #b45309;
+  --accent-color: #d97706;
+  --font-family: var(--font-heading);
+  --padding-unit: 24px;
+  --heading-color: #78350f;
+  --muted-color: #fcd34d;
+  --bg-surface: #fffbeb;
+  --border-color: #fde68a;
+}
+body.theme-luxury h1 {
+  color: var(--primary-color);
+  letter-spacing: var(--tracking-widest, 0.1em);
+  text-transform: uppercase;
+}
+body.theme-luxury .section-block h3 {
+  background: linear-gradient(90deg, transparent 0%, rgba(217, 119, 6, 0.1) 50%, transparent 100%);
+  color: var(--primary-color);
+  text-align: center;
+  padding: 12px;
+  border: none;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+body.theme-luxury #resume-container {
+  border: 3px double var(--accent-color);
+}
+
+/* Refined - Subtle refined elegance */
+body.theme-refined {
+  --primary-color: #be185d;
+  --accent-color: #ec4899;
+  --font-family: var(--font-heading);
+  --padding-unit: 20px;
+  --heading-color: #831843;
+  --muted-color: #f9a8d4;
+  --bg-surface: #fdf2f8;
+  --border-color: #fbcfe8;
+}
+body.theme-refined h1 {
+  color: var(--primary-color);
+  font-weight: var(--font-semibold);
+}
+body.theme-refined .section-block h3 {
+  color: var(--primary-color);
+  border-left: 3px solid var(--accent-color);
+  padding-left: 12px;
+  font-style: italic;
+}
+
+/* ==================== BOLD DESIGNS ==================== */
+
+/* Bold - Strong impactful presence */
+body.theme-bold {
+  --primary-color: #dc2626;
+  --accent-color: #ef4444;
+  --font-family: var(--font-body);
+  --padding-unit: 20px;
+  --heading-color: #991b1b;
+  --muted-color: #f87171;
+  --bg-surface: #fef2f2;
+  --border-color: #fecaca;
+}
+body.theme-bold h1 {
+  background: var(--primary-color);
+  color: white;
+  padding: 12px 24px;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+}
+body.theme-bold .section-block h3 {
+  background: var(--accent-color);
+  color: white;
+  padding: 10px 16px;
+  text-transform: uppercase;
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* Impact - Maximum visual impact */
+body.theme-impact {
+  --primary-color: #000000;
+  --accent-color: #ffffff;
+  --font-family: var(--font-body);
+  --padding-unit: 24px;
+  --heading-color: #000000;
+  --muted-color: #666666;
+  --bg-surface: #ffffff;
+  --border-color: #000000;
+}
+body.theme-impact h1 {
+  font-size: 3rem;
+  font-weight: var(--font-black, 900);
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+body.theme-impact .section-block h3 {
+  background: #000000;
+  color: #ffffff;
+  padding: 12px 20px;
+  text-transform: uppercase;
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-wider);
+  margin-top: 32px;
+}
+body.theme-impact .entity-item {
+  border-left: 4px solid #000000;
+  padding-left: 20px;
+}
+
+/* ==========================================================================
    Controls Bar (theme switcher + print button) - Premium Glassmorphism Style
    ========================================================================== */
 .controls-bar {
@@ -321,6 +1114,69 @@ body.theme-minimal h1 {
 .lang-select option {
   background: var(--ui-panel-bg);
   color: var(--ui-text);
+}
+
+/* Design Select Dropdown - Same styling as lang-select */
+.design-select {
+  padding: 10px 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--ui-text);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 4px 12px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  outline: none;
+  min-width: 200px;
+  max-width: 350px;
+}
+
+.design-select:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 24px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 20px rgba(88, 166, 255, 0.15);
+}
+
+.design-select option {
+  background: var(--ui-panel-bg);
+  color: var(--ui-text);
+  padding: 8px 12px;
+}
+
+.design-select optgroup {
+  background: var(--ui-bg);
+  color: var(--ui-text);
+  font-weight: 600;
+}
+
+/* Random Design Button */
+.random-design-btn {
+  padding: 10px 16px !important;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899) !important;
+  color: white !important;
+  border: none !important;
+  font-weight: 600 !important;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3) !important;
+  transition: all 0.2s ease !important;
+}
+
+.random-design-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.5) !important;
+}
+
+.random-design-btn:active {
+  transform: scale(0.95) !important;
 }
 
 .controls-bar button {

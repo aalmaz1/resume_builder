@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pretext Resume Builder | KNU Project</title>
     
+    <!-- Google Fonts - 3 Typography Systems for A/B Testing -->
+    <!-- System A: Professional (Merriweather + Inter) - Strict, Business -->
+    <!-- System B: Friendly (Poppins + Open Sans) - Modern, Creative -->
+    <!-- System C: Neutral (System Fonts) - Universal, Fastest -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Merriweather:wght@400;700;900&family=Open+Sans:wght@400;600;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    
+    
     <!-- Print Styles - Critical for PDF Export -->
     <style id="print-styles">
         @media print {
@@ -87,9 +96,9 @@
             }
         }
     </style>
-  <script type="module" crossorigin src="/assets/index-AQCbTkc4.js"></script>
+  <script type="module" crossorigin src="/assets/index-BFyq8vHe.js"></script>
   <link rel="modulepreload" crossorigin href="/assets/rolldown-runtime-CNC7AqOf.js">
-  <link rel="stylesheet" crossorigin href="/assets/index-CFFna6a0.css">
+  <link rel="stylesheet" crossorigin href="/assets/index-2JQdgrqg.css">
 </head>
 <body class="theme-classic">
 
@@ -109,9 +118,10 @@
 
         <div class="design-group">
             <span class="group-label" data-i18n="resumeDesignLabel">Resume Design:</span>
-            <button class="design-btn active" data-design="classic">Classic</button>
-            <button class="design-btn" data-design="modern">Modern</button>
-            <button class="design-btn" data-design="minimal">Minimal</button>
+            <select id="design-select" class="design-select">
+                <!-- Designs will be populated dynamically from design-templates.ts -->
+            </select>
+            <button id="random-design-btn" class="random-design-btn" title="Random Design">🎲 Random</button>
         </div>
 
         <div class="align-group">
