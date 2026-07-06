@@ -92,7 +92,7 @@ describe('ATSService', () => {
 
       expect(result.score).toBeLessThan(30);
       expect(result.issues.some(i => i.type === 'error')).toBe(true);
-      expect(result.issues.some(i => i.message.includes('Email'))).toBe(true);
+      expect(result.issues.some(i => i.message.includes('Email is missing'))).toBe(true);
     });
   });
 
@@ -102,7 +102,7 @@ describe('ATSService', () => {
       const result = atsService.analyze(fullResume);
 
       expect(result.score).toBeGreaterThanOrEqual(80);
-      expect(result.issues.some(i => i.type === 'success')).toBe(true);
+      expect(result.issues.some(i => i.message.includes('ATS-friendly'))).toBe(true);
     });
   });
 
@@ -118,7 +118,7 @@ describe('ATSService', () => {
 
       const result = atsService.analyze(resumeWithoutEmail);
 
-      expect(result.issues.some(i => i.message.includes('Email'))).toBe(true);
+      expect(result.issues.some(i => i.message === '❌ Email is missing')).toBe(true);
       // Verify the error issue type is present
       expect(result.issues.some(i => i.type === 'error')).toBe(true);
     });
@@ -133,7 +133,7 @@ describe('ATSService', () => {
 
       const result = atsService.analyze(resumeWithoutSkills);
 
-      expect(result.issues.some(i => i.message.includes('навыков'))).toBe(true);
+      expect(result.issues.some(i => i.message === '❌ Skills section is empty')).toBe(true);
       // Verify the error issue type is present
       expect(result.issues.some(i => i.type === 'error')).toBe(true);
     });
@@ -148,7 +148,7 @@ describe('ATSService', () => {
 
       const result = atsService.analyze(resumeWithoutProjects);
 
-      expect(result.issues.some(i => i.message.includes('опыта'))).toBe(true);
+      expect(result.issues.some(i => i.message === '❌ No projects found')).toBe(true);
       // Verify the error issue type is present
       expect(result.issues.some(i => i.type === 'error')).toBe(true);
     });
@@ -182,7 +182,7 @@ describe('ATSService', () => {
 
       const result = atsService.analyze(resumeWithShortSummary);
 
-      expect(result.issues.some(i => i.message.includes('короткий'))).toBe(true);
+      expect(result.issues.some(i => i.message === '⚠ Summary is too short')).toBe(true);
     });
   });
 
@@ -195,7 +195,7 @@ describe('ATSService', () => {
 
       const result = atsService.analyze(resumeWithKeywords);
 
-      expect(result.issues.some(i => i.message.includes('ключевых'))).toBe(true);
+      expect(result.issues.some(i => i.message.includes('technical keywords'))).toBe(true);
     });
 
     it('should reward resumes with 5+ keywords', () => {
@@ -206,7 +206,7 @@ describe('ATSService', () => {
 
       const result = atsService.analyze(resumeWithManyKeywords);
 
-      expect(result.issues.some(i => i.type === 'success')).toBe(true);
+      expect(result.issues.some(i => i.message.includes('strong keywords'))).toBe(true);
     });
   });
 
@@ -228,7 +228,7 @@ describe('ATSService', () => {
 
       const result = atsService.analyze(resumeWithoutKeywords);
 
-      expect(result.issues.some(i => i.message.includes('ключевых'))).toBe(true);
+      expect(result.issues.some(i => i.message.includes('Add more technical keywords'))).toBe(true);
     });
   });
 
@@ -361,7 +361,7 @@ describe('ATSService', () => {
 
       const result = atsService.analyze(resumeWithoutLinkedIn);
 
-      expect(result.issues.some(i => i.message.includes('LinkedIn'))).toBe(true);
+      expect(result.issues.some(i => i.message === '❌ Missing LinkedIn')).toBe(true);
     });
   });
 
