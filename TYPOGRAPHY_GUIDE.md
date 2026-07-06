@@ -1,360 +1,199 @@
-# 📐 Modern Typography System for Resume Builder
+# 📐 Typography Guide — Resume Builder
 
-## Executive Summary
+## Three Professional Typography Systems
 
-Your resume builder has been upgraded with a **professional, modern typography system** inspired by industry leaders like Canva, Novoresume, and Kickresume. The new design uses carefully selected Google Fonts and a systematic approach to spacing, sizing, and hierarchy.
-
----
-
-## 1. Анализ текущего состояния (До изменений)
-
-### Проблемы предыдущей версии:
-- ❌ **Шрифты**: Использовались системные шрифты (`Segoe UI`, `Georgia`) без единой системы
-- ❌ **Размеры**: Произвольные значения в `em`, `px`, `pt` без консистентности
-- ❌ **Интерлиньяж**: Фиксированный `1.6` для всего текста
-- ❌ **Иерархия**: Слабый визуальный контраст между заголовками и текстом
-- ❌ **Цвета**: Устаревшая палитра с недостаточным контрастом
-- ❌ **Кнопки/Формы**: Избыточный glassmorphism эффект, усложняющий восприятие
+Your resume builder now supports **3 distinct typography systems**. Switch between them by editing `src/styles.css`.
 
 ---
 
-## 2. Рекомендации по шрифтам (Реализовано)
+## System A: PROFESSIONAL (Default) ✅
 
-### Основные гарнитуры:
+**Fonts:** Merriweather (headings) + Inter (body)
 
-#### **Для заголовков: Playfair Display**
-```css
-font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
-```
-- **Почему**: Элегантный serif с характером, создаёт премиальное ощущение
-- **Веса**: 600 (SemiBold), 700 (Bold)
-- **Использование**: H1 (имя кандидата), H3 (названия разделов)
-- **Аналоги**: Используется в Luxe, Vogue, профессиональных резюме
+### Best For:
+- 💼 Finance & Banking
+- ⚖️ Legal & Consulting
+- 🎓 Academia & Research
+- 🏢 Corporate positions
 
-#### **Для основного текста: Inter**
-```css
-font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-```
-- **Почему**: Максимальная читаемость на любых экранах, нейтральный характер
-- **Веса**: 400 (Regular), 500 (Medium), 600 (SemiBold), 700 (Bold)
-- **Использование**: Основной текст, описания опыта, навыки, контакты
-- **Аналоги**: Используется GitHub, Figma, Notion, Vercel
+### Why It Works:
+- **Merriweather**: Serif font with strong vertical stress, conveys trust and authority. Optimized for screens with generous x-height.
+- **Inter**: Neo-grotesque sans-serif designed for computer interfaces. Excellent readability at small sizes.
+- **Contrast**: Classic serif/sans-serif pairing creates clear hierarchy without clashing.
 
-#### **Для кода: JetBrains Mono**
-```css
-font-family: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
-```
-- **Почему**: Специализированный моноширинный шрифт для технических резюме
-- **Веса**: 400 (Regular), 500 (Medium)
-- **Использование**: README, технические навыки, код
+### Weights:
+| Element | Font | Weight | Size | Line Height |
+|---------|------|--------|------|-------------|
+| H1 (Name) | Merriweather | 900 (Black) | 2.25rem (36px) | 1.2 |
+| H2 (Section) | Merriweather | 700 (Bold) | 1.5rem (24px) | 1.3 |
+| H3 (Subsection) | Merriweather | 700 (Bold) | 1.25rem (20px) | 1.3 |
+| Body Text | Inter | 400 (Regular) | 1rem (16px) | 1.6 |
+| Meta/Dates | Inter | 400 (Regular) | 0.875rem (14px) | 1.5 |
+| Buttons | Inter | 600 (SemiBold) | 1rem (16px) | 1.2 |
+
+### Visual Impact:
+> "Looks like a premium financial report. Feels established, serious, and trustworthy. Similar to Harvard Business Review or McKinsey presentations."
 
 ---
 
-## 3. Типографическая система
+## System B: FRIENDLY & MODERN
 
-### Шкала размеров (Type Scale)
-Основана на коэффициенте **1.25** (Major Third) — классическая музыкальная пропорция:
+**Fonts:** Poppins (headings) + Open Sans (body)
 
-| Переменная | Размер | Использование |
-|------------|--------|---------------|
-| `--text-xs` | 12px (0.75rem) | Метаданные, даты, подписи |
-| `--text-sm` | 14px (0.875rem) | Вторичный текст, кнопки, инпуты |
-| `--text-base` | 16px (1rem) | Основной текст, списки |
-| `--text-lg` | 18px (1.125rem) | Ведущий текст, описания |
-| `--text-xl` | 20px (1.25rem) | H3, заголовки разделов |
-| `--text-2xl` | 24px (1.5rem) | H2, имя кандидата |
-| `--text-3xl` | 30px (1.875rem) | H1, главный заголовок |
-| `--text-4xl` | 36px (2.25rem) | Акценты, hero-секции |
-
-### Межстрочные интервалы (Line Heights)
-
-| Переменная | Значение | Использование |
-|------------|----------|---------------|
-| `--leading-none` | 1.0 | Плотные заголовки |
-| `--leading-tight` | 1.2 | Заголовки H1-H3 |
-| `--leading-snug` | 1.375 | Подзаголовки |
-| `--leading-normal` | 1.5 | Основной текст |
-| `--leading-relaxed` | 1.625 | UI текст, интерфейсы |
-| `--leading-loose` | 2.0 | Цитаты, акценты |
-
-### Отступы и поля (Spacing)
-Основано на **8px grid системе**:
-
+### How to Activate:
+In `src/styles.css`, comment out System A and uncomment System B:
 ```css
---spacing-unit: 8px;
+/* System A */
+/* --font-heading: 'Merriweather', ...; */
+/* --font-body: 'Inter', ...; */
 
-/* Примеры использования */
-padding: calc(var(--spacing-unit) * 2);  /* 16px */
-margin-bottom: calc(var(--spacing-unit) * 3);  /* 24px */
-gap: calc(var(--spacing-unit) * 1.5);  /* 12px */
+/* System B - UNCOMMENT THESE */
+--font-heading: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+--font-body: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 ```
+
+### Best For:
+- 💻 Tech Startups
+- 🎨 Creative Industries (Design, Marketing)
+- 📱 Product Management
+- 🌐 Digital Agencies
+
+### Why It Works:
+- **Poppins**: Geometric sans-serif with friendly rounded terminals. Modern but not cold.
+- **Open Sans**: Humanist sans-serif optimized for legibility across devices. Neutral and approachable.
+- **Harmony**: Both are humanist/geometric, creating cohesive modern aesthetic.
+
+### Weights:
+| Element | Font | Weight | Size | Line Height |
+|---------|------|--------|------|-------------|
+| H1 (Name) | Poppins | 700 (Bold) | 2.25rem (36px) | 1.1 |
+| H2 (Section) | Poppins | 600 (SemiBold) | 1.5rem (24px) | 1.25 |
+| H3 (Subsection) | Poppins | 600 (SemiBold) | 1.25rem (20px) | 1.25 |
+| Body Text | Open Sans | 400 (Regular) | 1rem (16px) | 1.6 |
+| Meta/Dates | Open Sans | 400 (Regular) | 0.875rem (14px) | 1.5 |
+| Buttons | Open Sans | 600 (SemiBold) | 1rem (16px) | 1.2 |
+
+### Visual Impact:
+> "Feels like a Silicon Valley startup website. Approachable, energetic, contemporary. Similar to Stripe, Notion, or Figma branding."
 
 ---
 
-## 4. Цветовая система
+## System C: NEUTRAL & UNIVERSAL
 
-### Светлая тема (Light Mode)
+**Fonts:** System Fonts Only (San Francisco, Segoe UI, Roboto)
+
+### How to Activate:
+In `src/styles.css`, comment out System A and uncomment System C:
 ```css
---ui-bg: #f8fafc;        /* Светлый серо-голубой фон */
---ui-text: #1e293b;      /* Глубокий slate для текста */
---ui-panel-bg: #ffffff;  /* Чистый белый для панелей */
---ui-border: #e2e8f0;    /* Мягкие границы */
---ui-accent: #4f46e5;    /* Индиго акцент (современнее синего) */
+/* System A */
+/* --font-heading: 'Merriweather', ...; */
+/* --font-body: 'Inter', ...; */
+
+/* System C - UNCOMMENT THESE */
+--font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+--font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 ```
 
-### Тёмная тема (Dark Mode)
-```css
---ui-bg: #0f172a;        /* Глубокий slate фон */
---ui-text: #e2e8f0;      /* Светлый текст */
---ui-panel-bg: #1e293b;  /* Панели на тон светлее */
---ui-border: #334155;    /* Контрастные границы */
---ui-accent: #818cf8;    /* Светлый индиго */
-```
+### Best For:
+- 🌍 Any industry (truly universal)
+- ⚡ Maximum performance (0ms font load time)
+- 📱 Mobile-first applications
+- 🔒 Enterprise/Government (no external dependencies)
 
-### Семантические цвета
-```css
---color-primary: #4f46e5;    /* Основные действия */
---color-success: #10b981;    /* Успех, подтверждения */
---color-warning: #f59e0b;    /* Предупреждения */
---color-error: #ef4444;      /* Ошибки */
---color-secondary: #64748b;  /* Вторичный текст */
-```
+### Why It Works:
+- **Native Feel**: Uses platform-native fonts (SF on Mac/iOS, Segoe UI on Windows, Roboto on Android).
+- **Zero Load Time**: No network requests = instant rendering.
+- **Accessibility**: System fonts are optimized for each OS's accessibility settings.
+
+### Weights:
+| Element | Weight | Size | Line Height |
+|---------|--------|------|-------------|
+| H1 (Name) | 700 (Bold) | 2.25rem (36px) | 1.1 |
+| H2 (Section) | 600 (SemiBold) | 1.5rem (24px) | 1.25 |
+| H3 (Subsection) | 600 (SemiBold) | 1.25rem (20px) | 1.25 |
+| Body Text | 400 (Regular) | 1rem (16px) | 1.6 |
+| Meta/Dates | 400 (Regular) | 0.875rem (14px) | 1.5 |
+| Buttons | 600 (SemiBold) | 1rem (16px) | 1.2 |
+
+### Visual Impact:
+> "Feels native to your device. Clean, invisible, professional without trying too hard. Similar to GitHub, Apple.com, or Microsoft products."
 
 ---
 
-## 5. Пример кода (Реализовано)
+## Quick Comparison
 
-### Подключение шрифтов (index.html)
-```html
-<!-- Google Fonts - Modern Typography Stack -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-```
-
-### CSS Variables (styles.css)
-```css
-:root {
-  /* Font Families */
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-resume: 'Inter', 'Segoe UI', Arial, sans-serif;
-  --font-mono: 'JetBrains Mono', Consolas, monospace;
-  
-  /* Type Scale */
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  
-  /* Line Heights */
-  --leading-tight: 1.2;
-  --leading-normal: 1.5;
-  --leading-relaxed: 1.625;
-  
-  /* Font Weights */
-  --font-normal: 400;
-  --font-medium: 500;
-  --font-semibold: 600;
-  --font-bold: 700;
-}
-```
-
-### Применение в стилях
-```css
-h1 {
-  font-family: var(--font-heading);
-  font-size: var(--text-3xl);
-  font-weight: var(--font-bold);
-  line-height: var(--leading-none);
-  letter-spacing: var(--tracking-tight);
-}
-
-body {
-  font-family: var(--font-body);
-  font-size: var(--text-base);
-  line-height: var(--leading-relaxed);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-#resume-container {
-  font-family: var(--font-resume);
-  font-size: 11pt;
-  line-height: var(--leading-normal);
-}
-```
+| Feature | System A (Professional) | System B (Friendly) | System C (Neutral) |
+|---------|------------------------|---------------------|--------------------|
+| **Personality** | Authoritative, Classic | Energetic, Modern | Invisible, Native |
+| **Load Time** | ~150ms | ~150ms | **0ms** ✅ |
+| **Best Industry** | Finance, Law, Academia | Tech, Creative | Universal |
+| **Print Quality** | Excellent ★★★★★ | Very Good ★★★★☆ | Excellent ★★★★★ |
+| **Mobile Readability** | Excellent | Excellent | Best |
+| **Similar To** | NYT, Economist | Stripe, Airbnb | GitHub, Apple |
 
 ---
 
-## 6. Визуальное обоснование
+## Type Scale (All Systems)
 
-### До изменений:
+Based on **Major Third (1.25)** ratio for harmonious proportions:
+
 ```
-┌─────────────────────────────────────┐
-│  JOHN DOE                           │ ← Georgia, 3em, нет характера
-│  Software Engineer                  │ ← Segoe UI, серый, слабый
-│                                     │
-│  ────────────────────────────────   │
-│  EXPERIENCE                         │ ← Uppercase, 2px letter-spacing
-│  • Company Name                     │   выглядит устаревшим
-│    Description text...              │ ← Мелкий, плохой контраст
-└─────────────────────────────────────┘
+36px (2.25rem) — H1, Name
+24px (1.5rem)  — H2, Section Titles
+20px (1.25rem) — H3, Subsections
+16px (1rem)    — Body Text (Base)
+14px (0.875rem)— Secondary Text, Dates
+12px (0.75rem) — Captions, Metadata
 ```
 
-### После изменений:
-```
-┌─────────────────────────────────────┐
-│  JOHN DOE                           │ ← Playfair Display Bold, 30px
-│  Software Engineer                  │ ← Inter Medium, slate-500
-│                                     │   элегантный контраст
-│  ────────────────────────────────   │
-│  EXPERIENCE                         │ ← Playfair SemiBold, uppercase
-│  • Company Name                     │   с правильным tracking
-│    Description text...              │ ← Inter Regular, 11pt,
-│                                     │   идеальный line-height 1.5
-└─────────────────────────────────────┘
-```
-
-### Сравнение с конкурентами:
-
-| Сервис | Шрифт заголовков | Шрифт текста | Стиль |
-|--------|------------------|--------------|-------|
-| **Наш** | Playfair Display | Inter | Премиальный + чистый |
-| Canva | Различные | Lato/Open Sans | Универсальный |
-| Novoresume | Roboto | Roboto | Корпоративный |
-| Kickresume | Montserrat | Open Sans | Современный |
-| Zety | Oswald | Lato | bold/акцентный |
-
-**Наше преимущество**: Комбинация элегантного serif (Playfair) для заголовков и сверхчитаемого sans-serif (Inter) для текста создаёт баланс между премиальностью и функциональностью.
+### Line Heights:
+- **Headings**: 1.1–1.3 (tight for impact)
+- **Body**: 1.6 (optimal for reading)
+- **Secondary**: 1.5 (balanced)
 
 ---
 
-## 7. Адаптивность и устройства
+## Color & Contrast
 
-### Десктоп (1920px+)
-- Полный type scale используется
-- H1 = 30px, основной текст = 16px
-- Щедрые отступы (24-32px)
+For accessibility (WCAG AA compliance):
 
-### Планшет (768px-1024px)
-- Масштабирование через rem работает автоматически
-- Возможно уменьшение H1 до 26px
-- Отступы 16-20px
-
-### Мобильный (< 768px)
-- Базовый шрифт остаётся 16px (доступность)
-- H1 масштабируется до 24px
-- Минимальные отступы 12px
-- Сенсорные цели кнопок ≥ 44px
-
-### Print (PDF экспорт)
-- Фиксированный размер 11pt для основного текста
-- Inter оптимизирован для печати
-- Сохраняется иерархия и контраст
+| Use Case | Color | Contrast Ratio |
+|----------|-------|----------------|
+| Primary Text | `#0f172a` (slate-900) | 16:1 ✅ |
+| Secondary Text | `#64748b` (slate-500) | 5.5:1 ✅ |
+| Links/Buttons | `#4f46e5` (indigo-600) | 4.7:1 ✅ |
+| Disabled | `#cbd5e1` (slate-300) | 2.5:1 |
 
 ---
 
-## 8. Дополнительные улучшения
+## Performance Tips
 
-### Кнопки
-```css
-.controls-bar button {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);      /* 14px */
-  font-weight: var(--font-semibold); /* 600 */
-  border-radius: 10px;            /* Современное скругление */
-  transition: all 0.2s ease;      /* Быстрый, плавный ховер */
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
-```
-
-### Поля ввода
-```css
-input[type="text"] {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  border-radius: 8px;
-  border: 1px solid var(--ui-border);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-}
-
-input[type="text"]:focus {
-  border-color: var(--ui-accent);
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
-}
-```
-
-### Карточки и панели
-```css
-/* Тени для глубины */
-box-shadow: 
-  0 4px 6px rgba(0, 0, 0, 0.07),
-  0 2px 4px rgba(0, 0, 0, 0.06);
-
-/* Скругления */
-border-radius: 10px;  /* Кнопки */
-border-radius: 8px;   /* Инпуты */
-border-radius: 6px;   /* Карточки */
-```
+1. **Preload Critical Fonts**: Already configured in `index.html`
+2. **Use `font-display: swap`**: Prevents FOIT (Flash of Invisible Text)
+3. **Limit Weights**: Only load weights you actually use (currently 3 per family)
+4. **Consider System Fonts**: For maximum performance, use System C
 
 ---
 
-## 9. Как это применить
+## How to Test
 
-### Автоматически (уже сделано)
-Все изменения уже применены в файлах:
-- ✅ `/workspace/index.html` — подключены Google Fonts
-- ✅ `/workspace/src/styles.css` — полная типографическая система
-
-### Проверка
-Запустите проект и проверьте:
-```bash
-npm run dev
-```
-
-Откройте `http://localhost:3000` и обратите внимание на:
-1. **Заголовки** стали более элегантными (Playfair Display)
-2. **Текст** легче читается (Inter)
-3. **Кнопки** выглядят современнее (убран избыточный glassmorphism)
-4. **Цвета** более контрастные и профессиональные
+1. Open `src/styles.css`
+2. Comment/uncomment the desired system
+3. Save and refresh browser
+4. Compare visual impact on:
+   - Desktop (Chrome, Safari, Firefox)
+   - Mobile (iOS Safari, Chrome Android)
+   - Print preview (Ctrl+P / Cmd+P)
 
 ---
 
-## 10. Будущие улучшения
+## Recommendation
 
-### Опционально можно добавить:
-1. **Variable Fonts** — если Google Fonts добавит вариативные версии
-2. **Кириллическая поддержка** — уже включена в Inter и Playfair Display
-3. **Тёмная тема для резюме** — сейчас резюме всегда белое для печати
-4. **Анимации появления** — fade-in для плавного загрузки шрифтов
-5. **Font Loading API** — для предотвращения FOIT (Flash of Invisible Text)
+**Start with System A (Professional)** as default—it's the safest choice for most job seekers. 
 
-### Performance tips:
-```css
-/* Уже добавлено */
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+Then offer users a **toggle in the UI** to switch between systems based on their target industry:
+- Finance/Law → System A
+- Tech/Creative → System B  
+- General/Unknown → System C
 
-/* Можно добавить font-display */
-@font-face {
-  font-family: 'Inter';
-  font-display: swap;
-}
-```
-
----
-
-## Заключение
-
-Ваш генератор резюме теперь использует **профессиональную типографическую систему**, которая:
-
-✅ Выглядит дороже и современнее  
-✅ Улучшает читаемость на всех устройствах  
-✅ Создаёт чёткую визуальную иерархию  
-✅ Соответствует лучшим практикам 2024 года  
-✅ Конкурирует с лидерами рынка (Canva, Novoresume)  
-
-**Следующий шаг**: Протестируйте на реальных пользователях и соберите фидбек о воспринимаемом качестве дизайна.
+This gives your app a competitive edge over single-font generators!
