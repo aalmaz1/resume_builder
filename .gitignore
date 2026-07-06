@@ -1,53 +1,43 @@
 ```
-# Build artifacts
-dist/
-build/
-
 # Dependencies
 node_modules/
-
-# Compiled files
-*.pyc
-__pycache__/
-
-# Logs and temp files
-*.log
-*.tmp
 
 # Environment
 .env
 .env.local
 *.env.*
 
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
 # Editors
 .vscode/
 .idea/
 
-# OS
-.DS_Store
-Thumbs.db
-
-# Testing
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.so
 .coverage
 coverage/
 htmlcov/
 .pytest_cache/
 .mypy_cache/
 
-# Package managers
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# Distribution / packaging
-*.tar.gz
-*.whl
-*.egg
+# Build artifacts
+dist/
+build/
 *.egg-info/
+*.egg
 
-# IDE
-*.swp
-*.swo
+# System files
+.DS_Store
+Thumbs.db
 
 # Compressed files
 *.zip
