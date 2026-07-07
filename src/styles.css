@@ -745,9 +745,9 @@ body.theme-business {
 body.theme-business .resume-header {
   background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
   color: white;
-  padding: 24px;
-  margin: -20mm -20mm 20px -20mm;
-  border-radius: 0 0 12px 12px;
+  padding: 20px;
+  margin: 0 0 16px 0;
+  border-radius: 8px;
 }
 body.theme-business .resume-header h1,
 body.theme-business .resume-header h2,
