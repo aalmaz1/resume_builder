@@ -1,18 +1,20 @@
 import { ResumeData } from './types';
 import { renderResume } from './resume-builder';
-import { printResume } from './print-utils';
-import { fetchGitHubResumeData } from './github-provider';
+import { ExportService } from './services/ExportService';
+import { fetchGitHubResumeData, extractUsername } from './github-provider';
 import { generateDemoProfile } from './demo-profile';
 import { translations, Lang, defaultLang } from './translations';
 import { ATSService } from './services/ATSService';
 import { ATSResult } from './types/ats';
 import { DESIGNS, getRandomDesign, DesignTemplate } from './designs/design-templates';
+import { logger } from './utils/logger';
 
 let currentResumeData: ResumeData | null = null;
 let currentTextAlign: 'left' | 'center' | 'justify' = 'left';
 let currentLang: Lang = defaultLang;
 let currentDesign: string = 'classic'; // Track current design
 const atsService = new ATSService();
+const exportService = new ExportService();
 
 const defaultData: ResumeData = generateDemoProfile();
 
@@ -138,42 +140,41 @@ function applyDesign(designId: string): void {
     designSelect.value = designId;
   }
 }
-
+/**
 /**
  * Initialize design selector dropdown
  */
 function initializeDesignSelector(): void {
   const designSelect = document.getElementById('design-select') as HTMLSelectElement;
   if (!designSelect) return;
-  
-  // Clear existing options
+
+  buildDesignOptions(designSelect);
+  applyStoredDesign(designSelect);
+  setupDesignChangeHandler(designSelect);
+}
+
+/**
+ * Build HTML options for design selector grouped by category
+ */
+function buildDesignOptions(designSelect: HTMLSelectElement): void {
   designSelect.innerHTML = '';
-  
-  // Populate with all designs grouped by category
   let currentCategory = '';
   DESIGNS.forEach(design => {
-    // Add category optgroup if category changed
     if (design.category !== currentCategory) {
-      if (currentCategory !== '') {
+      if (currentCategory !== '' ) {
         const lastOptgroup = designSelect.querySelector('optgroup:last-child');
-        if (lastOptgroup) {
-          designSelect.appendChild(lastOptgroup);
-        }
+        if (lastOptgroup) designSelect.appendChild(lastOptgroup);
       }
-      
       const optgroup = document.createElement('optgroup');
       optgroup.label = design.category.charAt(0).toUpperCase() + design.category.slice(1);
       optgroup.dataset.category = design.category;
       currentCategory = design.category;
     }
-    
     const option = document.createElement('option');
     option.value = design.id;
     option.textContent = `${design.name} — ${design.description}`;
     option.dataset.category = design.category;
-    
-    // Find or create the right optgroup and append
-    let targetOptgroup = designSelect.querySelector(`optgroup[data-category=\"${design.category}\"]`);
+    let targetOptgroup = designSelect.querySelector(`optgroup[data-category="${design.category}"]`);
     if (!targetOptgroup) {
       targetOptgroup = document.createElement('optgroup');
       (targetOptgroup as HTMLOptGroupElement).label = design.category.charAt(0).toUpperCase() + design.category.slice(1);
@@ -182,15 +183,23 @@ function initializeDesignSelector(): void {
     }
     targetOptgroup.appendChild(option);
   });
-  
-  // Set initial value from saved state or default
+}
+
+/**
+ * Apply stored design from localStorage
+ */
+function applyStoredDesign(designSelect: HTMLSelectElement): void {
   const savedDesign = localStorage.getItem('resume-design') || 'classic';
   if (DESIGNS.some(d => d.id === savedDesign)) {
     designSelect.value = savedDesign;
     currentDesign = savedDesign;
   }
-  
-  // Listen for changes
+}
+
+/**
+ * Setup change handler for design selector
+ */
+function setupDesignChangeHandler(designSelect: HTMLSelectElement): void {
   designSelect.addEventListener('change', (e) => {
     const selectedDesign = (e.target as HTMLSelectElement).value;
     applyDesign(selectedDesign);
@@ -362,22 +371,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // PDF Export with notification
   document.getElementById('export-pdf')?.addEventListener('click', async () => {
-    await printResume();
-    showNotification(
-      currentLang === 'ru' ? translations.ru.exportSuccess : 
-      currentLang === 'ko' ? translations.ko.exportSuccess : 
-      translations.en.exportSuccess, 
-      'success'
-    );
+    try {
+      await exportService.exportToPdf('resume-container');
+      showNotification(
+        currentLang === 'ru' ? translations.ru.exportSuccess : 
+        currentLang === 'ko' ? translations.ko.exportSuccess : 
+        translations.en.exportSuccess, 
+        'success'
+      );
+    } catch (error) {
+      showNotification('Ошибка при экспорте PDF. Пожалуйста, попробуйте снова.', 'error');
+    }
   });
 
   // ATS Check Button - Toggle panel visibility
   document.getElementById('ats-check')?.addEventListener('click', () => {
-    console.log('🔍 ATS Check clicked');
-    console.log('currentResumeData:', currentResumeData);
+    logger.debug('ATS Check clicked');
+    logger.debug('currentResumeData:', currentResumeData);
     
     if (!currentResumeData) {
-      console.error('❌ No resume data available');
+      logger.error('No resume data available');
       return;
     }
 
@@ -388,7 +401,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    console.log('📊 Analyzing resume:', {
+    logger.debug('Analyzing resume:', {
       email: currentResumeData.personal.email,
       github: currentResumeData.personal.github,
       phone: currentResumeData.personal.phone,
@@ -400,7 +413,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const result = atsService.analyze(currentResumeData);
     
-    console.log('✅ ATS Result:', {
+    logger.debug('ATS Result:', {
       score: result.score,
       issuesCount: result.issues.length,
       issues: result.issues
