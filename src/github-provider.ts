@@ -1,4 +1,5 @@
 import { ResumeData, TimeBoundedEntity, SkillCategory } from './types';
+import { githubCache } from './utils/github-cache';
 
 /**
  * AI-powered description generator based on repository metadata
@@ -246,15 +247,36 @@ export async function fetchGitHubResumeData(input: string): Promise<ResumeData> 
   
   const headers = { 'Accept': 'application/vnd.github.v3+json' };
   
-  // 1. Fetch Profile, Repos & README in parallel
-  const [userRes, reposRes] = await Promise.all([
-    fetch(`https://api.github.com/users/${username}`, { headers }),
-    fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=30`, { headers })
-  ]);
+  // Create cache keys
+  const userCacheKey = `user:${username}`;
+  const reposCacheKey = `repos:${username}`;
   
-  if (!userRes.ok) throw new Error('User not found');
-  const profile = await userRes.json();
-  const allRepos = await reposRes.json() as any[];
+  // Try to get cached data first
+  const cachedUser = githubCache.get<any>(userCacheKey);
+  const cachedRepos = githubCache.get<any[]>(reposCacheKey);
+  
+  let profile: any;
+  let allRepos: any[];
+  
+  if (cachedUser && cachedRepos) {
+    // Use cached data
+    profile = cachedUser;
+    allRepos = cachedRepos;
+  } else {
+    // Fetch from API
+    const [userRes, reposRes] = await Promise.all([
+      fetch(`https://api.github.com/users/${username}`, { headers }),
+      fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=30`, { headers })
+    ]);
+    
+    if (!userRes.ok) throw new Error('User not found');
+    profile = await userRes.json();
+    allRepos = await reposRes.json() as any[];
+    
+    // Cache the results
+    githubCache.set(userCacheKey, profile);
+    githubCache.set(reposCacheKey, allRepos);
+  }
   
   // 2. Fetch README from the most popular repo (or a repo named after the user)
   let readmeContent: string | undefined;

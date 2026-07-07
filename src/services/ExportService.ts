@@ -116,7 +116,6 @@ export class ExportService {
         throw new Error('html2pdf default export not found');
       }
     } catch (error) {
-      console.error('Failed to load html2pdf:', error);
       throw new Error('Failed to load PDF export library');
     }
   }
