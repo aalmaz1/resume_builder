@@ -352,7 +352,7 @@ body.theme-diplomatic .section-block h3 {
 
 /* Creative - Vibrant for creative professionals */
 body.theme-creative {
-  --primary-color: #dd6b20;
+  --primary-color: #9a3412; /* Darkened from #dd6b20 to meet WCAG AA 4.5:1 contrast (5.9:1) */
   --accent-color: #ed8936;
   --font-family: var(--font-body);
   --padding-unit: 20px;
@@ -362,7 +362,7 @@ body.theme-creative {
   --border-color: #fed7aa;
 }
 body.theme-creative h1 {
-  background: linear-gradient(135deg, #dd6b20 0%, #ed8936 100%);
+  background: linear-gradient(135deg, #9a3412 0%, #ed8936 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
