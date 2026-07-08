@@ -151,6 +151,20 @@
   border: 0;
 }
 
+/* ==========================================================================
+   GLOBAL RESET — Fix mobile overflow issues
+   Apply border-box to all elements to prevent padding from adding to width
+   ========================================================================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Prevent horizontal scroll on mobile */
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
 body {
   font-family: var(--font-body);
   color: var(--ui-text);
@@ -164,6 +178,8 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  margin: 0;
 }
 
 /* ==========================================================================
@@ -1058,6 +1074,16 @@ body.theme-impact .entity-item {
   color: var(--ui-text);
   position: relative;
   overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Mobile responsive fix for controls bar */
+@media (max-width: 768px) {
+  .controls-bar {
+    width: 100%;
+    padding: 12px;
+    gap: 12px;
+  }
 }
 
 .controls-bar::before {
@@ -1920,6 +1946,15 @@ li {
   width: 100%;
   margin: 20px auto;
   padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Mobile responsive fix for main content wrapper */
+@media (max-width: 768px) {
+  .main-content-wrapper {
+    padding: 0 10px;
+    margin: 10px auto;
+  }
 }
 
 #resume-container {
@@ -2112,6 +2147,27 @@ li {
     flex: 1;
     max-width: 100%;
     position: static;
+  }
+}
+
+/* Additional mobile fixes for screens below 768px */
+@media (max-width: 768px) {
+  #resume-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 20px !important;
+  }
+  
+  /* Ensure no element overflows viewport */
+  img, svg, canvas {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  /* Fix for any fixed-width elements that might cause overflow */
+  .positioned-block {
+    width: 100% !important;
+    max-width: 100% !important;
   }
 }
 
