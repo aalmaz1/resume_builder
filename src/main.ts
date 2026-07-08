@@ -573,11 +573,15 @@ function showEditableHint(): void {
     font-size: 13px;
     animation: fadeInDown 0.5s ease-out;
     white-space: nowrap;
+    pointer-events: none;
   `;
+  hintEl.style.opacity = '1';
+  hintEl.style.pointerEvents = 'auto';
   
   // Hide after 5 seconds
   setTimeout(() => {
     hintEl.style.opacity = '0';
+    hintEl.style.pointerEvents = 'none';
     hintEl.style.transition = 'opacity 0.5s';
     setTimeout(() => {
       hintEl.textContent = '';
