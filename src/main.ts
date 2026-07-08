@@ -380,7 +380,14 @@ document.addEventListener('DOMContentLoaded', () => {
         'success'
       );
     } catch (error) {
-      showNotification('Ошибка при экспорте PDF. Пожалуйста, попробуйте снова.', 'error');
+      console.error('PDF export error:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      showNotification(
+        currentLang === 'ru' ? `Ошибка при экспорте PDF: ${errorMessage}` : 
+        currentLang === 'ko' ? `PDF 내보내기 오류: ${errorMessage}` : 
+        `PDF export error: ${errorMessage}`, 
+        'error'
+      );
     }
   });
 
