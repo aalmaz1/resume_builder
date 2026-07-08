@@ -974,7 +974,7 @@ body.theme-refined .section-block h3 {
 /* Bold - Strong impactful presence */
 body.theme-bold {
   --primary-color: #dc2626;
-  --accent-color: #ef4444;
+  --accent-color: #b91c1c; /* Darkened from #ef4444 to meet WCAG AA 4.5:1 contrast with white text */
   --font-family: var(--font-body);
   --padding-unit: 20px;
   --heading-color: #991b1b;
