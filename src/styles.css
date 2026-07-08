@@ -92,6 +92,14 @@
   --ui-accent: #4f46e5;
   --ui-btn-text: #fff;
   
+  /* Premium Glass Effect Variables for Light Theme */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-highlight: rgba(255, 255, 255, 0.8);
+  --glass-shadow: rgba(0, 0, 0, 0.1);
+  --glass-gradient-top: rgba(255, 255, 255, 0.9);
+  --glass-gradient-side: rgba(255, 255, 255, 0.7);
+  
   /* Resume always stays white/black for print consistency */
   --resume-bg: #ffffff;
   --resume-text: #0f172a;
