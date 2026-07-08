@@ -93,12 +93,12 @@
   --ui-btn-text: #fff;
   
   /* Premium Glass Effect Variables for Light Theme */
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.5);
-  --glass-highlight: rgba(255, 255, 255, 0.8);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-highlight: rgba(255, 255, 255, 0.6);
   --glass-shadow: rgba(0, 0, 0, 0.1);
-  --glass-gradient-top: rgba(255, 255, 255, 0.9);
-  --glass-gradient-side: rgba(255, 255, 255, 0.7);
+  --glass-gradient-top: rgba(255, 255, 255, 0.4);
+  --glass-gradient-side: rgba(255, 255, 255, 0.3);
   
   /* Resume always stays white/black for print consistency */
   --resume-bg: #ffffff;
@@ -1211,20 +1211,22 @@ body.theme-impact .entity-item {
   font-weight: 600;
 }
 
-/* Random Design Button */
+/* Random Design Button - styled like Export PDF button */
 .random-design-btn {
-  padding: 10px 16px !important;
-  background: linear-gradient(135deg, #8b5cf6, #ec4899) !important;
-  color: white !important;
-  border: none !important;
-  font-weight: 600 !important;
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3) !important;
-  transition: all 0.2s ease !important;
+  background: linear-gradient(135deg, rgba(45, 70, 120, 0.8), rgba(30, 45, 80, 0.9)) !important;
+  color: #c9d1d9 !important;
+  border-color: rgba(88, 166, 255, 0.4) !important;
+  box-shadow: 
+    0 12px 24px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 30px rgba(88, 166, 255, 0.4) !important;
 }
 
 .random-design-btn:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 8px 20px rgba(139, 92, 246, 0.5) !important;
+  background: linear-gradient(135deg, rgba(56, 139, 253, 0.4), rgba(88, 166, 255, 0.5)) !important;
+  color: #ffffff !important;
+  border-color: rgba(88, 166, 255, 0.7) !important;
+  transform: translateY(-1px) !important;
 }
 
 .random-design-btn:active {
