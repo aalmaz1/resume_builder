@@ -124,6 +124,7 @@ export class ExportService {
     if (!this.html2pdfInstance) {
       throw new Error('html2pdf not loaded');
     }
-    return this.html2pdfInstance;
+    // Вызываем функцию html2pdf без контекста, чтобы она вернула правильный объект
+    return this.html2pdfInstance();
   }
 }
