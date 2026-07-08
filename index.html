@@ -100,14 +100,14 @@
 </head>
 <body class="theme-classic">
 
-    <div class="controls-bar">
+    <div class="controls-bar" role="navigation" aria-label="Resume builder controls">
         <div class="theme-group">
             <span class="group-label" id="app-title">Resume Builder</span>
         </div>
 
         <div class="lang-group">
             <label for="lang-select" id="lang-label">Interface Language:</label>
-            <select id="lang-select" class="lang-select">
+            <select id="lang-select" class="lang-select" aria-label="Select interface language">
                 <option value="en">English</option>
                 <option value="ru">Русский</option>
                 <option value="ko">한국어</option>
@@ -115,8 +115,8 @@
         </div>
 
         <div class="design-group">
-            <span class="group-label" data-i18n="resumeDesignLabel">Resume Design:</span>
-            <select id="design-select" class="design-select">
+            <label for="design-select" class="group-label" data-i18n="resumeDesignLabel">Resume Design:</label>
+            <select id="design-select" class="design-select" aria-label="Select resume theme">
                 <!-- Designs will be populated dynamically from design-templates.ts -->
             </select>
             <button id="random-design-btn" class="random-design-btn" title="Random Design">🎲 Random</button>
@@ -129,18 +129,19 @@
             <button class="align-btn" data-align="justify" title="Justify">≡ <span data-i18n="alignJustify">Justify</span></button>
         </div>
 
-        <div class="import-group">
-            <input type="text" id="github-url" placeholder="GitHub username (e.g. torvalds)">
-            <button id="import-github">Import</button>
-            <div id="loader"></div>
+        <div class="import-group" role="search">
+            <label for="github-url" class="visually-hidden">GitHub username</label>
+            <input type="text" id="github-url" placeholder="GitHub username (e.g. torvalds)" aria-label="GitHub username">
+            <button id="import-github" aria-label="Import from GitHub">Import</button>
+            <div id="loader" aria-live="polite"></div>
         </div>
 
-        <div class="action-group">
-            <button id="save-json">Save JSON</button>
-            <button id="export-pdf">Export PDF</button>
-            <button id="ats-check" class="ats-tooltip-container">
+        <div class="action-group" role="group" aria-label="Export and analysis actions">
+            <button id="save-json" aria-label="Save resume as JSON">Save JSON</button>
+            <button id="export-pdf" aria-label="Export resume as PDF">Export PDF</button>
+            <button id="ats-check" class="ats-tooltip-container" aria-label="Check ATS compatibility">
                 📊 ATS Check
-                <span class="ats-tooltip-icon" title="What is ATS?">ⓘ</span>
+                <span class="ats-tooltip-icon" title="What is ATS?" role="button" tabindex="0">ⓘ</span>
                 <span class="ats-tooltip" id="ats-tooltip-text"></span>
             </button>
         </div>
@@ -159,10 +160,10 @@
 
     <!-- Main content area with side-by-side layout -->
     <div class="main-content-wrapper">
-        <div id="resume-container" contenteditable="true" spellcheck="false"></div>
+        <main id="resume-container" contenteditable="true" spellcheck="false" role="document" aria-label="Resume preview"></main>
         
         <!-- ATS Panel - Sticky sidebar -->
-        <aside id="ats-panel" class="ats-panel hidden">
+        <aside id="ats-panel" class="ats-panel hidden" aria-label="ATS analysis panel">
             <div class="ats-panel-content"></div>
         </aside>
     </div>
